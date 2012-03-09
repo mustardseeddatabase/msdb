@@ -1,0 +1,62 @@
+#nav {
+  position: absolute;
+  top: 200px;
+  left: 0px;
+}
+
+.nav_button {
+  display: block;
+  height: 42px;
+  width: 42px;
+  margin-top: 4px;
+  cursor: pointer;
+  padding-right: 5px;
+  text-align: right;
+  -moz-box-shadow: 2px 2px 5px #000;
+  -webkit-box-shadow: 2px 2px 5px #000;
+  -box-shadow: 2px 2px 5px #000;
+
+	-moz-border-radius: 0px 12px 12px 0px;
+	-webkit-border-radius: 0px 12px 12px 0px;
+	-o-border-radius: 0px 12px 12px 0px;
+	-ms-border-radius: 0px 12px 12px 0px;
+	-khtml-border-radius: 0px 12px 12px 0px;
+	border-radius: 0px 12px 12px 0px;
+
+  background-image: url(<%= asset_path ('page_sprite.png') %>);
+  background-repeat: no-repeat;
+}
+
+.nav_button:hover { width : 142px }
+
+.nav_button:hover > .nav_text { visibility : visible }
+
+.nav_text {
+  color: #ed6e34;
+  visibility: hidden;
+  font-size: 12pt;
+  line-height: 2.7em;
+}
+
+/* sprite control: */
+#households { background-position: 0px 0px;       }
+
+#clients    { background-position: 0px -42px;     }
+
+#checkin    { background-position: 0px -84px;     }
+
+#checkout   { background-position: 0px -126px;    }
+
+#donations  { background-position: 0px -168px;    }
+
+#logout     { background-position: 0px -210px;    }
+
+#admin      { background-position: 0px -252px;    }
+
+.enabled { visibility: visible; }
+
+/* making the button invisible is not for security purposes
+* a user without privileges will be rejected if they try
+* to go to the page. */
+.disabled { visibility: hidden; }
+

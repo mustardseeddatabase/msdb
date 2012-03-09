@@ -1,0 +1,29 @@
+$table_color: #246B9E;
+
+#container {
+  width: 800px;
+}
+
+.box_shadow {
+  -moz-box-shadow: 2px 2px 5px #000;
+  -webkit-box-shadow: 2px 2px 5px #000;
+  -box-shadow: 2px 2px 5px #000;
+}
+
+table#found_in_db {
+  width: 100%;
+  border: $table_color;
+  border-style: solid;
+  border-width: 2px;
+}
+
+tr#headings, table#limit_categories {
+  background: $table_color;
+  color: white;
+}
+
+table#limit_categories {
+  width: 100%;
+  margin-bottom: 4px;
+  font-size: 9pt;
+}

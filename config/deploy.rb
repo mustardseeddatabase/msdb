@@ -10,12 +10,10 @@ set :scm, :git
 set :deploy_to, "/home/ccstbrai"
 set :deploy_via, :remote_cache
 
-# ssh_options[:keys] = %w(/home/oridb/.ssh/sourcerepo_oridb_keys/id_rsa)
 ssh_options[:keys] = [File.join(ENV["HOME"], ".ssh", "sourcerepo_ccstb_keys", "id_rsa")]
 
 set :keep_releases, 3
 
-#set :domain, "74.63.4.138"
 set :domain, "69.25.136.6"
 role :web, domain                    # Your HTTP server, Apache/etc
 role :app, domain                    # This may be the same as your `Web` server

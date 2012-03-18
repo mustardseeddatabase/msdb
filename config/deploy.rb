@@ -4,6 +4,7 @@ default_run_options[:pty] = true
 set :application, "ccstb"
 set :gitserver, "makestuffup.sourcerepo.com"
 set :repository,  "git@makestuffup.sourcerepo.com:makestuffup/ccstb.git"
+set :branch, "ccstb"
 set :git_enable_submodules, 1
 
 set :scm, :git

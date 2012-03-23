@@ -1,0 +1,38 @@
+$border: #ecd757;
+$bg: #fcf6d0;
+.message_block {
+  clear: both;
+  margin-top: 0.2em;
+  margin-bottom: 0.3em;
+  width: 500px;
+
+  ul {
+    margin-bottom: 0;
+    list-style: none;
+    padding: 10px;
+    border-top: 1px solid $border;
+    border-bottom: 1px solid $border;
+    li {
+      margin-left: 4em;
+    }
+    &.error {
+      background: $bg url("<%= asset_path 'message_block/error.gif' %>") 1em 50% no-repeat;
+    }
+
+    &.info {
+      background: $bg url("<%= asset_path 'message_block/info.gif' %>") 1em 50% no-repeat;
+    }
+
+    &.notice {
+      background: $bg url("<%= asset_path 'message_block/notice.gif' %>") 1em 50% no-repeat;
+    }
+
+    &.confirm {
+      background: $bg url("<%= asset_path 'message_block/notice.gif' %>") 1em 50% no-repeat;
+    }
+
+    &.warn {
+      background: $bg url("<%= asset_path 'message_block/warn.gif' %>") 1em 50% no-repeat;
+    }
+  }
+}

@@ -1,0 +1,36 @@
+= form_for @donor, :validate => true do |d|
+  %table
+    %tr
+      %td= d.label :organization
+      %td= d.text_field :organization
+    %tr
+      %td= d.label :contactName
+      %td= d.text_field :contactName
+    %tr
+      %td= d.label :contactTitle
+      %td= d.text_field :contactTitle
+    %tr
+      %td= d.label :address
+      %td= d.text_field :address
+    %tr
+      %td= d.label :zip
+      %td= d.text_field :zip
+    %tr
+      %td= d.label :city
+      %td= d.text_field :city
+    %tr
+      %td= d.label :state
+      %td= d.select :state, STATES
+    %tr
+      %td= d.label :phone
+      %td= d.text_field :phone
+    %tr
+      %td= d.label :fax
+      %td= d.text_field :fax
+    %tr
+      %td= d.label :email
+      %td= d.text_field :email
+    %tr
+      %td= d.label :city
+      %td= d.text_field :city
+  - submit_or_return_to donors_path

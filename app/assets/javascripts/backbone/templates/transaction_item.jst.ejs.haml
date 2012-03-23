@@ -1,0 +1,14 @@
+%td <%= transaction_item.get('item').get('upc') || transaction_item.get('item').get('sku') %>
+%td#description <%= transaction_item.get('item').get('description') %>
+%td#weight_oz <%= transaction_item.get('item').get('weight_oz') %>
+%td#count <%= transaction_item.get('item').get('count') %>
+%td#category <%= transaction_item.get('item').get('category_descriptor') %>
+%td
+  %input{:id => 'quantity',
+    :size => '2',
+    :type => 'text',
+    :value =>  "<%= transaction_item.get('quantity') %>".html_safe,
+    :autocomplete => 'off'}
+
+%td= link_to "Edit", '#', :id => 'edit_transaction_item_link'
+%td= link_to "Remove", '#', :id => 'remove_transaction_item_link'

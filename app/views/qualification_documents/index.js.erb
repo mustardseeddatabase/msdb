@@ -1,0 +1,2 @@
+var ajax_result = "<%= escape_javascript(render :partial => 'client_quickcheck', :locals => {:client => @client, :household => @client.household}) %>";
+$('#quickcheck').html(ajax_result);

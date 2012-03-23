@@ -1,0 +1,5 @@
+%tr
+  %th Name
+-for result in @results
+  %tr
+    %td= link_to result, donor_path(result.id)

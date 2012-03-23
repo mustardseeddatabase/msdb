@@ -1,0 +1,13 @@
+= message_block :on => [:donation, :donor, :donated_item, :item]
+%h1 New Donation by #{@donor.organization}
+#container
+  #transaction_list_app
+    = render "shared/barcode_input_widget"
+
+    = render :partial => 'shared/transaction_list', :locals => {:return_path => donations_path}
+
+:javascript
+  var categories          = new Application.Categories(#{ Category.to_json });
+  var error_messages      = #{ Item.attribute_error_messages };
+
+  $(function(){ donation_app = new Application.DonationCreateAppView([], "#{donor_donations_url(@donor)}"); });

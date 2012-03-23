@@ -1,0 +1,74 @@
+%table
+  -if hp = household && household.perm_address
+    %tr
+      %td Permanent address
+      %td= hp
+      %td= link_to 'View household', household_path(household)
+  -if ht = household && household.temp_address
+    %tr
+      %td Temporary address
+      %td= ht
+      %td= link_to 'View household', household_path(household)
+%table
+  %tr{:valign => :bottom, :style => 'height:30px'}
+    %th Household residents (#{household && household.clients.size})
+    %th ID date
+    %th ID status
+    %th Number of warnings
+    %th
+  -for client in clients
+    %tr.client{:class => ('with_errors' if !client.id_current?), :data => {:object_id => client.id_qualdoc.id, :param => 'id_warnings', :qualification_error_message => qualification_error_message(client), :upload_link_text => upload_link_text(:id)}}
+      %td= link_to client.name_age, client_path(client)
+      %td= client.id_date && client.id_date.to_date.to_formatted_s(:rfc822)
+      %td
+        - information_status(client, :id)
+      %td.count{:align => :center}= client.id_warnings || '0'
+      %td= client_document_link(client)
+  %tr{:valign => :bottom, :style => 'height:30px'}
+    %th Qualification information
+    %th Date of record
+    %th Status
+    %th Number of warnings
+  - ['res', 'inc', 'gov'].each do |param|
+    %tr.household{:class => ('with_errors' if !household.send(param + "_current?")), :data => {:object_id => household.send(param + '_qualdoc').id, :param => param + '_warnings', :qualification_error_message => qualification_error_message(household, param), :upload_link_text => upload_link_text(param)}}
+      %td= household_document_link(param,household)
+      %td= document_date(param,household)
+      %td
+        - information_status(household, param)
+      %td.count{:align => :center}= household.send(param + '_warnings') || 0
+
+  %tr{:valign => 'bottom', :style => 'height:30px'}
+    %td{:colspan => 4}
+      #error_message{:style => 'background:#c44; height:20px'}
+  %tr{:valign => 'bottom', :style => 'height:50px'}
+    %td{:colspan => 4}
+      #action_links
+        =link_to "Warn and waive requirement, this visit...", '#',:id => 'warn'
+        %br
+        =link_to "Upload new ID document...", '#', :id => 'upload'
+        #upload_form{:style => 'display:none'}
+          =form_tag qualification_documents_path(:client_id => @client.id), :method => :put, :multipart => true, :id => :docform do
+            = file_field_tag "qualification_document[][docfile]", :id => :docfile_input
+            = submit_tag 'Upload file'
+            %span#file_message{:style => 'display:none; color:#c44; font-weight:bold'} You must first select a file to upload
+        =form_tag qualification_documents_path(:client_id => @client.id), :method => :put, :remote => true, :id => 'quickcheck_complete' do
+          - if !clients.select(&:'id_current?').blank?
+            - for client in clients.select(&:'id_current?')
+              = hidden_field_tag 'qualification_documents['+client.id_qualdoc.id.to_s+'][warnings]', (client.id_qualdoc.warnings || 0)
+          - ['res', 'inc', 'gov'].each do |param|
+            = hidden_field_tag 'qualification_documents['+(household.send(param + '_qualdoc') && household.send(param + '_qualdoc').id).to_s+'][warnings]', (household.send(param + '_qualdoc') && household.send(param + '_qualdoc').warnings || 0)
+          =submit_tag "Quickcheck completed", :style => 'display: none'
+
+
+:javascript
+  $('#warn').click(function(){increment_warnings_for_next(); $('#upload_form').hide(); return false});
+  $('#upload').click(function(){$('#upload_form').show(); return false});
+  $("input[value = 'Upload file']").click(function(){ 
+    if($('#docfile_input').val().length == 0){
+                $('#file_message').show();
+                return false;
+              }else{
+                return true;
+              }});
+  $('#docfile_input').click(function(){$('#file_message').hide()});
+  #{(render :partial => 'quickcheck_client_script.js.erb').html_safe}

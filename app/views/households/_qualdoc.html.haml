@@ -1,0 +1,39 @@
+- prefix = name[0..2].downcase
+= f.fields_for :"#{prefix}_qualdoc" do |doc|
+  %table{:style => "padding-top:#{padding}"}
+    %tr
+      %td{:style => "width:300px"}
+        %label{:for => "household_#{prefix}_qualdoc_confirm"} #{name} confirmed?
+      %td= doc.check_box :confirm
+    %tr
+      %td
+        %label{:for => "household_#{prefix}_qualdoc_attributes_date"} #{name} confirmation date
+      %td= doc.date_select :date
+    %tr
+      %td #{name} warnings
+      %td= doc.text_field :warnings, :size => 3
+    %tr
+      %td #{name} verification information
+      %td= doc.check_box :vi
+    %tr
+      %td{:colspan => '2'}
+        =link_to "Upload new #{name.downcase} verification document...", '#', :id => "#{prefix}_upload"
+        %div{:id => "#{prefix}_upload_form", :style => 'display:none'}
+          = doc.file_field :docfile, :id => :"#{prefix}_docfile_input"
+          %span{:id => "#{prefix}_file_message", :style => 'display:none; color:#c44; font-weight:bold'} You must first select a file to upload
+
+:javascript
+  $("##{prefix}_upload").click(function(){
+      $("##{prefix}_upload_form").show();
+      return false;
+    });
+  $("#submit_#{prefix}_doc").click(function(){ 
+    if($("##{prefix}_docfile_input").val().length == 0){
+                $("##{prefix}_file_message").show();
+                return false;
+              }else{
+                configure_the_form();
+                return true;
+              }
+            });
+  $("##{prefix}_docfile_input").click(function(){$('##{prefix}_file_message').hide()});

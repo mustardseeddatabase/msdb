@@ -1,0 +1,2 @@
+class TempAddress < Address
+end

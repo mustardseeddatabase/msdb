@@ -1,0 +1,15 @@
+= message_block :on => [:inventory, :inventory_item, :item]
+
+%h1 Take inventory
+
+#container
+  #transaction_list_app
+    = render "shared/barcode_input_widget"
+
+    = render :partial => 'shared/transaction_list', :locals => {:return_path => admin_index_path }
+
+:javascript
+  var categories          = new Application.Categories(#{ Category.to_json });
+  var error_messages      = #{ Item.attribute_error_messages };
+
+  $(function(){ inventory_app = new Application.InventoryAppView([], "#{inventories_path}"); });

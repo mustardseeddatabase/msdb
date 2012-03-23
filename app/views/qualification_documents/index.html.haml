@@ -1,0 +1,33 @@
+= message_block :on => [:client, :household, :res_qualdoc, :inc_qualdoc, :gov_qualdoc, :id_qualdoc]
+%h1 Client quick check
+:javascript
+  $(function(){
+    $('#lastName').autocomplete({ 
+        url:'/clients/autocomplete', 
+        minChars:3, 
+        paramName:'client_full_name', 
+        onItemSelect:function(client){getDetails(client)}
+      });
+
+    ftb = new FancyTextBox(clear_quickcheck)
+  });
+
+  var getDetails = function(client){
+    history.pushState({}, '', "/qualification_documents?client_id="+client.data[0])
+    var form = $('#client_form')
+    form.attr('action',"/qualification_documents?client_id="+client.data[0])
+    form.submit()
+  };
+
+  var clear_quickcheck = function(){ $('#quickcheck').html('') };
+
+- focus('client_lastName_input')
+= form_tag clients_path, :id =>'client_form', :remote => true, :method => :get do
+  %table
+    %tr
+      %td{:width => '180px'}
+        %label Last name
+      %td= render :partial => 'shared/fancy_text_box', :locals => {:name => "client[lastName]", :param => :lastName, :title => 'Clear client name'}
+#quickcheck
+  -if @client
+    = render :partial => 'client_quickcheck', :locals => {:client => @client, :household => @household, :clients => @clients}

@@ -1,0 +1,18 @@
+= message_block :on => [:distribution, :client, :distribution_item, :item]
+
+%h1 New Distribution for #{@client.first_last_name}
+#transaction_list_app
+  #container
+    = render "shared/barcode_input_widget"
+
+    %table#limit_categories.box_shadow
+
+    = render :partial => 'shared/transaction_list', :locals => { :return_path => distributions_path}
+
+:javascript
+  var category_thresholds = {#{CategoryThreshold.thresholds_where_resident_count_is(@client.household_size)}};
+  var categories          = new Application.Categories(#{ Category.to_json });
+  var limit_categories    = new Application.LimitCategories(#{ LimitCategory.to_json})
+  var error_messages      = #{ Item.attribute_error_messages };
+
+  $(function(){ distribution_app = new Application.DistributionAppView({transaction_items: []}, "#{client_distributions_path(@client)}"); });

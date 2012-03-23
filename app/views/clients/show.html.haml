@@ -1,0 +1,87 @@
+= message_block :on => :client
+%h1= @client.first_last_name
+%table
+  %tr
+    %td First name
+    %td= @client.firstName
+  %tr
+    %td Middle initial
+    %td= @client.mi
+  %tr
+    %td Last name
+    %td= @client.lastName
+  %tr
+    %td Suffix
+    %td= @client.suffix
+  %tr
+    %td Birthdate
+    %td= @client.birthdate && @client.birthdate.to_formatted_s(:default)
+  %tr
+    %td Race
+    %td= @client.race && Client::Races[@client.race.upcase]
+  %tr
+    %td Gender
+    %td= @client.gender
+  %tr
+    %td Head of household
+    %td= @client.headOfHousehold_yn
+  %tr
+    %td= link_to 'View household', household_path(@client.household) if @client.household
+
+%h2 ID verification document:
+%table
+  %tr
+    %td{:style => 'width:120px'} Confirm
+    %td= @client.id_qualdoc && @client.id_qualdoc.becomes(IdQualdoc).confirm_yn
+  %tr
+    %td Date
+    %td= @client.id_qualdoc && @client.id_qualdoc.date && @client.id_qualdoc.date.to_formatted_s(:default)
+  %tr
+    %td Status
+    %td= @client.id_qualdoc && @client.id_qualdoc.information_status
+  %tr
+    %td Warnings
+    %td= @client.id_qualdoc && @client.id_qualdoc.warnings
+  %tr
+    %td VI
+    %td= @client.id_qualdoc && @client.id_qualdoc.becomes(IdQualdoc).vi_yn
+  %tr
+    %td
+      -if @client.has_id_doc_in_db?
+        = link_to 'View ID document', qualification_document_path(@client.id_qualdoc)
+%h2 Recent checkins
+- if @checkins.blank?
+  none
+- else
+  %table
+    %tr
+      %th Date
+      %th Warnings
+    -for checkin in @checkins
+      %tr{:valign => :top}
+        %td{:width => '160px'}
+          = checkin.created_at.to_formatted_s(:app_default)
+          - if !checkin.primary?
+            %br
+              (by:
+              = link_to checkin.parent_checkin.client.first_last_name, client_path(checkin.parent_checkin.client)
+              )
+        %td= warnings(checkin)
+
+%table{:style => "padding-top : 30px"}
+  %tr
+    %td= link_to 'Edit this client', edit_client_path(@client)
+  %tr
+    %td{:colspan => '2'}= link_to 'Delete this client', client_path(@client, :return_to => @return_to), :method => :delete, :id => :delete_client_link, :confirm => 'Are you sure?'
+
+:javascript
+  $(function(){
+    if(#{@client.is_sole_head_of_household?}){
+      $('#delete_client_link').click(function(){
+        $(this).wrap('<div class="field_with_errors" />');
+        $(this).wrap('<div style="float:left" />');
+        $(this).parent().parent().append('<div style="float:left" class="message">Head of household cannot be deleted.<br/>Please designate a new head of household first.</div>');
+        return false;
+      });
+    }
+  })

@@ -1,0 +1,145 @@
+= form_for household, :html => {:id => 'household_form', :multipart => true} do |f|
+  = hidden_field_tag :index_query, @household_search.params.to_json unless @household_search.nil?
+  %div{:style => 'float:left; display:inline; padding-right:30px'}
+    = f.fields_for :perm_address do |p|
+      %table
+        %tr
+          %td{:width => '140px'}
+            %label{:for => :address} Permanent address
+          %td= p.text_field :address
+        %tr
+          %td
+            %label{:for => :city} Permanent city
+          %td= p.text_field :city
+        %tr
+          %td
+            %label{:for => :zip} Permanent zip
+          %td= p.text_field :zip
+        %tr
+          %td
+            %label{:for => :apt} Permanent apt
+          %td= p.text_field :apt
+  %div
+    = f.fields_for :temp_address do |t|
+      %table
+        %tr
+          %td{:width => '140px'}
+            %label{:for => :address} Temporary address
+          %td= t.text_field :address
+        %tr
+          %td
+            %label{:for => :city} Temporary city
+          %td= t.text_field :city
+        %tr
+          %td
+            %label{:for => :zip} Temporary zip
+          %td= t.text_field :zip
+        %tr
+          %td
+            %label{:for => :apt} Temporary apt
+          %td= t.text_field :apt
+  %div{:style => 'clear:both'}
+    %table
+      %tr
+        %td{:width => '140px'}
+          %label{:for => :household_phone} Phone
+        %td= f.text_field :phone
+      %tr
+        %td
+          %label{:for => :household_email} Email
+        %td= f.text_field :email
+    - if @include_clients
+      %h2 Residents (#{@clients.size})
+      %table#residents{:style => "padding-left:20px"}
+        -if @clients.blank?
+          %tr
+            %td none
+        -else
+          -for client in @clients
+            %tr{:style => 'vertical-align:top'}
+              %td= client.last_first_name
+              %td= client.age
+              %td= "(head of household)" if client.headOfHousehold?
+              %td{:style => "padding-left:40px"}= link_to 'Remove resident', household_household_client_path(@household, client), :method => :delete, :confirm => 'are you sure?', :class => (:remove_head if client.is_sole_head_of_household?)
+        %tr{:height => "30px", :valign => "bottom"}
+          %td= link_to "Add resident...", new_household_household_client_path(@household)
+    %table{:style => "padding-top:20px"}
+      %tr
+        %td{:width => '140px'}
+          %label{:for => :household_income} Household income
+        %td{:width => '200px'}= f.text_field :income, :size => 15
+      %tr
+        %td{:width => '140px'} SSI?
+        %td
+          = f.check_box :ssi
+        %td{:width => '140px'} Single Parent?
+        %td
+          = f.check_box :singleParent
+      %tr
+        %td Medicaid?
+        %td
+          = f.check_box :medicaid
+        %td Vegetarian?
+        %td
+          = f.check_box :vegetarian
+      %tr
+        %td Homeless?
+        %td
+          = f.check_box :homeless
+        %td Diabetic?
+        %td
+          = f.check_box :diabetic
+      %tr
+        %td Physically disabled?
+        %td
+          = f.check_box :physDisabled
+        %td Retired?
+        %td
+          = f.check_box :retired
+      %tr
+        %td Mentally disabled?
+        %td
+          = f.check_box :mentDisabled
+        %td Unemployed?
+        %td
+          = f.check_box :unemployed
+      %tr
+        %td USDA registered?
+        %td= f.check_box :usda
+        %td
+        %td
+    %table{:style => "padding-top:30px"}
+      %tr
+        %td{:valign => 'top', :width => '140px'}
+          %label{:for => :household_otherConcerns} Other concerns
+        %td= f.text_area :otherConcerns, :cols => '70', :rows => '4'
+    %h2 Qualification information
+    = render :partial => 'qualdoc', :locals => {:name => 'Residency',         :qualdoc => @household.res_qualdoc, :f => f, :padding => '0px'}
+    = render :partial => 'qualdoc', :locals => {:name => 'Income',            :qualdoc => @household.inc_qualdoc, :f => f, :padding => '30px'}
+    = render :partial => 'qualdoc', :locals => {:name => 'Government income', :qualdoc => @household.gov_qualdoc, :f => f, :padding => '30px'}
+
+  - submit_or_return_to(households_path(@household_search.to_params))
+
+= form_tag "action_to_be_replaced_by_javascript", :id => :the_real_upload_form, :style => 'display:none', :method => :put, :multipart => true
+:javascript
+  var configure_the_form = function(){
+    var form = $('#household_form')
+    var method_input = $(document.createElement('input'))
+    method_input.attr({ name: '_method', type: 'hidden', value: 'put' })
+    form.append(method_input)
+    form.attr({ 
+      action: "#{qualification_documents_path(:household_id => @household.id)}",
+      "accept-charset": "UTF-8",
+      method: 'post',
+      enctype: "multipart/form-data"
+      })
+  }
+
+  $(function(){
+    $('.remove_head').click(function(event){
+      $(this).wrap('<div class="field_with_errors" />');
+      $(this).wrap('<div style="float:left" />');
+      $(this).parent().parent().append('<div style="float:left" class="message">Head of household cannot be removed.<br/>Please designate a new head of household first.</div>');
+      return false;
+    })
+  })

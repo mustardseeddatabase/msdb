@@ -1,0 +1,10 @@
+/* client-side validation messages */
+div.field_with_errors .message {
+  color: red;
+  margin-left: 20px;
+}
+
+.configuration_error {
+  border: solid;
+  border-color: red;
+}

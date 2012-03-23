@@ -1,0 +1,54 @@
+:javascript
+  $( function(){
+    $('#existing_client').click(function(){
+      $('#existing_client_form').show(); 
+      $('#new_client_form').hide(); 
+      $('#cancel').show(); 
+      false});
+
+    var show_new_client_form = function(){
+      $('#new_client_form').show(); 
+      $('#existing_client_form').hide(); 
+      $('#cancel').hide(); 
+      false}
+
+    $('#new_client').click( function(){
+      $('#new_client_form').show(); 
+      $('#existing_client_form').hide(); 
+      $('#cancel').hide(); 
+      false});
+
+    if("#{@new_client_form}"){ show_new_client_form() }
+  })
+= message_block :on => :client
+%h1 Add resident to household
+%table
+  -if address(:perm)
+    %tr
+      %td Household permanent address:
+      %td= address(:perm)
+  -if address(:temp)
+    %tr
+      %td Household temporary address:
+      %td= address(:temp)
+%h2 Current residents
+%table{:style => "padding-left:10px"}
+  -for client in @clients.reject(&:new_record?)
+    %tr
+      %td= [client.first_last_name, client.age].join(', ')
+      %td
+        -if client.headOfHousehold?
+          (head of household)
+%table{:style => "padding-top:10px"}
+  %tr
+    %td
+      %a{:id => :existing_client, :href => '#'} Add resident from existing clients...
+  %tr
+    %td
+      %a{:id => :new_client, :href => '#'} Add a new client...
+  %tr
+    %td= link_to 'Cancel', :back, :id => :cancel
+#existing_client_form{:style => 'display:none'}
+  =render 'find_clients', :household => @household
+#new_client_form{:style => 'display:none'}
+  =render 'client_form', :household => @household

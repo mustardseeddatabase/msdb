@@ -1,0 +1,10 @@
+%table#found_in_db.box_shadow{:cellspacing => '0'}
+
+%table{:style => 'padding-top:30px'}
+  %tr
+    %td{:width => '180px'}
+      %button{:id => :submit_button, :style => 'margin-right: 100px', :type => :button} Save
+    %td= link_to "Cancel", return_path
+
+%span#error_message
+

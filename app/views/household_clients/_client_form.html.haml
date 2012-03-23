@@ -1,0 +1,41 @@
+=form_for @client, :url => household_household_clients_path(@household), :validate => true do |f|
+  %table
+    %tr
+      %td= label :client, :firstName
+      %td= f.text_field :firstName
+    %tr
+      %td= label :client, :lastName
+      %td= f.text_field :lastName
+    %tr
+      %td= label :client, :mi
+      %td= f.text_field :mi, :size => 2
+    %tr
+      %td= label :client, :birthdate
+      %td= f.date_select :birthdate, :include_blank => true, :start_year => Date.today.year-100, :end_year => Date.today.year
+    %tr
+      %td= label :client, :race
+      %td= f.select :race, race_options, :include_blank => true
+    %tr
+      %td= label :client, :gender
+      %td= f.select :gender, ["M","F"]
+    %tr
+      %td{:style => "vertical-align:top"}= label :client, :headOfHousehold
+      %td= f.check_box :headOfHousehold, {}, true
+  - submit_or_return_to url_for(:back)
+
+:javascript
+  $(function(){
+    $('#client_headOfHousehold').live('change', function(){
+      if(#{@household.has_head?}){
+        if(this.checked){
+          $(this).wrap('<div class="field_with_errors" />');
+          $(this).wrap('<div style="float:left" />');
+          $(this).parent().parent().append('<div style="float:left; margin-left:20px"><label for="client_headOfHousehold" class="message" style="margin-left:0px">There is already designated a head of household.<br/>Checking this checkbox replaces current head of household.</label></div>')
+        }else{
+          $(this).unwrap()
+          $(this).unwrap()
+          $(this).parent().children().last().remove()
+        }
+      }
+    })
+  })

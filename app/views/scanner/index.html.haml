@@ -1,0 +1,34 @@
+:javascript
+  $(function(){
+    $('body').keyup(function(event){
+        var input = $('#item_barcode').val();
+        if(event.which == 13){
+          $.ajax({
+            url: '/scanner/show',
+            success: show_result,
+            data: 'barcode='+ input
+          });
+        }
+      })
+
+    var show_result = function(data, status, object){ 
+        $('#found_in_db tr').first().after(data);
+        $('#item_barcode').val('');
+        $('#item_barcode').focus();
+      }
+  })
+
+- focus('item_barcode')
+%table
+  %tr
+    %td= label :item, :barcode
+    %td= text_field :item, :barcode
+%table#found_in_db
+  %tr{:valign => :top}
+    %th{:align => :left, :width => '100em'} Barcode
+    %th{:align => :left, :width => '200em'} Description
+    %th{:align => :center, :width => '50em'} Weight<br/>oz
+    %th{:align => :center, :width => '50em'} Count
+    %th{:align => :center, :width => '50em'} Quantity
+    %th{:align => :left, :width => '80em'} Category
+    %th{:align => :left, :width => '80em'} Limit<br/>category

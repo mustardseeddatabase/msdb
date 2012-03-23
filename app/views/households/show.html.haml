@@ -1,0 +1,133 @@
+= message_block :on => [:client, :household]
+%h1 Household information
+%p= link_to 'Delete this household', household_path(@household), :method => :delete, :confirm => 'Are you sure?'
+%p= link_to 'Edit this household', edit_household_path(@household)
+%table
+  %tr
+    %td{:width => '120px'} Permanent address
+    %td= @household.permanent_address
+    %td{:width => '120px', :style => "padding-left:30px"} Temporary address
+    %td= @household.temporary_address
+  %tr
+    %td Permanent city
+    %td= @household.permanent_city
+    %td{:style => "padding-left:30px"} Temporary city
+    %td= @household.temporary_city
+  %tr
+    %td Permanent zip
+    %td= @household.permanent_zip
+    %td{:style => "padding-left:30px"} Temporary zip
+    %td= @household.temporary_zip
+  %tr
+    %td Permanent apt
+    %td= @household.permanent_apt
+    %td{:style => "padding-left:30px"} Temporary apt
+    %td= @household.temporary_apt
+  %tr
+    %td{:width => '180px'} Phone
+    %td= @household.phone
+  %tr
+    %td Email
+    %td= @household.email
+  %tr
+    %td Resident count
+    %td= @household.resident_count
+  %tr
+    %td Distribution color code
+    %td{:style => "background:#{@household.distribution_color_code}"}= @household.distribution_color_code
+%h2 Residents:
+%table#residents{:style => 'margin-left:40px'}
+  - if !@clients.blank?
+    - for client in @clients
+      %tr
+        %td= link_to client.last_first_name, client_path(client, :return_to => "household_path(#{@household.id})")
+        %td= client.age
+        %td= "(head of household)" if client.headOfHousehold?
+  - else
+    none
+%table{:style => "padding-top:30px"}
+  %tr
+    %td{:width => '180px'} Household annual income
+    %td{:width => '200px'} $#{number_with_delimiter(@household.income)}
+  %tr
+    %td SSI?
+    %td= @household.ssi_yn
+    %td Single Parent?
+    %td= @household.singleParent_yn
+  %tr
+    %td Medicaid?
+    %td= @household.medicaid_yn
+    %td Vegetarian?
+    %td= @household.vegetarian_yn
+  %tr
+    %td Homeless?
+    %td= @household.homeless_yn
+    %td Diabetic?
+    %td= @household.diabetic_yn
+  %tr
+    %td Physically disabled?
+    %td= @household.physDisabled_yn
+    %td Retired?
+    %td= @household.retired_yn
+  %tr
+    %td Mentally disabled?
+    %td= @household.mentDisabled_yn
+    %td Unemployed?
+    %td= @household.unemployed_yn
+  %tr
+    %td USDA registered?
+    %td= @household.usda_yn
+    %td
+    %td
+%table{:style => "padding-top:30px"}
+  %tr
+    %td{:valign => 'top', :width => '180px'} Other concerns
+    %td= other_concerns
+%table{:style => "padding-top:30px"}
+  %tr
+    %td{:style => "width:300px"} Residency confirmed?
+    %td= @household.res_confirm_yn
+  %tr
+    %td= label 'household_res_date', "Residency confirmation date"
+    %td= @household.res_date && @household.res_date.to_formatted_s(:rfc822)
+  %tr
+    %td Residency warning?
+    %td= @household.res_warnings
+  %tr
+    %td Residency verification information
+    %td= @household.res_vi_yn
+  -if @household.has_res_doc_in_db?
+    %tr
+      %td= link_to "View residency verification information", qualification_document_path(@household.res_qualdoc.id)
+%table{:style => "padding-top:30px"}
+  %tr
+    %td{:style => "width:300px"} Income confirmed?
+    %td= @household.inc_confirm_yn
+  %tr
+    %td Income confirmation date?
+    %td= @household.inc_date && @household.inc_date.to_formatted_s(:rfc822)
+  %tr
+    %td Income warning?
+    %td= @household.inc_warnings
+  %tr
+    %td Income verification information
+    %td= @household.inc_vi_yn
+  -if @household.has_inc_doc_in_db?
+    %tr
+      %td= link_to "View income verification information", qualification_document_path(@household.inc_qualdoc.id)
+%table{:style => "padding-top:30px"}
+  %tr
+    %td{:style => "width:300px"} Government income confirmed?
+    %td= @household.gov_confirm_yn
+  %tr
+    %td Government income confirmation date?
+    %td= @household.gov_date && @household.gov_date.to_formatted_s(:rfc822)
+  %tr
+    %td Government income warning?
+    %td= @household.gov_warnings
+  %tr
+    %td Government income verification information
+    %td= @household.gov_vi_yn
+  -if @household.has_gov_doc_in_db?
+    %tr
+      %td= link_to "View government income verification information", qualification_document_path(@household.gov_qualdoc.id)

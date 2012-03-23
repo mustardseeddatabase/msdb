@@ -1,0 +1,14 @@
+%a.nav_button#households{ :href => '/households',              :class => "#{nav_enable(:controller => 'households', :action => 'index')}"}
+  %span.nav_text households
+%a.nav_button#clients{    :href => '/clients',                 :class => "#{nav_enable(:controller => 'clients', :action => 'index')}"}
+  %span.nav_text clients
+%a.nav_button#checkin{    :href => '/qualification_documents', :class => "#{nav_enable(:controller => 'qualification_documents', :action => 'index')}"}
+  %span.nav_text check in
+%a.nav_button#checkout{   :href => '/distributions',           :class => "#{nav_enable(:controller => 'distributions', :action => 'index')}"}
+  %span.nav_text checkout
+%a.nav_button#donations{  :href => '/donations',               :class => "#{nav_enable(:controller => 'donations', :action => 'index')}"}
+  %span.nav_text donations
+%a.nav_button#logout{     :href => '/logout',                  :class => "enabled"}
+  %span.nav_text logout
+%a.nav_button#admin{      :href => '/admin',                   :class => "#{nav_enable(:controller => 'admin', :action => 'index')}"}
+  %span.nav_text admin

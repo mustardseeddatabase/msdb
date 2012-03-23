@@ -1,0 +1,48 @@
+%td
+  <%= barcode %>
+%td
+  %input{:type=>'text',
+    :value => "<%= (item.get('description') != null) ? _(item.get('description')).escape() : null  %>",
+    :id => "description",
+    :class => "<%= item.view_class_for('description') %>",
+    :autocomplete => 'off',
+    :size => 34 }
+
+%td{:align=>'center'}
+  %input{:type=>'text',
+    :value => "<%= item.get('weight_oz') %>",
+    :id => "weight_oz",
+    :size => '2',
+    :class => "<%= item.view_class_for('weight_oz') %>",
+    :autocomplete => 'off' }
+
+%td{:align=>'center'}
+  %input{:type=>'text',
+    :value => "<%= item.get('count') %>",
+    :id => "count",
+    :size => '2',
+    :class => "<%= item.view_class_for('count') %>",
+    :autocomplete => 'off'}
+
+%td
+  %select{:id => "category_id",
+    :class => "<%= item.view_class_for('category_id') %>"}
+    %option{:value =>""}Please select a category...
+    :plain
+      <% for (var i=0; i<categories.length; i++) { %>
+        <option value ="<%= categories.models[i].id %>"
+              <% if( categories.models[i].id == item.get('category_id')){ %>selected<% } %> >
+          <%= categories.models[i].get('descriptor') %>
+        </option>
+      <% } %>
+
+%td{:align=>'center'}
+  %input{:type=>'text',
+    :id => "quantity",
+    :value => '1',
+    :size => '2',
+    :autocomplete => 'off' }
+
+%td
+%td= link_to 'Remove...', '#', :id => 'remove_transaction_item_link'
+

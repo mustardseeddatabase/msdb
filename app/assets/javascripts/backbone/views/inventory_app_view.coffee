@@ -1,0 +1,1 @@
+class Application.InventoryAppView extends Application.TransactionAppView

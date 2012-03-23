@@ -1,0 +1,29 @@
+= message_block :on => :donor
+%h1 Receive donations into inventory
+=form_tag "to_be_replaced_by_javascript", :method => :get do
+  = select_tag 'donor', donor_options, :id => :donor_id
+%p= link_to "Add a new donor...", new_donor_path
+
+%p &nbsp;
+%h2 Add/Delete items from a recent donation:
+%table#donations
+  %tr
+    %th Donor
+    %th Date
+    %th
+  -for donation in @donations do
+    %tr
+      %td= donation.donor
+      %td= donation.created_at.to_s(:app_default)
+      %td= link_to 'Edit', edit_donor_donation_path(donation.donor_id, donation.id)
+
+:javascript
+  $(function(){
+    $('#donor_id').change( function(){
+          if($(this).val() != 0){
+            var form = $(this).closest('form');
+            form.attr('action',"/donors/" + $(this).val() + "/donations/new");
+            form.submit();
+          }
+        })
+    })

@@ -1,0 +1,5 @@
+%tr
+  %th Name
+-for result in @results
+  %tr
+    %td= link_to (result.first_last_name || "no name"), client_path(result.id)

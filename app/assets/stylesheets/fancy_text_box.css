@@ -1,0 +1,33 @@
+.fancy_text_box {
+  border-collapse: collapse;
+}
+
+.text_field_container {
+  background-color: white;
+  border: 1px #7c7c7c inset;
+  border-right-width: 0;
+  padding-top:0
+}
+
+.text_input {
+  border:none;
+  height:100%;
+}
+
+.control_container {
+  border:1px #7c7c7c inset;
+  border-left-width: 0;
+  background-color: white
+}
+
+.text_clear {
+  color: gray;
+  cursor:pointer;
+  display:none;
+  text-decoration:none;
+  border: none;
+}
+
+.text_clear:hover {
+  color: black;
+}

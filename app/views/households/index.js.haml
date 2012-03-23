@@ -1,0 +1,2 @@
+var ajax_result = "#{escape_javascript(render :partial => 'households', :locals => {:households => @households})}";
+$('#households').html(ajax_result)

@@ -1,0 +1,38 @@
+$green_gradient_stop: #81CB36;
+$shadow: #5B730A;
+$blu_text: #3399EE;
+$white_gradient_stop: #ffffff;
+
+#logo {
+  float: left;
+  width: 167px;
+  height: 154px;
+  background-image: url(<%= asset_path ('ms_sprite.png') %>);
+  background-repeat: no-repeat;
+  background-position: -160px 0px;
+}
+
+#banner {
+  width: 102%;
+  height: 156px;
+  margin-top: -8px;
+  margin-left: -8px;
+  background: #ffffff; /* Old browsers */
+  /* IE9 SVG, needs conditional override of 'filter' to 'none' */
+  background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIxMDAlIiB5Mj0iMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIxNSUiIHN0b3AtY29sb3I9IiNmZmZmZmYiIHN0b3Atb3BhY2l0eT0iMSIvPgogICAgPHN0b3Agb2Zmc2V0PSIxMDAlIiBzdG9wLWNvbG9yPSIjNTM3ODA4IiBzdG9wLW9wYWNpdHk9IjEiLz4KICA8L2xpbmVhckdyYWRpZW50PgogIDxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiIGZpbGw9InVybCgjZ3JhZC11Y2dnLWdlbmVyYXRlZCkiIC8+Cjwvc3ZnPg==);
+  background: -moz-linear-gradient(left,  $white_gradient_stop 15%, $green_gradient_stop 100%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, right top, color-stop(15%,$white_gradient_stop), color-stop(100%,$green_gradient_stop)); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(left,  $white_gradient_stop 15%,$green_gradient_stop 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(left,  $white_gradient_stop 15%,$green_gradient_stop 100%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(left,  $white_gradient_stop 15%,$green_gradient_stop 100%); /* IE10+ */
+  background: linear-gradient(left,  $white_gradient_stop 15%,$green_gradient_stop 100%); /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr="#{$white_gradient_stop}", endColorstr="#{$green_gradient_stop}",GradientType=1 ); /* IE6-8 */
+}
+
+#banner_text {
+  color: $blu_text;
+  padding-left: 200px;
+  padding-top: 100px;
+  font-family: "Arial Black";
+  font-size: 16pt;
+}

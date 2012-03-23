@@ -1,0 +1,23 @@
+.message_block
+%h1 Item status
+#transaction_list_app
+  #container
+    = render "shared/barcode_input_widget"
+
+    %table#found_in_db{:cellspacing => '0'}
+      %tr#headings{:valign => 'top'}
+        %th{:align => 'left',   :width => '100em' } Barcode<br/>/sku
+        %th{:align => 'left',   :width => '200em' } Description
+        %th{:align => 'center', :width => '50em'  } Weight<br/>oz
+        %th{:align => 'center', :width => '50em'  } Count
+        %th{:align => 'left',   :width => '180em' } Category
+        %th{:align => 'center', :width => '50em'  } Quantity<br/>on hand
+        %th{:width => '80em'}
+
+    %span#error_message
+
+:javascript
+  var categories          = new Application.Categories(#{ Category.to_json });
+  var error_messages      = #{ Item.attribute_error_messages };
+
+  $(function(){ item_app = new Application.ItemAppView; });

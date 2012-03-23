@@ -1,0 +1,8 @@
+%td <%= transaction_item.get('item').get('upc') || transaction_item.get('item').get('sku') %>
+%td#description <%= transaction_item.get('item').get('description') %>
+%td#weight_oz <%= transaction_item.get('item').get('weight_oz') %>
+%td#count <%= transaction_item.get('item').get('count') %>
+%td#category <%= transaction_item.get('item').category_descriptor() %>
+%td#transaction_item_quantity <%= transaction_item.get('quantity') %>
+%td
+%td= link_to "Remove", '#', :id => 'remove_transaction_item_link'

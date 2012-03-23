@@ -1,0 +1,2 @@
+class PermAddress < Address
+end

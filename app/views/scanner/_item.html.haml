@@ -1,0 +1,10 @@
+%tr
+  %td= item.upc
+  %td= item.description
+  %td{:align => :center}= item.weight_oz
+  %td{:align => :center}= item.count
+  %td{:align => :center}= text_field :donated_item, :quantity, :size => 2, :value => 1
+  %td= item.category
+  %td= item.limit_category
+%tr
+  %td #{item.upc.to_s.length} digits

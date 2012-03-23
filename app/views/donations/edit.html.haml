@@ -1,0 +1,14 @@
+= message_block :on => [:donation, :donor, :donated_item, :item]
+%h1 Edit Donation by #{@donor} on #{@donation.created_at.to_s(:app_default)}
+#container
+  #transaction_list_app
+    = render "shared/barcode_input_widget"
+
+    = render :partial => 'shared/transaction_list', :locals => {:return_path => donations_path}
+
+:javascript
+  var categories          = new Application.Categories(#{ Category.to_json });
+  var error_messages      = #{ Item.attribute_error_messages };
+  var transaction         = { id : #{ @donation.id}, transaction_items : #{ @donated_items.to_json(:except => [:created_at,:updated_at],:include => {:item => {:methods => [:category_name, :limit_category_name]}}) }};
+
+  $(function(){ donation_app = new Application.DonationEditAppView(transaction, "#{donor_donations_url(@donor)}"); });

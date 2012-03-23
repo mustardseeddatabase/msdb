@@ -1,0 +1,1 @@
+class Application.DonationCreateAppView extends Application.TransactionAppView

@@ -1,0 +1,18 @@
+- if request.xhr? && @households.size == 0
+  No households matched #{@household_search.search_terms}
+- else
+  %p Search terms: #{search_terms}
+  %table{:style => "margin-top: 20px"}
+    %tr
+      %th{:align => 'left'} Address
+      %th{:align => 'left'} City
+      %th{:align => 'left'} Zip
+      %th{:align => 'left'} Client last names
+    - for household in households
+      %tr{:onMouseOver => "this.style.backgroundColor = '#f3b638'", :onMouseOut => "this.style.backgroundColor = ''"}
+        %td= household.address
+        %td= household.city
+        %td= household.zip
+        %td= household.client_names
+        %td= link_to 'Edit', edit_household_path(household, @household_search.to_params)
+        %td= link_to 'Show', household_path(household)

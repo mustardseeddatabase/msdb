@@ -1,0 +1,25 @@
+%h1 Configure category limits
+= form_for "limit_categories", :url => limit_categories_path, :method => :put do |f|
+  %table
+    %tr
+      %th
+      %th{:colspan => 6} Number of residents:
+    %tr
+      %th{:align => :left} Categories:
+      %th 1
+      %th 2
+      %th 3
+      %th 4
+      %th 5
+      %th 6
+      - for limit_category in @limit_categories
+        %tr
+          %td
+            = limit_category.name
+            = hidden_field_tag "limit_categories[][id]", limit_category.id
+          - for category_threshold in limit_category.category_thresholds do
+            %td
+              = hidden_field_tag "limit_categories[][category_thresholds_attributes][][id]", category_threshold.id
+              = text_field_tag   "limit_categories[][category_thresholds_attributes][][threshold]", category_threshold.threshold, :size => 2, :id => "#{limit_category.name}_threshold_#{category_threshold.res_count}"
+    %tr
+      %td= submit_tag "Save"

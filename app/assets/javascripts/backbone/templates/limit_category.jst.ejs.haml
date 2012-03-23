@@ -1,0 +1,6 @@
+%td{ :width => "120px" }
+  <%= name %> (
+  %span{ :id => "<%= span_id %>" }
+    <%= value %>/<%= category_threshold %>)
+%td{ :width => "180px" }
+  %div{:class => "<%= threshold_class %> box_shadow", :id => "<%= sanitized_name %>", :style => "width:<%= width %>px"} &nbsp;

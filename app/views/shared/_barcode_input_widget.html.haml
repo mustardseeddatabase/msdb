@@ -1,0 +1,10 @@
+%div#barcode_input
+  %table
+    %tr
+      %td= label :item, :barcode
+      %td= text_field :item, :barcode
+      %td#barcode_message
+    %tr
+      %td=link_to "No barcode...", "#", :id => :no_barcode
+
+- focus('item_barcode')

@@ -1,0 +1,5 @@
+var ajax_result = "#{escape_javascript(render :partial => 'household_clients/client_details', :locals => {:perm_or_temp => 'permanent', :address => @client.household && @client.household.permanent_address})}"
+$('#permanent').replaceWith(ajax_result)
+var ajax_result = "#{escape_javascript(render :partial => 'household_clients/client_details', :locals => {:perm_or_temp => 'temporary', :address => @client.household && @client.household.temporary_address})}"
+$('#temporary').replaceWith(ajax_result)
+$('#add_client').replaceWith("<tr id = 'add_client'><td colspan='2'>#{escape_javascript(link_to 'Add to household', household_household_client_path(@household, @client), :method => :put)}<td><tr>")

@@ -1,0 +1,10 @@
+%h1 Inventories
+%table
+  %th Inventory date
+  %th
+  %th
+  - for inventory in @inventories do
+    %tr
+      %td= inventory.created_at.to_date.to_formatted_s(:app_default)
+      %td= link_to "View", inventory_path(inventory)
+      %td= link_to "Resume", edit_inventory_path(inventory)

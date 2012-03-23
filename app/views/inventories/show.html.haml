@@ -1,0 +1,24 @@
+=message_block :on => :inventory
+
+%h1 Inventory count on #{ @inventory.created_at.to_date.to_formatted_s(:app_default)}
+%table
+  %tr#headings{:valign => 'top'}
+    %th{:align => 'left',   :width => '100em' } Barcode
+    %th{:align => 'left',   :width => '200em' } Description
+    %th{:align => 'center', :width => '50em'  } Weight<br/>oz
+    %th{:align => 'center', :width => '50em'  } Count
+    %th{:align => 'center', :width => '50em'  } Quantity
+    %th{:align => 'left',   :width => '120em' } Category
+  -for inventory_item in @inventory.inventory_items do
+    %tr.transaction_item
+      %td= inventory_item.item.upc || inventory_item.item.sku
+      %td= inventory_item.item.description
+      %td= inventory_item.item.weight_oz
+      %td= inventory_item.item.count
+      %td= inventory_item.quantity
+      %td= inventory_item.item.category.descriptor
+
+%table{:style => 'margin-top:20px'}
+  %tr
+    %td{:width => '320em'}= link_to "Reset database to match inventory", update_all_items_path(@inventory), :method => :put, :confirm => "Are you sure?"
+    %td= link_to "Back", :back

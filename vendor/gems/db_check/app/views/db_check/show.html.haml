@@ -1,0 +1,7 @@
+%h1 Results
+-if @results.size.zero?
+  %p (no results)
+-else
+  %table
+    = render :partial => @template.to_s
+%p=link_to "Back...", :back

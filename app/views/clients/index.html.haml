@@ -1,0 +1,34 @@
+= message_block :on => :client
+%h1 Find client
+#diagnostic
+:javascript
+  $(function(){
+    $('.text_input').autocomplete({ 
+      url:'/clients/autocomplete', 
+      minChars:3, 
+      paramName:'client_full_name', 
+      onItemSelect:function(client){getDetails(client)}
+    });
+
+    ftb = new FancyTextBox(clear_client)
+  });
+
+  var getDetails = function(client){
+    var form = $('#client_form')
+    form.attr('action',"/clients/"+client.data[0])
+    form.submit()
+  };
+
+  var clear_client = function(){ $('#client').html('') };
+
+- focus('client_lastName_input')
+= form_tag clients_path, :id =>'client_form', :method => :get do
+  %table
+    %tr
+      %td{:width => '180px'}
+        %label Last name
+      %td= render :partial => 'shared/fancy_text_box', :locals => {:name => "client[lastName]", :param => :lastName, :title => 'Clear client name'}
+  =hidden_field_tag :return_to, @return_to
+#client
+
+%p= link_to "Add new client...", new_client_path

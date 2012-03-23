@@ -1,0 +1,7 @@
+%tr
+  %th Permanent address
+  %th Temporary address
+-for result in @results
+  %tr
+    %td= link_to (result.perm_address || "no permanent address"), household_path(result.id)
+    %td= link_to (result.temp_address || "no temporary address"), household_path(result.id)

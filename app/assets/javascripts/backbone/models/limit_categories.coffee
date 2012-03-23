@@ -1,0 +1,1 @@
+class Application.LimitCategories extends Backbone.Collection

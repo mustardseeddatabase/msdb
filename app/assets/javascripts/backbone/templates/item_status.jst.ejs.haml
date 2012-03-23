@@ -1,0 +1,8 @@
+%tr#item_status
+  %td <%= item.get('upc') || item.get('sku') %>
+  %td#description <%= item.get('description') %>
+  %td#weight_oz <%= item.get('weight_oz') %>
+  %td#count <%= item.get('count') %>
+  %td#category <%= item.get('category_descriptor') %>
+  %td#qoh <%= item.get('qoh') %>
+  %td= link_to "Edit", '#', :id => 'edit_item_link'

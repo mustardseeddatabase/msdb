@@ -1,0 +1,3 @@
+= message_block :on => :client
+%h1 Edit #{@client.first_last_name}
+= render 'client_form', :return_page => client_path(@client)

@@ -1,0 +1,72 @@
+:javascript
+  $(function() { 
+    $("[class='text_input'][id='address']").autocomplete({ url:'addresses/autocomplete', minChars:3, paramName: 'address', inputClass: 'acInput', resultsClass: 'address_results acResults' }); 
+    $("[class='text_input'][id='city']").autocomplete({ url:'addresses/autocomplete', minChars:3, paramName: 'city', inputClass: 'acInput', resultsClass: 'city_results acResults' }); 
+    $("[class='text_input'][id='zip']").autocomplete({ url:'addresses/autocomplete', minChars:3, paramName: 'zip', inputClass: 'acInput', resultsClass: 'zip_results acResults'}); 
+    $("[class='text_input'][id='client_name']").autocomplete({ url:'clients/autocomplete', minChars:3, paramName: 'client_name', inputClass: 'acInput', resultsClass: 'client_name_results acResults'});
+    $("#households_form").submit(function(e){
+      form_fields = $(this).serialize();
+      url = this.action;
+      var query = $(this).serializeArray();
+      var json = {};
+      for (i in query){ json[query[i].name] = query[i].value };
+      history.pushState( json, '', "/households.html?" + form_fields);
+    });
+
+    $(window).bind("popstate", function(event){
+      if(event.originalEvent.state != null){
+        // why retrieve the ajax (.js) content?..
+        // because the browser (Chrome, FF) doesn't render the page correctly without re-requesting the ajax content
+        $.getScript(location.href.replace(/\.html/,'.js'));
+        st = event.originalEvent.state;
+        for(i in st){ $("input[ name = '" + i + "']").val(st[i]) } 
+      }
+    })
+
+    var warn = function(){$('#message').text("Please enter at least one search criterion.")};
+
+    $('input[type = "submit"]').click(function(){
+      if( $("[class*='text_input'][id='address']").val().length == 0 &&
+          $("[class*='text_input'][id='city']").val().length == 0 &&
+          $("[class*='text_input'][id='zip']").val().length == 0 &&
+          $("[class*='text_input'][id='client_name']").val().length == 0){
+            warn();
+            return false;
+          }
+    })
+
+    ftb = new FancyTextBox
+   })
+- focus('household_search_client_name_input')
+= message_block :on => [:household, :user]
+%h1 Find household
+%p Search by any or all of the following. Search results match all criteria:
+= form_tag households_url(:format => 'js'), :id => 'households_form', :method => :get, :remote => true do
+  %table
+    %tr
+      %td
+        %label{:for => :client_name} Client's last name
+      %td= render :partial => 'shared/fancy_text_box', :locals => {:name => "household_search[client_name]", :param => :client_name, :title => 'Clear client name'}
+    %tr
+      %td
+        %label{:for => :address} Street name
+      %td= render :partial => 'shared/fancy_text_box', :locals => {:name => "household_search[address]", :param => :address, :title => 'Clear street name'}
+    %tr
+      %td
+        %label{:for => :city} City
+      %td= render :partial => 'shared/fancy_text_box', :locals => {:name => "household_search[city]", :param => :city, :title => 'Clear city'}
+    %tr
+      %td
+        %label{:for => :zip} Zip code
+      %td= render :partial => 'shared/fancy_text_box', :locals => {:name => "household_search[zip]", :param => :zip, :title => 'Clear zip code'}
+    %tr
+      %td{:colspan => 2}
+        .field_with_errors
+          .message#message
+  - submit_or_return_to(home_path, 'Find matching household(s)...')
+
+%p= link_to "Add new household...", new_household_path
+
+#households
+  -unless @households.blank?
+    =render :partial => 'households', :locals => {:households => @households}

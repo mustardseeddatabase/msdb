@@ -37,6 +37,7 @@ Download the code:
 
 Install gem dependencies:
 
+    cd msdb
     bundle
 
 Create a database:

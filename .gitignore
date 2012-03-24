@@ -4,7 +4,6 @@ db/*.sqlite3
 log/*.log
 tmp/
 vendor/bundle/
-config/database.yml
 .DS_Store
 gem_graph.png
 public/uploads

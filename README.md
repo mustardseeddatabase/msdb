@@ -40,7 +40,7 @@ Install gem dependencies:
     cd msdb
     bundle
 
-Create a database:
+Create a database (the default database is sqlite, to facilitate installation. You will certainly wish to replace that with mySQL or Postgres, so edit config/database.yml appropriately).:
 
     rake db:schema:load
 

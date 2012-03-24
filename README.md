@@ -44,6 +44,10 @@ Create a database:
 
     rake db:schema:load
 
+Prepare the test database:
+
+    rake db:schema:load RAILS_ENV=test
+
 Run the tests:
 
     cucumber features

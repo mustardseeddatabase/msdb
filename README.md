@@ -31,9 +31,11 @@ If these are not already present, follow the installation instructions for each 
   * **bundler** - [gembundler.com](http://gembundler.com/)
   * **git** - [git-scm.com](http://git-scm.com/)
 
-Download the code:
+Download the code from github:
 
     git clone git://github.com/mustardseeddatabase/msdb.git
+
+Or if you have a github account, fork the code into your account and download from there, later you will use your own account as a repo for your own customized version.
 
 Install gem dependencies:
 

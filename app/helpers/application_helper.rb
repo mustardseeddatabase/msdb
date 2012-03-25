@@ -24,18 +24,4 @@ module ApplicationHelper
     current_role_permits?(path) ? 'enabled' : 'disabled'
   end
 
-  def current_user_permitted?(path)
-    controller = Controller.find_by_controller_name(path[:controller])
-    action = Action.find_by_action_name_and_controller_id(path[:action],controller.id) unless controller.nil?
-    user_roles = current_user.user_roles
-    role_ids = user_roles.map(&:role_id)
-    role_ids.any?{|rid| action && ActionRole.exists?(:action_id => action.id, :role_id => rid )}
-  end
-
-  def current_role_permits?(path)
-    controller = Controller.find_by_controller_name(path[:controller])
-    action = Action.find_by_action_name_and_controller_id(path[:action],controller.id) unless controller.nil?
-    role_ids = session[:role].current_role_ids
-    role_ids.any?{|rid| action && ActionRole.exists?(:action_id => action.id, :role_id => rid )}
-  end
 end

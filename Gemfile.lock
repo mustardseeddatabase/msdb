@@ -52,7 +52,7 @@ GIT
 
 GIT
   remote: git://github.com/thoughtbot/capybara-webkit.git
-  revision: 1ed54b1d59e3e23edc181d8a6606f70a8b2a6385
+  revision: c2a2bd03761b25ae9e63f22935c8107f2b52f593
   specs:
     capybara-webkit (0.11.0)
       capybara (>= 1.0.0, < 1.2)
@@ -145,10 +145,10 @@ GEM
     erubis (2.7.0)
     execjs (1.3.0)
       multi_json (~> 1.0)
-    factory_girl (2.6.4)
-      activesupport (>= 2.3.9)
-    factory_girl_rails (1.7.0)
-      factory_girl (~> 2.6.0)
+    factory_girl (3.0.0)
+      activesupport (>= 3.0.0)
+    factory_girl_rails (3.0.0)
+      factory_girl (~> 3.0.0)
       railties (>= 3.0.0)
     ffi (1.0.11)
     flexmock (0.9.0)

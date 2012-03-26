@@ -1,5 +1,5 @@
 require 'spec_helper'
-require './vendor/gems/authengine/spec/factories/user_factory'
+require 'authengine/testing_support/factories/user_factory'
 
 def current_user
   @current_user ||= Factory.create(:user)

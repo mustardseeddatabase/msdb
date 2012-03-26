@@ -1,5 +1,5 @@
 Given /^There is an item with a barcode "([^"]*)" and description "([^"]*)" in the database$/ do |barcode, description|
-  Factory.create(:item, :upc => barcode, :description => description)
+  FactoryGirl.create(:item, :upc => barcode, :description => description)
 end
 
 Given /^Item with barcode "([^"]*)" has no category configured$/ do |barcode|
@@ -59,11 +59,11 @@ Then /^Quantity for "([^"]*)" should be "([^"]*)"$/ do |description, count|
 end
 
 Given /^There is an item with description "([^"]*)" in the database$/ do |description|
-  Factory.create(:item, :description => description)
+  FactoryGirl.create(:item, :description => description)
 end
 
 Given /^There is a no-barcode item with description "([^"]*)" in the database$/ do |description|
-  Factory.create(:item_with_sku, :description => description)
+  FactoryGirl.create(:item_with_sku, :description => description)
 end
 
 

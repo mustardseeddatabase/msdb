@@ -3,9 +3,9 @@ require 'ruby-debug'
 
 describe "when permanent address matches the search criteria" do
   before(:each) do
-    perm_address = Factory.build(:perm_address, :address => '1234 Redwood Highway', :city => 'Clarksville', :zip => '12345')
-    temp_address = Factory.build(:temp_address)
-    @household = Factory.build(:household_with_docs)
+    perm_address = FactoryGirl.build(:perm_address, :address => '1234 Redwood Highway', :city => 'Clarksville', :zip => '12345')
+    temp_address = FactoryGirl.build(:temp_address)
+    @household = FactoryGirl.build(:household_with_docs)
     @household.perm_address = perm_address
     @household.temp_address = temp_address
     @household.map_address_from('perm_address')
@@ -26,9 +26,9 @@ end
 
 describe "when temporary address matches the search criteria" do
   before(:each) do
-    temp_address = Factory.build(:temp_address, :address => '1234 Redwood Highway', :city => 'Clarksville', :zip => '12345')
-    perm_address = Factory.build(:perm_address)
-    @household = Factory.build(:household_with_docs)
+    temp_address = FactoryGirl.build(:temp_address, :address => '1234 Redwood Highway', :city => 'Clarksville', :zip => '12345')
+    perm_address = FactoryGirl.build(:perm_address)
+    @household = FactoryGirl.build(:household_with_docs)
     @household.perm_address = perm_address
     @household.temp_address = temp_address
     @household.map_address_from('temp_address')
@@ -57,9 +57,9 @@ end
 
 describe "when temporary address with a po box matches the search criteria" do
   before(:each) do
-    temp_address = Factory.build(:temp_address, :address => 'po box 1234', :city => 'Clarksville', :zip => '12345')
-    perm_address = Factory.build(:perm_address)
-    @household = Factory.build(:household_with_docs)
+    temp_address = FactoryGirl.build(:temp_address, :address => 'po box 1234', :city => 'Clarksville', :zip => '12345')
+    perm_address = FactoryGirl.build(:perm_address)
+    @household = FactoryGirl.build(:household_with_docs)
     @household.perm_address = perm_address
     @household.temp_address = temp_address
     @household.map_address_from('temp_address')

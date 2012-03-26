@@ -1,5 +1,5 @@
 Given /^there is a client with last name "([^"]*)", first name "([^"]*)", age "([^"]*)" in the database$/ do |last_name, first_name, age|
-  Factory(:client, 
+  FactoryGirl.create(:client, 
           :lastName => last_name, 
           :firstName => first_name, 
           :birthdate => age.to_i.years.ago)
@@ -7,26 +7,26 @@ end
 
 Given /^there is a client with last name "([^"]*)", first name "([^"]*)", age "([^"]*)" in the database belonging to the household$/ do |last_name, first_name, age|
   household = Household.first
-  Factory(:client, 
+  FactoryGirl.create(:client, 
           :lastName => last_name, 
           :firstName => first_name, 
           :birthdate => age.to_i.years.ago, 
           :household_id => household.id,
-          :id_qualdoc => Factory(:id_qualdoc, :warnings => nil))
+          :id_qualdoc => FactoryGirl.create(:id_qualdoc, :warnings => nil))
 end
 
 Given /^there is a client with last name "([^"]*)", first name "([^"]*)", age "([^"]*)" in the database with no household$/ do |last_name, first_name, age|
-  Factory(:client,
+  FactoryGirl.create(:client,
           :lastName => last_name, 
           :firstName => first_name, 
           :birthdate => age.to_i.years.ago, 
           :household_id => nil,
-          :id_qualdoc => Factory(:id_qualdoc, :warnings => nil))
+          :id_qualdoc => FactoryGirl.create(:id_qualdoc, :warnings => nil))
 end
 
 Given /^there is a client with last name "([^"]*)", first name "([^"]*)", age "([^"]*)" in the database belonging to the household, without an ID document$/ do |last_name, first_name, age|
   household = Household.first
-  Factory(:client, 
+  FactoryGirl.create(:client, 
           :lastName => last_name, 
           :firstName => first_name, 
           :birthdate => age.to_i.years.ago, 
@@ -37,23 +37,23 @@ end
 Given /^there is a client with last name "([^"]*)", first name "([^"]*)", age "([^"]*)" in the database belonging to the household, with an ID document, (not )?head of household$/ do |last_name, first_name, age, yes_or_no|
   household = Household.first
   hoh = yes_or_no == 'not ' ? false : true
-  Factory(:client, 
+  FactoryGirl.create(:client, 
           :lastName => last_name, 
           :firstName => first_name, 
           :birthdate => age.to_i.years.ago, 
           :headOfHousehold => hoh,
           :household_id => household.id,
-          :id_qualdoc => Factory(:id_qualdoc, :warnings => nil))
+          :id_qualdoc => FactoryGirl.create(:id_qualdoc, :warnings => nil))
 end
 
 Given /^there is a client with last name "([^"]*)", first name "([^"]*)", age "([^"]*)", with id date "([^"]*)" in the database belonging to the household$/ do |last_name, first_name, age, date|
   household = Household.first
-  Factory(:client,
+  FactoryGirl.create(:client,
           :lastName => last_name,
           :firstName => first_name,
           :birthdate => age.to_i.years.ago,
           :household_id => household.id,
-          :id_qualdoc => Factory(:id_qualdoc, :date => eval(date), :warnings => nil, :vi => 1))
+          :id_qualdoc => FactoryGirl.create(:id_qualdoc, :date => eval(date), :warnings => nil, :vi => 1))
 end
 
 Given /^"([^"]*)" is (not )?head of household$/ do |full_name, yes_or_no|
@@ -65,23 +65,22 @@ end
 
 Given /^there is a client with last name "([^"]*)", first name "([^"]*)", age "([^"]*)", with id date "([^"]*)", and (\d+) warning, in the database belonging to the household$/ do |last_name, first_name, age, date, warning_count|
   household = Household.first
-  Factory(:client,
+  FactoryGirl.create(:client,
           :lastName => last_name,
           :firstName => first_name,
           :birthdate => age.to_i.years.ago,
           :household_id => household.id,
-          :id_qualdoc => Factory(:id_qualdoc, :date => eval(date), :warnings => warning_count, :vi => 1))
+          :id_qualdoc => FactoryGirl.create(:id_qualdoc, :date => eval(date), :warnings => warning_count, :vi => 1))
 end
 
 Given /^there is a client with last name "([^"]*)", first name "([^"]*)", age "([^"]*)" in the database belonging to the household, with an ID document$/ do |last_name, first_name, age|
   household = Household.first
-  id_qualdoc = Factory(:id_qualdoc,
+  id_qualdoc = FactoryGirl.create(:id_qualdoc,
                        :date => 1.month.ago,
                        :warnings => 0,
                        :vi => 1,
                        :docfile => File.new(File.join(Rails.root,'features', 'support', 'upload_files','arbogast_id.pdf')))
-  Factory(:client,
-          :lastName => last_name,
+  FactoryGirl.create(:client, :lastName => last_name,
           :firstName => first_name,
           :birthdate => age.to_i.years.ago,
           :household_id => household.id,
@@ -93,7 +92,7 @@ Then /^I click "([^"]*)"$/ do |active_text|
 end
 
 Given /^there is a household with residency expired, income expiring and govtincome valid in the database$/ do
-  h = Factory.create(:household_with_docs)
+  h = FactoryGirl.create(:household_with_docs)
   h.res_qualdoc.update_attribute(:date, 7.months.ago)
   h.inc_qualdoc.update_attribute(:date, 6.months.ago.advance(:weeks => 1))
   h.gov_qualdoc.update_attribute(:date, 1.month.ago)
@@ -101,14 +100,14 @@ Given /^there is a household with residency expired, income expiring and govtinc
 end
 
 Given /^there is a household with residency, income and govtincome expired in the database$/ do
-  perm_address = Factory.create(:perm_address, :address => '121 Apple Lane', :city => 'Pendleton', :zip => '10101')
-  Factory.create(:household_with_expired_docs,
+  perm_address = FactoryGirl.create(:perm_address, :address => '121 Apple Lane', :city => 'Pendleton', :zip => '10101')
+  FactoryGirl.create(:household_with_expired_docs,
                  :perm_address_id => perm_address.id)
 end
 
 Given /^there is a household with residency, income and govtincome current in the database$/ do
-  perm_address = Factory.create(:perm_address, :address => '121 Apple Lane', :city => 'Pendleton', :zip => '10101')
-  Factory.create(:household_with_current_docs,
+  perm_address = FactoryGirl.create(:perm_address, :address => '121 Apple Lane', :city => 'Pendleton', :zip => '10101')
+  FactoryGirl.create(:household_with_current_docs,
                  :perm_address_id => perm_address.id)
 end
 

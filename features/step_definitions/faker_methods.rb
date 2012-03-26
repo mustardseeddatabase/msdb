@@ -1,11 +1,11 @@
 def household
-  Factory.build :household
+  FactoryGirl.build :household
 end
 
 def client
-  Factory.build :client
+  FactoryGirl.build :client
 end
 
 def donor
-  Factory.build :donor
+  FactoryGirl.build :donor
 end

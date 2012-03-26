@@ -136,7 +136,7 @@ Feature: Client check in
     Then I should see "You must first select a file to upload"
 
 # TODO CHECK THIS, it can't be working. It probably appears to work b/c
-# Factory(:id_qualdoc) includes a qualification document already, before 
+# FactoryGirl.create(:id_qualdoc) includes a qualification document already, before 
 # even a document is uploaded
 @selenium
   Scenario: Follow the document check sequence, upload the final document to complete checkout

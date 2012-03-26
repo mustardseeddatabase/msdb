@@ -1,5 +1,5 @@
 Given /^There is one donation in the database$/ do
-  Factory.create(:donation_with_known_barcode)
+  FactoryGirl.create(:donation_with_known_barcode)
 end
 
 Given /^The donor is "([^"]*)"$/ do |donor_org|

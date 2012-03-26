@@ -2,7 +2,7 @@ require 'spec_helper'
 require 'authengine/testing_support/factories/user_factory'
 
 def current_user
-  @current_user ||= Factory.create(:user)
+  @current_user ||= FactoryGirl.create(:user)
 end
 
 describe ApplicationHelper, "current_user_permitted method" do
@@ -24,7 +24,7 @@ describe ApplicationHelper, "current_user_permitted method" do
   end
 
   it "is false when permitted for a different user" do
-    @current_user = Factory.create(:user)
+    @current_user = FactoryGirl.create(:user)
     current_user_permitted?({:controller => 'distributions', :action => 'index'}).should be_false
   end
 
@@ -51,7 +51,7 @@ describe ApplicationHelper, "current_role_permits? method" do
   #end
 
   #it "is false when permitted for a different user" do
-    #@current_user = Factory.create(:user)
+    #@current_user = FactoryGirl.create(:user)
     #current_role_permits?({:controller => 'distributions', :action => 'index'}).should be_false
   #end
 

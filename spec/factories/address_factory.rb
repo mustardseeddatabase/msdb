@@ -1,22 +1,24 @@
 require 'faker'
 
-FactoryGirl.define :address do |address|
-    address.address  { Faker::Address.street_address }
-    address.city  { Faker::Address.city }
-    address.zip  { Faker::Address.zip_code }
-    address.apt  { rand(400) }
-end
+FactoryGirl.define do
+  factory :address do
+    address  { Faker::Address.street_address }
+    city  { Faker::Address.city }
+    zip  { Faker::Address.zip_code }
+    apt  { rand(400) }
+  end
 
-FactoryGirl.define :temp_address do |address|
-    address.address  { Faker::Address.street_address }
-    address.city  { Faker::Address.city }
-    address.zip  { Faker::Address.zip_code }
-    address.apt  { rand(400) }
-end
+  factory :temp_address do
+    address  { Faker::Address.street_address }
+    city  { Faker::Address.city }
+    zip  { Faker::Address.zip_code }
+    apt  { rand(400) }
+  end
 
-FactoryGirl.define :perm_address do |address|
-    address.address  { Faker::Address.street_address }
-    address.city  { Faker::Address.city }
-    address.zip  { Faker::Address.zip_code }
-    address.apt  { rand(400) }
+  factory :perm_address do
+    address  { Faker::Address.street_address }
+    city  { Faker::Address.city }
+    zip  { Faker::Address.zip_code }
+    apt  { rand(400) }
+  end
 end

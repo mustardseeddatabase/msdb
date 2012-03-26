@@ -46,8 +46,6 @@ module Msdb
     config.assets.version = '1.0'
 
     #I18n.load_path += Dir[Rails.root.join("config","locales","*.yml")] # in order to use the i18n theme control this early in the boot
-    #config.assets.paths << Rails.root.join("app", "themes", I18n.translate( :theme), "assets").to_s
-    #config.assets.paths << Rails.root.join("app", "themes", I18n.translate( :theme), "assets", "images").to_s
 
     # JavaScript files you want as :defaults (application.js is always included).
     config.action_view.javascript_expansions[:defaults] = %w(jquery rails)

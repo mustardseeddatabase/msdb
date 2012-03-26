@@ -63,7 +63,7 @@ Run the rake task:
 
     rake msdb:create_theme
 
-The theme's text elements (banner text and page title) may then be configured in config/locales/en.yml.
+The theme's text elements (banner text and page title) may then be configured in config/locales/theme/en.yml.
 
 All the images (logo and navigation icons) are combined in a single sprite, app/themes/custom/images/ms_sprite.png. Replace the elements in this image with images of your own.
 

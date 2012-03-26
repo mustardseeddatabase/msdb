@@ -1,4 +1,4 @@
-Factory.define :donor do |d|
+FactoryGirl.define :donor do |d|
   d.organization {Faker::Company.name}
   d.contactName {Faker::Name.name}
   d.contactTitle ["Agency Relations Manager", "Bethlehem Volunteer Center Camp Manager", "Director", "Pastor", "Principal", "Teacher", "Volunteer", "Volunteer Coordinator"].sample

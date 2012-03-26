@@ -13,25 +13,25 @@ FactoryGirl.define do
 
       factory :household_with_docs do
         after_create do |hh|
-          Factory.create(:res_qualdoc, :association_id => hh.id)
-          Factory.create(:inc_qualdoc, :association_id => hh.id)
-          Factory.create(:gov_qualdoc, :association_id => hh.id)
+          FactoryGirl.create(:res_qualdoc, :association_id => hh.id)
+          FactoryGirl.create(:inc_qualdoc, :association_id => hh.id)
+          FactoryGirl.create(:gov_qualdoc, :association_id => hh.id)
         end
       end
 
       factory :household_with_current_docs do
         after_create do |hh|
-          Factory.create(:current_res_qualdoc, :association_id => hh.id)
-          Factory.create(:current_inc_qualdoc, :association_id => hh.id)
-          Factory.create(:current_gov_qualdoc, :association_id => hh.id)
+          FactoryGirl.create(:current_res_qualdoc, :association_id => hh.id)
+          FactoryGirl.create(:current_inc_qualdoc, :association_id => hh.id)
+          FactoryGirl.create(:current_gov_qualdoc, :association_id => hh.id)
         end
       end
 
       factory :household_with_expired_docs do
         after_create do |hh|
-          Factory.create(:expired_res_qualdoc, :association_id => hh.id)
-          Factory.create(:expired_inc_qualdoc, :association_id => hh.id)
-          Factory.create(:expired_gov_qualdoc, :association_id => hh.id)
+          FactoryGirl.create(:expired_res_qualdoc, :association_id => hh.id)
+          FactoryGirl.create(:expired_inc_qualdoc, :association_id => hh.id)
+          FactoryGirl.create(:expired_gov_qualdoc, :association_id => hh.id)
         end
       end # /factory
   end # /factory

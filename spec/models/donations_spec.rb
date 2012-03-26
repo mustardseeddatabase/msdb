@@ -4,8 +4,8 @@ describe "most_recent_five scope" do
   before(:each) do
     w = 1
     6.times do
-      donor = Factory.create(:donor)
-      Factory.create(:donation, :created_at => w.weeks.ago, :donor_id => donor.id)
+      donor = FactoryGirl.create(:donor)
+      FactoryGirl.create(:donation, :created_at => w.weeks.ago, :donor_id => donor.id)
       w += 1
     end
   end

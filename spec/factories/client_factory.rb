@@ -14,13 +14,13 @@ FactoryGirl.define do
 
     factory :client_with_expired_id do
       after_build do |c|
-        c.id_qualdoc = Factory.build(:expired_id_qualdoc)
+        c.id_qualdoc = FactoryGirl.build(:expired_id_qualdoc)
       end
     end
 
     factory :client_with_current_id do
       after_build do |c|
-        c.id_qualdoc = Factory.build(:current_id_qualdoc)
+        c.id_qualdoc = FactoryGirl.build(:current_id_qualdoc)
       end
     end
   end

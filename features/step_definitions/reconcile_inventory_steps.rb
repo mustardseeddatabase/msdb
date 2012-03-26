@@ -1,6 +1,6 @@
 Given /^there are (\d+) items in the database each with qoh greater than (\d+)$/ do |arg1, arg2|
   5.times do
-    Factory.create(:item)
+    FactoryGirl.create(:item)
   end
 end
 

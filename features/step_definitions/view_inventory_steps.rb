@@ -1,5 +1,5 @@
 Given /^there is an inventory created on (.+) in the database$/ do |date|
-  Factory.create(:inventory, :created_at => Date.parse(date))
+  FactoryGirl.create(:inventory, :created_at => Date.parse(date))
 end
 
 Then /^I should see (\d+) inventory items$/ do |count|

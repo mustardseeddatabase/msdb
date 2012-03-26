@@ -1,12 +1,12 @@
 Given /^There is a donor called "([^"]*)" in the database$/ do |name|
-  Factory.create(:donor, :organization => name)
+  FactoryGirl.create(:donor, :organization => name)
 end
 
 Given /^There are ten donations in the database$/ do
   w = 1
   10.times do
-    donor = Factory.create(:donor)
-    Factory.create(:donation, :created_at => w.weeks.ago, :donor_id => donor.id)
+    donor = FactoryGirl.create(:donor)
+    FactoryGirl.create(:donation, :created_at => w.weeks.ago, :donor_id => donor.id)
     w += 1
   end
 end

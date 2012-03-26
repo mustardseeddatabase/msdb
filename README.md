@@ -71,6 +71,8 @@ Edit the stylesheets in app/themes/custom/stylesheets to render the pages with y
 
 ## Set up access accounts, roles and privileges
 
+TODO make a rake task to configure the first access account.
+
 When it is first installed, the application is configured with a single access account with user name "admin" and password "password".
 
 Another account should be configured, and the default account removed. It is a serious security vulnerability to leave the default account configured.

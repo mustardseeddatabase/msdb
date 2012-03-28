@@ -57,19 +57,27 @@ Run the tests:
 
 If you wish to import your own data, rather than start with a clean slate, you will need to write rake tasks to map your existing database onto the tables in the application. Depending on the structure of your database, this can be a tricky endeavour. Verifying that the import has been correctly executed is a manual task and cannot easily be automated.
 
+Bootstrap access accounts. Set up the first adminstrative account, from which other access accounts can be generated via the user interface.
+
+Note that the command format has no spaces or quotes.
+
+    rake authengine:bootstrap[Harry,Harker,hhrocks,sekret]
+
 ## Customize the color scheme and graphics
 
 Run the rake task:
 
     rake msdb:create_theme
 
-The theme's text elements (banner text and page title) may then be configured in config/locales/en.yml.
+The theme's text elements (banner text and page title) may then be configured in config/locales/theme/en.yml.
 
 All the images (logo and navigation icons) are combined in a single sprite, app/themes/custom/images/ms_sprite.png. Replace the elements in this image with images of your own.
 
 Edit the stylesheets in app/themes/custom/stylesheets to render the pages with your own color scheme.
 
 ## Set up access accounts, roles and privileges
+
+TODO make a rake task to configure the first access account.
 
 When it is first installed, the application is configured with a single access account with user name "admin" and password "password".
 

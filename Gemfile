@@ -9,7 +9,8 @@ gem 'haml', :git => 'git://github.com/infbio/haml.git', :branch => 'form_for_fix
 #gem 'haml'
 gem 'haml-rails'
 gem 'message_block', :git => 'git://github.com/lazylester/message_block.git'
-gem 'authengine', :git => 'git://github.com/mustardseeddatabase/authengine.git'
+#gem 'authengine', :git => 'git://github.com/mustardseeddatabase/authengine.git'
+gem 'authengine', :path => '/Users/lesnightingill/Code/authengine'
 gem 'db_check', :path => 'vendor/gems/db_check'
 gem 'carrierwave' #, :git => 'git://github.com/jnicklas/carrierwave.git' # until version 0.6 is available, this avoids deprecation warnings in Rspec tests related to memoization
 gem 'delegate_multiparameter', :path => 'vendor/gems/delegate_multiparameter'

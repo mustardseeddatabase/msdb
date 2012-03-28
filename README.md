@@ -59,7 +59,7 @@ If you wish to import your own data, rather than start with a clean slate, you w
 
 Bootstrap access accounts. Set up the first adminstrative account, from which other access accounts can be generated via the user interface.
 
-Note that the command format has no spaces or quotes.
+Note that the command format has no spaces or quotes, the arguments are first name, last name, login and password.
 
     rake authengine:bootstrap[Harry,Harker,hhrocks,sekret]
 
@@ -77,8 +77,8 @@ Edit the stylesheets in app/themes/custom/stylesheets to render the pages with y
 
 ## Set up access accounts, roles and privileges
 
-TODO make a rake task to configure the first access account.
+A bootstrap rake task is provided to configure the first admin account (see above). After the first account is configured, further accounts and roles may be added via the user interface.
 
-When it is first installed, the application is configured with a single access account with user name "admin" and password "password".
+Roles, with user-defined names, are configured, and access privileges are assigned to the roles. When a user account is added, the user is assigned one (or more) roles.
 
-Another account should be configured, and the default account removed. It is a serious security vulnerability to leave the default account configured.
+Since a food pantry operation may be staffed by a transient cast of volunteers, an account may be temporarily downgraded (for the duration of the session) so that the computer may be used for, for instance, client checkout, without exposing the full database to the temporary staffer.

@@ -13,11 +13,12 @@ namespace :msdb do
     ActiveRecord::Base.connection.execute('DELETE FROM clients')
     ActiveRecord::Base.connection.execute('DELETE FROM qualification_documents WHERE type = "IdQualdoc"')
     i = 0
-    50.times do
+    80.times do
       FactoryGirl.create(:client)
       c = Client.new
       print "\rclient #{i += 1}/50"
     end
+    print "\n\r"
   end
 
 
@@ -88,6 +89,28 @@ namespace :msdb do
       print "\rhousehold #{n += 1}"
     end
     print "\n\r"
+  end
+
+  desc "populate households with clients"
+  task :households_populate => :environment do
+    disable_logging
+    unpopulated_households = Household.count
+    unassigned_client_ids = Client.select(:id).map(&:id)
+    Household.all.each do |household|
+      while (unassigned_client_ids.size - (count_to_assign = (rand(8)+1))) > unpopulated_households
+        if unpopulated_households == 1
+          count_to_assign = unassigned_client_ids.size
+        end
+        to_be_assigned = unassigned_client_ids.sample(count_to_assign)
+        unassigned_client_ids.delete_if{|i| to_be_assigned.include?(i)}
+        to_be_assigned.each do |client_id|
+          Client.find(client_id).update_attribute(:household_id, household.id)
+        end
+        break
+      end
+
+      unpopulated_households -= 1
+    end
   end
 
   desc 'preloading limit categories'
@@ -163,6 +186,7 @@ namespace :msdb do
     ActiveRecord::Base.connection.execute('DELETE FROM qualification_documents')
     Rake::Task['msdb:client_preload'].invoke
     Rake::Task['msdb:households_preload'].invoke
+    Rake::Task['msdb:households_populate'].invoke
     Rake::Task['msdb:limit_categories_preload'].invoke
     Rake::Task['msdb:categories_preload'].invoke
     Rake::Task['msdb:category_thresholds_preload'].invoke

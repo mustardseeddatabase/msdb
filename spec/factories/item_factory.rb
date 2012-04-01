@@ -1,6 +1,6 @@
 FactoryGirl.define do
   factory :item do
-    upc {rand(9999999999)}
+    upc {until(!Item.select(:upc ).map(&:upc ).include?(i = (1+rand(99999999998)))); end; i}
     description { ["peanut butter",
                    "small red beans",
                    "Del monte Mandarin Oranges",
@@ -19,7 +19,7 @@ FactoryGirl.define do
 
   factory :item_with_barcode, :parent => :item do
     sku nil
-    upc {rand(9999999999)}
+    upc {until(!Item.select(:upc ).map(&:upc ).include?(i = (1+rand(99999999998)))); end; i}
   end
 
   factory :item_with_known_barcode, :parent => :item do
@@ -29,6 +29,6 @@ FactoryGirl.define do
 
   factory :item_with_sku, :parent => :item do
     upc nil
-    sku {rand(999)}
+    sku{until(!Item.select(:sku).map(&:sku).include?(i = (1+rand(998)))); end; i}
   end
 end

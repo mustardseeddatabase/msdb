@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120114201723) do
+ActiveRecord::Schema.define(:version => 20120401061000) do
 
   create_table "action_roles", :force => true do |t|
     t.integer  "role_id",    :limit => 8
@@ -131,7 +131,6 @@ ActiveRecord::Schema.define(:version => 20120114201723) do
     t.integer  "temp_address_id"
     t.string   "phone"
     t.string   "email"
-    t.integer  "resident_count"
     t.integer  "income"
     t.boolean  "ssi"
     t.boolean  "medicaid"

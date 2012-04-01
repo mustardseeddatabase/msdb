@@ -107,7 +107,7 @@ namespace :msdb do
     ActiveRecord::Base.connection.execute('DELETE FROM category_thresholds')
     n = 0
     limit_category_names.each do |limit_category_name|
-      LimitCategory.create(:name => limit_category_name
+      LimitCategory.create(:name => limit_category_name)
       print "\rlimit category #{n += 1}"
     end
     print "\n\r"
@@ -115,23 +115,23 @@ namespace :msdb do
 
   desc "preload categories table"
   task :categories_preload => :environment do
-    categories => [{:cat_name=>"Food", :limit_category_name=>"Grains"},
-                   {:cat_name=>"Food", :limit_category_name=>"Proteins"},
-                   {:cat_name=>"Food", :limit_category_name=>"Snacks/Desserts"},
-                   {:cat_name=>"Food", :limit_category_name=>"Fruits"},
-                   {:cat_name=>"Food", :limit_category_name=>"Sauces/Condiments"},
-                   {:cat_name=>"Food", :limit_category_name=>"Vegetables"},
-                   {:cat_name=>"Food", :limit_category_name=>"Beverages"},
-                   {:cat_name=>"Food", :limit_category_name=>"Soups"},
-                   {:cat_name=>"Medical", :limit_category_name=>"Other (Non-Food)"},
-                   {:cat_name=>"Hygiene", :limit_category_name=>"Other (Non-Food)"},
-                   {:cat_name=>"Household", :limit_category_name=>"Other (Non-Food)"},
-                   {:cat_name=>"Clothing", :limit_category_name=>"Other (Non-Food)"},
-                   {:cat_name=>"Food", :limit_category_name=>"Meals/Dinners"},
-                   {:cat_name=>"Food", :limit_category_name=>"Dairy"}]
+    categories = [{:cat_name=>"Food", :limit_category_name=>"Grains"},
+                  {:cat_name=>"Food", :limit_category_name=>"Proteins"},
+                  {:cat_name=>"Food", :limit_category_name=>"Snacks/Desserts"},
+                  {:cat_name=>"Food", :limit_category_name=>"Fruits"},
+                  {:cat_name=>"Food", :limit_category_name=>"Sauces/Condiments"},
+                  {:cat_name=>"Food", :limit_category_name=>"Vegetables"},
+                  {:cat_name=>"Food", :limit_category_name=>"Beverages"},
+                  {:cat_name=>"Food", :limit_category_name=>"Soups"},
+                  {:cat_name=>"Medical", :limit_category_name=>"Other (Non-Food)"},
+                  {:cat_name=>"Hygiene", :limit_category_name=>"Other (Non-Food)"},
+                  {:cat_name=>"Household", :limit_category_name=>"Other (Non-Food)"},
+                  {:cat_name=>"Clothing", :limit_category_name=>"Other (Non-Food)"},
+                  {:cat_name=>"Food", :limit_category_name=>"Meals/Dinners"},
+                  {:cat_name=>"Food", :limit_category_name=>"Dairy"}]
     categories.each do |category|
       Category.create(:name => category[:cat_name],
-                      :limit_category_id => LimitCategory.find_by_name(category[:limit_category_name].id))
+                      :limit_category_id => LimitCategory.find_by_name(category[:limit_category_name]).id)
     end
   end
 
@@ -150,7 +150,7 @@ namespace :msdb do
                   "Vegetables"=>{1=>11, 2=>12, 3=>13, 4=>16, 5=>17, 6=>20}}
 
     LimitCategory.all.each do |limit_category|
-      (1..6) do |resident_count|
+      (1..6).each do |resident_count|
         CategoryThreshold.create(:limit_category_id => limit_category.id,
                                  :res_count => resident_count,
                                  :threshold => thresholds[limit_category.name][resident_count])
@@ -159,16 +159,16 @@ namespace :msdb do
   end
 
 
-  task :import_all => :environment do
+  task :preload => :environment do
     ActiveRecord::Base.connection.execute('DELETE FROM qualification_documents')
     Rake::Task['msdb:client_preload'].invoke
+    Rake::Task['msdb:households_preload'].invoke
     Rake::Task['msdb:limit_categories_preload'].invoke
     Rake::Task['msdb:categories_preload'].invoke
     Rake::Task['msdb:category_thresholds_preload'].invoke
     Rake::Task['msdb:item_preload'].invoke
     Rake::Task['msdb:donor_preload'].invoke
     Rake::Task['msdb:donations_preload'].invoke
-    Rake::Task['msdb:households_preload'].invoke
     Rake::Task['msdb:distributions_preload'].invoke
   end
 end

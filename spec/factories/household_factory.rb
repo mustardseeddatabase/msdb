@@ -4,7 +4,6 @@ FactoryGirl.define do
   factory :household do
     phone  {Faker::PhoneNumber.phone_number}
     email  {Faker::Internet.email}
-    resident_count  {rand(20)}
     income  {rand(40)*1000}
     otherConcerns  {Faker::Lorem.paragraph}
 

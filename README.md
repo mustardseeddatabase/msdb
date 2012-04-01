@@ -63,6 +63,10 @@ Note that the command format has no spaces or quotes, the arguments are first na
 
     rake authengine:bootstrap[Harry,Harker,hhrocks,sekret]
 
+A sample set of data may be loaded into the database so you can explore the application and get a feel for how it works. Load up the sample data with:
+
+    rake msdb:preload
+
 ## Customize the color scheme and graphics
 
 Run the rake task:

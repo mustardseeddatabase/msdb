@@ -41,7 +41,7 @@ namespace :ccstb do
       c.mi = client[2]
       c.lastName = client[3].gsub("\n"," ") unless client[3].nil?
       c.suffix = client[4]
-      c.birthdate = Date.parse(client[5]) unless client[5].nil?
+      c.birthdate = Date.strptime(client[5], "%m/%d/%Y") unless client[5].nil?
       c.race = client[6].upcase unless client[6].nil?
       c.gender = client[7]
       c.headOfHousehold = client[8]
@@ -139,7 +139,7 @@ namespace :ccstb do
       c = Distribution.new
       c.id = item[0]
       c.household_id = item[1].to_i
-      c.created_at = DateTime.parse(item[2]) unless item[2].nil?
+      c.created_at = DateTime.strptime(item[2], "%m/%d/%Y %H:%M:%S") unless item[2].nil?
       if c.save(:validate => false)
         n=n+1
         GC.start if n%50==0
@@ -192,7 +192,7 @@ namespace :ccstb do
       c = Donation.new
       c.id = item[0].to_i
       c.donor_id = item[1].to_i
-      c.created_at = DateTime.parse(item[2]) unless item[2].nil?
+      c.created_at = DateTime.strptime(item[2], "%m/%d/%Y %H:%M:%S") unless item[2].nil?
       if c.save(:validate => false)
         n=n+1
         GC.start if n%50==0
@@ -249,8 +249,8 @@ namespace :ccstb do
     source_items.each do |item|
       c = Household.new
       c.id = item[0].to_i
-      c.created_at = Date.parse(item[1]) unless item[1].nil?
-      c.updated_at = Date.parse(item[2]) unless item[2].nil?
+      c.created_at = Date.strptime(item[1], "%m/%d/%Y") unless item[1].nil?
+      c.updated_at = Date.strptime(item[2], "%m/%d/%Y") unless item[2].nil?
       c.build_perm_address(:address => (item[3].gsub("\n",'') unless item[3].nil?), :city => (item[4].gsub("\n",'') unless item[4].nil?), :zip => (item[5].gsub("\n",'') unless item[5].nil?), :apt => (item[6].gsub("\n",'') unless item[6].nil?)) unless [item[3],item[4],item[5],item[6]].all?(&:blank?)
       c.build_temp_address(:address => (item[7].gsub("\n",'') unless item[7].nil?), :city => (item[8].gsub("\n",'') unless item[8].nil?), :zip => (item[9].gsub("\n",'') unless item[9].nil?), :apt => (item[10].gsub("\n",'') unless item[10].nil?)) unless [item[7],item[8],item[9],item[10]].all?(&:blank?)
       c.phone = item[11].gsub("\n",'') unless item[11].nil?
@@ -270,15 +270,15 @@ namespace :ccstb do
       c.unemployed = item[25] == "1"
       c.otherConcerns = ActiveSupport::Inflector.transliterate(item[26]) unless item[26].nil?
       c.create_res_qualdoc(:confirm => item[27] == "1",
-                           :date => item[28] && Date.parse(item[28]),
+                           :date => item[28] && Date.strptime(item[28], "%m/%d/%Y"),
                            :warnings => item[29].to_i,
                            :vi => (item[30] == "1"))
       c.create_inc_qualdoc(:confirm => item[31] == "1",
-                           :date => item[32] && Date.parse(item[32]),
+                           :date => item[32] && Date.strptime(item[32], "%m/%d/%Y"),
                            :warnings => item[33].to_i,
                            :vi => (item[34] == "1"))
       c.create_gov_qualdoc(:confirm => item[35] == "1",
-                           :date => item[36] && Date.parse(item[36]),
+                           :date => item[36] && Date.strptime(item[36], "%m/%d/%Y"),
                            :warnings => item[37].to_i,
                            :vi => (item[38] == "1"))
       c.usda = item[39] == "1"

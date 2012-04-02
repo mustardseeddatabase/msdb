@@ -14,9 +14,9 @@ namespace :msdb do
     ActiveRecord::Base.connection.execute('DELETE FROM qualification_documents WHERE type = "IdQualdoc"')
     i = 0
     80.times do
-      FactoryGirl.create(:client)
-      c = Client.new
-      print "\rclient #{i += 1}/50"
+      type = (i%2).zero? ? :client_with_expired_id : :client_with_current_id
+      FactoryGirl.create(type)
+      print "\rclient #{i += 1}/80"
     end
     print "\n\r"
   end
@@ -127,7 +127,8 @@ namespace :msdb do
                             "Meals/Dinners",
                             "Dairy"]
     disable_logging
-    ActiveRecord::Base.connection.execute('DELETE FROM category_thresholds')
+    ActiveRecord::Base.connection.execute('DELETE FROM limit_categories')
+    print "delete from limit_categories"
     n = 0
     limit_category_names.each do |limit_category_name|
       LimitCategory.create(:name => limit_category_name)
@@ -152,6 +153,8 @@ namespace :msdb do
                   {:cat_name=>"Clothing", :limit_category_name=>"Other (Non-Food)"},
                   {:cat_name=>"Food", :limit_category_name=>"Meals/Dinners"},
                   {:cat_name=>"Food", :limit_category_name=>"Dairy"}]
+    ActiveRecord::Base.connection.execute('DELETE FROM categories')
+    print "delete categories table"
     categories.each do |category|
       Category.create(:name => category[:cat_name],
                       :limit_category_id => LimitCategory.find_by_name(category[:limit_category_name]).id)
@@ -172,6 +175,8 @@ namespace :msdb do
                   "Soups"=>{1=>2, 2=>2, 3=>2, 4=>3, 5=>3, 6=>3},
                   "Vegetables"=>{1=>11, 2=>12, 3=>13, 4=>16, 5=>17, 6=>20}}
 
+    ActiveRecord::Base.connection.execute('DELETE FROM category_thresholds')
+    print "delete category_thresholds table"
     LimitCategory.all.each do |limit_category|
       (1..6).each do |resident_count|
         CategoryThreshold.create(:limit_category_id => limit_category.id,

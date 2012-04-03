@@ -59,7 +59,7 @@ Run the javascript tests by starting the rails server:
 
     rails s
 
-Then point a browser to localhost:3000/jasmine
+Then point a browser to localhost:3000/jasmine to view the test results.(This is achieved by means of the [jasminerice](https://github.com/bradphelan/jasminerice) gem)
 
 If you wish to import your own data, rather than start with a clean slate, you will need to write rake tasks to map your existing database onto the tables in the application. Depending on the structure of your database, this can be a tricky endeavour. Verifying that the import has been correctly executed is a manual task and cannot easily be automated.
 

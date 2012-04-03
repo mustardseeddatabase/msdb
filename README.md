@@ -55,6 +55,12 @@ Run the tests:
     cucumber features
     rspec spec
 
+Run the javascript tests by starting the rails server:
+
+    rails s
+
+Then point a browser to localhost:3000/jasmine
+
 If you wish to import your own data, rather than start with a clean slate, you will need to write rake tasks to map your existing database onto the tables in the application. Depending on the structure of your database, this can be a tricky endeavour. Verifying that the import has been correctly executed is a manual task and cannot easily be automated.
 
 Bootstrap access accounts. Set up the first adminstrative account, from which other access accounts can be generated via the user interface.

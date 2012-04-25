@@ -314,6 +314,7 @@ namespace :ccstb do
     print "\n\r"
   end
 
+  desc 'perform all the imports'
   task :import_all => :environment do
     ActiveRecord::Base.connection.execute('TRUNCATE TABLE qualification_documents')
     Rake::Task['ccstb:client_import'].invoke

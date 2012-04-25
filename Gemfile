@@ -22,7 +22,7 @@ gem 'sprockets', '~> 2.0'
 # Gems only required for assets and not required
 # in production environments by default.
 group :assets do
-  gem 'sass-rails', "~> 3.1.0"
+  gem 'sass-rails', "3.1.4" # due to rake 'stack level too deep' failure, this constraint can be removed when the fix is in sass-rails
   gem 'coffee-rails', "~> 3.1.0"
   gem 'uglifier'
   gem 'execjs'

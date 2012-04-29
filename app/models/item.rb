@@ -8,6 +8,7 @@ class Item < ActiveRecord::Base
   attr_accessor :cid
 
   scope :with_sku, where('sku IS NOT NULL')
+  scope :with_upc, where('upc IS NOT NULL')
   scope :with_description, lambda{|description| where("description like ?", "%#{description}%").order(:description)}
   scope :excluding, lambda { |ids| where("id NOT IN (?)", ids) }
 

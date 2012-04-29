@@ -23,4 +23,8 @@ class DbChecker
     [Donor.with_no_donations, :donor]
   end
 
+  def self.donor_duplicate_org_names
+    [Donor.with_duplicate_org_names, :donor]
+  end
+
 end

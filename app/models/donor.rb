@@ -19,4 +19,13 @@ class Donor < ActiveRecord::Base
   def self.with_no_donations
     includes(:donations).select{|d| d.donations.empty? }
   end
+
+  def self.with_duplicate_org_names
+    duplicates = all.select do |donor|
+                    if donor.organization
+                      all.map(&:organization).count(donor.organization) > 1
+                    end
+                  end
+    duplicates.uniq
+  end
 end

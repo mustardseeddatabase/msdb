@@ -4,7 +4,7 @@ class DbCheckController < ApplicationController
 
   def show
     if DbChecker.singleton_methods(false).map(&:to_s).include? params[:check_type]
-      @results, @template = DbChecker.send(params[:check_type])
+      @results, @template, @title = DbChecker.send(params[:check_type])
     else raise NoMethodError
     end
   end

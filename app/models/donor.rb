@@ -16,6 +16,10 @@ class Donor < ActiveRecord::Base
     HumanizedAttributes[attr.to_sym] || super
   end
 
+  def full_address
+    [address, city, state, zip].compact.join(', ')
+  end
+
   def self.with_no_donations
     includes(:donations).select{|d| d.donations.empty? }
   end

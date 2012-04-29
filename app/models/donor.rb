@@ -17,7 +17,7 @@ class Donor < ActiveRecord::Base
   end
 
   def full_address
-    [address, city, state, zip].compact.join(', ')
+    [address, city, state, zip].reject(&:blank?).join(', ')
   end
 
   def self.with_no_donations

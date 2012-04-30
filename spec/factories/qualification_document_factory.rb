@@ -3,7 +3,7 @@ include ActionDispatch::TestProcess
 FactoryGirl.define do
   factory :id_qualdoc do
     confirm  [true,false].sample
-    date  {Date.new!(2455666 - rand(365))}
+    date  {Date.today - rand(365)}
     warnings  0
     vi  [true,false].sample
     after_build do |iq|
@@ -21,7 +21,7 @@ FactoryGirl.define do
 
   factory :res_qualdoc do
     confirm  [true,false].sample
-    date  {Date.new!(2455666 - rand(365))}
+    date  {Date.today - rand(365)}
     warnings  0
     vi  [true,false].sample
     after_build do |rq|
@@ -39,7 +39,7 @@ FactoryGirl.define do
 
   factory :inc_qualdoc do
     confirm  [true,false].sample
-    date  {Date.new!(2455666 - rand(365))}
+    date  {Date.today - rand(365)}
     warnings  0
     vi  [true,false].sample
     after_build do |iq|
@@ -57,7 +57,7 @@ FactoryGirl.define do
 
   factory :gov_qualdoc do
     confirm  [true,false].sample
-    date  {Date.new!(2455666 - rand(365))}
+    date  {Date.today - rand(365)}
     warnings  0
     vi  [true,false].sample
     after_build do |gq|

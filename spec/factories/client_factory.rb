@@ -7,7 +7,7 @@ FactoryGirl.define do
     mi {(rand(26) + 97 ).chr.upcase}
     lastName  {Faker::Name.last_name}
     suffix  {Faker::Name.suffix}
-    birthdate  {Date.new!(2430000+ rand(25000))}
+    birthdate  {Date.today - (365 * 18) - (365 * rand(10))}
     race  {Client::Races.values.sample}
     gender  {["M","F"].sample}
     headOfHousehold  {[true,false].sample}

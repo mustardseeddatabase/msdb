@@ -1,3 +1,13 @@
+# official unofficial ruby-debug19 fix
+# with the same gems as mentioned in 
+# https://gist.github.com/1333785
+
+source 'https://gems.gemfury.com/8n1rdTK8pezvcsyVmmgJ/' 
+
+gem 'linecache19',       '>= 0.5.13'
+gem 'ruby-debug-base19', '>= 0.11.26'
+gem 'ruby-debug19'
+
 source 'http://rubygems.org'
 
 gem "rails", "~> 3.1.3"
@@ -40,7 +50,7 @@ group :development, :test do
   gem 'capybara-webkit', :git => "git://github.com/thoughtbot/capybara-webkit.git" #, :branch => '1.0'
   gem 'selenium-webdriver', '2.0.1'
   gem 'factory_girl_rails'
-  gem 'ruby-debug19', :require => 'ruby-debug'
+  #gem 'ruby-debug19', :require => 'ruby-debug'
   gem 'rspec'
   gem 'rspec-rails'
   gem 'flexmock'

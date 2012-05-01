@@ -1,5 +1,5 @@
 require 'csv'
-require 'ruby-debug'
+#require 'ruby-debug' # this is required on the dev machine but causes problems on the server
 
 
 def path(env)

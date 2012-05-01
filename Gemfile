@@ -42,7 +42,7 @@ group :development, :test do
   gem 'sqlite3-ruby'
   gem 'database_cleaner'
   gem 'launchy'
-  gem 'cucumber-rails', '>=0.5.1'
+  gem 'cucumber-rails', '>=0.5.1', :require => false
   #gem 'capybara', :git => 'git://github.com/jnicklas/capybara.git'
   gem 'capybara-webkit', :git => "git://github.com/thoughtbot/capybara-webkit.git" #, :branch => '1.0'
   gem 'selenium-webdriver', '2.0.1'

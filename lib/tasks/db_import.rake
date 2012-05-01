@@ -1,4 +1,5 @@
 require 'csv'
+require 'ruby-debug'
 
 
 def path(env)
@@ -11,8 +12,8 @@ end
 
 def source(filename, env)
   file = File.join( File.expand_path(path(env)), filename)
-  #CSV::Reader.parse(File.open(file))
-  CSV.read(file)
+  print "source length: #{File.read(file).lines.count} for #{filename}\r\n"
+  CSV.read(file, "r:ISO-8859-1")
 end
 
 def size(filename, env)
@@ -71,14 +72,14 @@ namespace :ccstb do
     total = size("Inventory.txt", Rails.env)
     source_items.each do |item|
       c = Item.new
-      if item[0].to_i < 900
+      if item[0].to_i < 10000 # this "appears" to be the threshold for sku vs. upc in the itemID column of the access database
         c.sku = item[0].to_i
       else
         c.upc = item[0].to_i
       end
       # transliterate removes accented characters that seem to be a problem for the database
       c.description = ActiveSupport::Inflector.transliterate(item[1].gsub("\n"," ")).titlecase unless item[1].nil?
-      c.weight_oz = item[2]
+      c.weight_oz = item[2].to_i > 1000 ? 0 : item[2].to_i
       cat = item[3].gsub("\n", " ") unless item[3].nil?
       lim_cat = item[5].gsub("\n", " ") unless item[5].nil?
       lim_cat = "Other (Non-Food)" unless cat == "Food"

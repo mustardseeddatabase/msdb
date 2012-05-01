@@ -46,7 +46,7 @@ class Client < ActiveRecord::Base
   # for household search
   def self.lastNames_matching(lastName)
     select(:lastName).
-      where("lastName LIKE '%#{lastName}%'").
+      where("lastName LIKE '%#{lastName.gsub("'","''")}%'").
       map(&:lastName).
       uniq.compact.sort.
       reject(&:blank?)
@@ -55,7 +55,7 @@ class Client < ActiveRecord::Base
   # returns matching lastname and id, for quickcheck
   def self.lastNames_matching_extended(lastName)
     select([:id, :lastName, :firstName, :birthdate]).
-      where("lastName LIKE '%#{lastName}%'").
+      where("lastName LIKE '%#{lastName.gsub("'","''")}%'").
       map{|c| c.name_age + '|' + c.id.to_s}.
       uniq.compact.sort.
       reject(&:blank?)

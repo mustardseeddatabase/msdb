@@ -11,7 +11,7 @@ class Application.TransactionItems extends Backbone.Collection
     # (cache will fetch from server if the item is not present)
     get_description : (barcode) ->
       @terminate_editing()
-      if ((@models.length != 0) && (@first().get('item').get('upc') == parseInt barcode)) # if the previous item has the same barcode, update it
+      if ((@models.length != 0) && (@first().get('item').get('upc') == parseInt(barcode,10))) # if the previous item has the same barcode, update it
         quantity = @first().get('quantity')
         @first().set({quantity : quantity + 1})
       else # create a new distribution item

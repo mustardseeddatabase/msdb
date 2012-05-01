@@ -42,7 +42,7 @@ class Application.Item extends Backbone.Model
     @get('name').replace(/[^a-z,A-Z]+/g,"")
 
   has_barcode: (barcode) ->
-    @get('upc') == parseInt(barcode)
+    @get('upc') == parseInt(barcode,10)
 
   is_fully_configured: ->
     (@first_configuration_error() == null)

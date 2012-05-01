@@ -52,9 +52,9 @@ group :development, :test do
   # official unofficial ruby-debug19 fix
   # with the same gems as mentioned in 
   # https://gist.github.com/1333785
-  gem 'linecache19',       '>= 0.5.13'
-  gem 'ruby-debug-base19', '>= 0.11.26'
-  gem 'ruby-debug19'
+  #gem 'linecache19',       '>= 0.5.13'
+  #gem 'ruby-debug-base19', '>= 0.11.26'
+  #gem 'ruby-debug19'
 
 
   #gem 'ruby-debug19', :require => 'ruby-debug'

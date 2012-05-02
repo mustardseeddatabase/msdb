@@ -2,11 +2,19 @@ Then /^The inventory items list length should be "([^"]*)"$/ do |count|
   page.evaluate_script("inventory_app.transaction.transaction_items.length").should == count.to_i
 end
 
-Then /^The backbone inventory model should contain a count of "([^"]*)"$/ do |count|
-  page.evaluate_script("inventory_app.transaction.transaction_items.first().get('item').get('count')").should == count.to_i
+Then /^The backbone inventory model should contain a "([^"]*)" of "([^"]*)"$/ do |attribute,value|
+  page.evaluate_script("inventory_app.transaction.transaction_items.first().get('item').get('#{attribute}')").should == value.to_i
 end
 
-Then /^The backbone inventory model should contain a quantity of "([^"]*)"$/ do |count|
+Then /^The backbone "([^"]*)" model should contain a "([^"]*)" of "([^"]*)"$/ do |model,attribute,value|
+  page.evaluate_script("#{model}.transaction.transaction_items.first().get('item').get('#{attribute}')").should == value.to_i
+end
+
+Then /^The backbone "([^"]*)" transaction model should contain a quantity of "([^"]*)"$/ do |model,value|
+  page.evaluate_script("#{model}.transaction.transaction_items.first().get('quantity')").should == value.to_i
+end
+
+Then /^The backbone inventory transaction model should contain a quantity of "([^"]*)"$/ do |count|
   page.evaluate_script("inventory_app.transaction.transaction_items.first().get('quantity')").should == count.to_i
 end
 

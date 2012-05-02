@@ -42,6 +42,10 @@ Given /^Item with barcode "([^"]*)" count is "([^"]*)"$/ do |barcode, count|
   Item.find_by_upc(barcode).update_attribute(:count, count)
 end
 
+Given /^Item with barcode "([^"]*)" weight is invalid$/ do |barcode|
+  Item.find_by_upc(barcode).update_attribute(:weight_oz, nil)
+end
+
 Then /^I should see "([^"]*)" entr(?:y|ies) with the description "([^"]*)" and barcode "([^"]*)"$/ do |count, description, barcode|
   all(:xpath,"//table/tbody/tr[contains(.,'#{description}')][contains(.,'#{barcode}')]").length.should == count.to_i
 end

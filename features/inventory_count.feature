@@ -32,30 +32,30 @@ Feature: Count current inventory
 @selenium
 	Scenario: Scan barcodes to receive items that are already in the database, but item is invalid
 		Given There is an item with a barcode "12341234" and description "Canned Peas" in the database
-    And Item with barcode "12341234" count is "0"
+    And Item with barcode "12341234" weight is invalid
 		When I scan an item with barcode "12341234"
 		Then I should see a text field with the value "Canned Peas" within: #found_in_db
     And I should see "The item in the database has errors." within: "#error_message"
-    And I should see "Count can't be blank or zero" within: "#error_message"
-    And "count" field should have class "configuration_error"
+    And I should see "Weight can't be blank or zero" within: "#error_message"
+    And "weight_oz" field should have class "configuration_error"
 		When I press "Save"
     Then I should see "Cannot save until errors are corrected" within: "#error_message"
 		Then There should be "0" "inventory_items" in the database
 		And There should be "0" "inventories" in the database
-    When I fill in "count" with "6"
-    Then The backbone inventory model should contain a count of "6"
-    And "count" field should not have class "configuration_error"
+    When I fill in "weight_oz" with "6"
+    Then The backbone "inventory_app" model should contain a "weight_oz" of "6"
+    And "weight_oz" field should not have class "configuration_error"
     When I fill in "quantity" with "0"
-    Then The backbone inventory model should contain a quantity of "0"
+    Then The backbone "inventory_app" transaction model should contain a quantity of "0"
     Then "quantity" field should have class "configuration_error"
 
 @selenium
 	Scenario: Scan barcodes to receive items that are already in the database, item is invalid, then save
 		Given There is an item with a barcode "12341234" and description "Canned Peas" in the database
-    And Item with barcode "12341234" count is "0"
+    And Item with barcode "12341234" weight is invalid
 		When I scan an item with barcode "12341234"
 		Then I should see a text field with the value "Canned Peas" within: #found_in_db
-    When I fill in "count" with "6"
+    When I fill in "weight_oz" with "6"
     When I fill in "quantity" with "6"
 		When I press "Save"
 		Then I should see "Inventory saved"

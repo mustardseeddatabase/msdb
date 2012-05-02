@@ -102,13 +102,14 @@ Then /^(?:|I )should see "([^"]*)"$/ do |text|
 end
 
 Then /^(?:|I )should see "([^"]*)" within: "([^"]*)"$/ do |text, scope|
-  with_scope('"'+scope+'"') do
-    if page.respond_to? :should
-      page.should have_content(text)
-    else
-      assert page.has_content?(text)
-    end
-  end
+  find(scope, :visible => true).should have_content(text) # perhaps this approach will wait for a visible item?
+  #with_scope('"'+scope+'"') do
+    #if page.respond_to? :should
+      #page.should have_content(text)
+    #else
+      #assert page.has_content?(text)
+    #end
+  #end
 end
 
 Then /^I should not see "([^"]*)" within: "([^"]*)"$/ do |text, scope|

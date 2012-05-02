@@ -61,11 +61,11 @@ Feature: Distribution limits
     And The "Canned Peas" item has the following attributes:
             | attribute   | value    |
             | upc         | 12341234 |
-            | count       | 0        |
-            | category_id | 11       |
+            | count       | 1        |
+            | category_id | nil      |
 		When I scan an item with barcode "12341234"
     Then I should see "The item in the database has errors" within: "#error_message"
-    And I should see "Count can't be blank or zero" within: "#error_message"
+    And I should see "Please select a category" within: "#error_message"
     When I follow "Remove..."
     Then I should not see "Item in the database has errors" within: "#error_message"
     And I should not see "Count can't be blank or zero" within: "#error_message"

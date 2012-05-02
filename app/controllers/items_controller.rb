@@ -7,6 +7,7 @@ class ItemsController < ApplicationController
       format.html
       format.js {# e.g. when receiving donations
         item = Item.includes(:category => :limit_category).find_or_create_by_upc(params[:upc])
+        item.count = 1 if item.count == 0 # this is a convenience hack to avoid the user constantly having to fix zero-count items
         render :json => item.to_json(:methods => [:source, :category_descriptor, :category_name, :limit_category_id], :except => [:created_at, :updated_at])
       }
     end

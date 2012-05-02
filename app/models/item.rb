@@ -77,7 +77,8 @@ class Item < ActiveRecord::Base
   end
 
   def for_autocompleter
-    description + "|" + self.to_json(:except => [:created_at, :updated_at])
+    self.count = 1 if count == 0 # this is a convenience hack to avoid the user constantly having to fix zero-count items
+    description + "|" + self.to_json(:methods => [:source, :category_descriptor, :category_name, :limit_category_id], :except => [:created_at, :updated_at])
   end
 
   def cid_map

@@ -7,8 +7,9 @@ class Application.SkuListSkuSelectorView extends Application.SkuSelectorStatusVi
     @template = JST["backbone/templates/preferred_sku_template"]
     @application = args.application
     @item = new Application.Item()
-    @item.bind('change', @update, @)
+    @item.bind('change', @render, @)
     _.bindAll(@, "render")
+    @configure_autocomplete($(@el), @)
     @render()
 
   events:
@@ -39,9 +40,19 @@ class Application.SkuListSkuSelectorView extends Application.SkuSelectorStatusVi
 
   render: ->
     $('#result').html(@template({barcode : '' , item : @item}))
-    @configure_autocomplete($(@el), @)
-    @
 
   select_item: ->
-    super
-    $('#add_to_list').removeAttr('disabled')
+    @render()
+    $('#add_to_list').removeAttr('disabled') # enables the "Add to list" button
+
+  update: ->
+    category_id = @item.get('category_id')
+    if category_id
+      descriptor = categories.get(category_id).get('descriptor')
+    $('#description_autocomplete td#sku',            @el).text(         @item.get('sku'))
+    $('#description_autocomplete input#description', @el).attr('value', @item.get('description'))
+    $('#description_autocomplete td#weight_oz',      @el).text(         @item.get('weight_oz') || "")
+    $('#description_autocomplete td#count',          @el).text(         @item.get('count') || "")
+    $('#description_autocomplete td#category',       @el).text(descriptor || "")
+    $('#description_autocomplete td#qoh',            @el).text(         @item.get('qoh'))
+

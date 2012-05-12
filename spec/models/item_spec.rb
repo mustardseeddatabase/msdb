@@ -13,11 +13,11 @@ describe "excluding scope" do
   end
 end
 
-describe "canonical scope" do
-  it "returns only items with canonical set to true" do
-    canonical_item = FactoryGirl.create(:item, :canonical => true)
-    non_canonical_item = FactoryGirl.create(:item, :canonical => false)
-    Item.canonical.first.should == canonical_item
+describe "preferred scope" do
+  it "returns only items with preferred set to true" do
+    preferred_item = FactoryGirl.create(:item, :preferred => true)
+    non_preferred_item = FactoryGirl.create(:item, :preferred => false)
+    Item.preferred.first.should == preferred_item
   end
 end
 

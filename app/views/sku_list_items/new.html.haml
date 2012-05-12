@@ -1,9 +1,10 @@
 %h1 Select an item to add to the preferred sku list
 #transaction_list_app
   #container
-    %table
+    %table{:style => "float:left"}
       %tr
         %td Enter item description:
+      %tr
         %td= render :partial => 'shared/fancy_text_box', :locals => {:name => "description", :param => :description, :title => 'Clear input'}
     #result
     %span#error_message

@@ -6,7 +6,7 @@ Feature: Sku list
   Background: Logged in, with all requisit permissions
     Given There is a no-barcode item with description "Rutabaga" in the database
     And The "Rutabaga" item has limit category "Vegetables"
-    And The "Rutabaga" item is identified as canonical
+    And The "Rutabaga" item is identified as preferred
     And I am logged in and on the "sku_lists#show" page
     And permissions are granted for "admin" to visit the following pages:
            | page                   |
@@ -44,14 +44,14 @@ Feature: Sku list
     When I follow "Edit"
     And I follow "Remove" for the item described as "Rutabaga"
     Then I should see "Edit preferred sku list" within: "h1"
-    And The "Rutabaga" item in the database should not be designated as canonical
+    And The "Rutabaga" item in the database should not be designated as preferred
     And I should not see any items in the preferred sku list
 
 @selenium
   Scenario: Add an item to the list
     Given There is a no-barcode item with description "Potatoes, loose" in the database
     And The "Potatoes, loose" item has limit category "Vegetables"
-    And The "Potatoes, loose" item is identified as not canonical
+    And The "Potatoes, loose" item is identified as not preferred
     When I follow "Edit"
     And I follow "Add an item"
     Then The "Add to list" button should be disabled
@@ -61,4 +61,4 @@ Feature: Sku list
     Then The "Add to list" button should be enabled
     And I press "Add to list"
     Then I should see an item in the list with description "Potatoes"
-    And The "Potatoes, loose" item in the database should be designated as canonical
+    And The "Potatoes, loose" item in the database should be designated as preferred

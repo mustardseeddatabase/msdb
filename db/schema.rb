@@ -176,7 +176,7 @@ ActiveRecord::Schema.define(:version => 20120502144800) do
     t.integer  "qoh",                            :default => 0
     t.integer  "category_id"
     t.integer  "limit_category_id"
-    t.boolean  "canonical"
+    t.boolean  "preferred"
   end
 
   add_index "items", ["sku", "description"], :name => "index_items_on_sku_and_description"

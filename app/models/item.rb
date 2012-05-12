@@ -11,7 +11,7 @@ class Item < ActiveRecord::Base
   scope :with_upc, where('upc IS NOT NULL')
   scope :with_description, lambda{|description| where("description like ?", "%#{description}%").order(:description)}
   scope :excluding, lambda { |ids| where("id NOT IN (?)", ids) }
-  scope :canonical, where('canonical = ?', true)
+  scope :preferred, where('preferred = ?', true)
 
   AttributeErrorMessages = {
       :description       => "Invalid description",
@@ -85,7 +85,8 @@ class Item < ActiveRecord::Base
 
   def for_autocompleter
     self.count = 1 if count == 0 # this is a convenience hack to avoid the user constantly having to fix zero-count items
-    description + "|" + self.to_json(:methods => [:source, :category_descriptor, :category_name, :limit_category_id], :except => [:created_at, :updated_at])
+    details = self.to_json(:methods => [:source, :category_descriptor, :category_name, :limit_category_id], :except => [:created_at, :updated_at])
+    [description,"(",weight_oz," oz)", "|", details].join
   end
 
   def cid_map

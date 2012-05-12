@@ -132,9 +132,9 @@ Feature: Receive donations without barcodes
     And The donated items list length should be "0"
 
 @selenium
-  Scenario: Identify canonical no-barcode item
+  Scenario: Identify preferred no-barcode item
     Given There is a no-barcode item with description "Canned Peas, giant" in the database
-    And   There is a no-barcode item with description "Canned Peas, petite" in the database, identified as canonical
+    And   There is a no-barcode item with description "Canned Peas, petite" in the database, identified as preferred
     When I follow "No barcode"
     When I fill in "description" with "pea"
     Then I should see "Canned Peas, petite"

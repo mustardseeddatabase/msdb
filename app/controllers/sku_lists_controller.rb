@@ -1,11 +1,11 @@
 class SkuListsController < ApplicationController
   def show
-    @items = Item.canonical
+    @items = Item.preferred
     @categories = @items.map(&:category).uniq
   end
 
   def edit
-    @items = Item.canonical
+    @items = Item.preferred
     @categories = @items.map(&:category).uniq
     @item_categories = @items.group_by(&:category_descriptor)
     @item_categories.merge!({"No category" => @item_categories[nil]}) if @categories.include?(nil)

@@ -13,7 +13,7 @@ class UpcItemsController < ApplicationController
     item = Item.find_by_upc(params[:upc])
     # sku and upc are not updated from client as they cannot be edited
     # and may contain 'undefined' or 'null' strings from javascript
-    acceptable_attrs = ["description", "category_id", "count", "weight_oz", "qoh", "canonical"]
+    acceptable_attrs = ["description", "category_id", "count", "weight_oz", "qoh", "preferred"]
     attrs = params[:item] ? params[:item].slice(*acceptable_attrs) : params.slice(*acceptable_attrs)
     attrs["description"] = attrs["description"].titlecase if attrs["description"] # cleaning up the database, item by item!
     respond_to do |format|

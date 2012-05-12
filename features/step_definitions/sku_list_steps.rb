@@ -4,9 +4,9 @@ Given /^The "([^"]*)" item has limit category "([^"]*)"$/ do |description, limit
   Item.find_by_description(description).update_attribute(:category_id, category.id)
 end
 
-Given /^The "([^"]*)" item is identified as (not )?canonical$/ do |description, yes_or_no|
-  canonical = yes_or_no.nil? ? 1 : 0
-  Item.find_by_description(description).update_attribute(:canonical, canonical)
+Given /^The "([^"]*)" item is identified as (not )?preferred$/ do |description, yes_or_no|
+  preferred = yes_or_no.nil? ? 1 : 0
+  Item.find_by_description(description).update_attribute(:preferred, preferred)
 end
 
 Then /^I should see "([^"]*)" for the item described as "([^"]*)"$/ do |link_text, item_description|
@@ -25,12 +25,12 @@ Then /^The item description in the database should be "([^"]*)"$/ do |descriptio
   Item.find_by_description(description).should be_true
 end
 
-Then /^The "([^"]*)" item in the database should (not )?be designated as canonical$/ do |description,yes_or_no|
+Then /^The "([^"]*)" item in the database should (not )?be designated as preferred$/ do |description,yes_or_no|
   sleep(0.2)
   if yes_or_no == "not "
-    Item.find_by_description(description).canonical.should be_false
+    Item.find_by_description(description).preferred.should be_false
   else
-    Item.find_by_description(description).canonical.should be_true
+    Item.find_by_description(description).preferred.should be_true
   end
 end
 

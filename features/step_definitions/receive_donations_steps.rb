@@ -70,6 +70,9 @@ Given /^There is a no-barcode item with description "([^"]*)" in the database$/ 
   FactoryGirl.create(:item_with_sku, :description => description)
 end
 
+Given /^There is a no\-barcode item with description "([^"]*)" in the database, identified as canonical$/ do |description|
+  FactoryGirl.create(:item_with_sku, :description => description, :canonical => 1)
+end
 
 Given /^The "([^"]*)" item has a sku instead of a barcode$/ do |description|
   Item.find_by_description(description).update_attributes(:sku => 123, :upc => nil)

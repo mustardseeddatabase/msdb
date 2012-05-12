@@ -52,7 +52,7 @@ GIT
 
 GIT
   remote: git://github.com/thoughtbot/capybara-webkit.git
-  revision: 6d224d0791f027811906a4f2863f8b1bb99da179
+  revision: 554c0181f16fbd5dace87d5ec86e8a8b36ae52c8
   specs:
     capybara-webkit (0.11.0)
       capybara (>= 1.0.0, < 1.2)
@@ -101,7 +101,7 @@ GEM
       activesupport (= 3.1.4)
     activesupport (3.1.4)
       multi_json (~> 1.0)
-    addressable (2.2.7)
+    addressable (2.2.8)
     archive-tar-minitar (0.5.2)
     arel (2.2.3)
     builder (3.0.0)
@@ -187,7 +187,7 @@ GEM
       treetop (~> 1.4.8)
     metaclass (0.0.1)
     mime-types (1.18)
-    mocha (0.11.3)
+    mocha (0.11.4)
       metaclass (~> 0.0.1)
     multi_json (1.3.4)
     mysql2 (0.3.11)
@@ -227,19 +227,19 @@ GEM
     rake (0.9.2.2)
     rdoc (3.12)
       json (~> 1.4)
-    rspec (2.9.0)
-      rspec-core (~> 2.9.0)
-      rspec-expectations (~> 2.9.0)
-      rspec-mocks (~> 2.9.0)
-    rspec-core (2.9.0)
-    rspec-expectations (2.9.1)
+    rspec (2.10.0)
+      rspec-core (~> 2.10.0)
+      rspec-expectations (~> 2.10.0)
+      rspec-mocks (~> 2.10.0)
+    rspec-core (2.10.0)
+    rspec-expectations (2.10.0)
       diff-lcs (~> 1.1.3)
-    rspec-mocks (2.9.0)
-    rspec-rails (2.9.0)
+    rspec-mocks (2.10.1)
+    rspec-rails (2.10.1)
       actionpack (>= 3.0)
       activesupport (>= 3.0)
       railties (>= 3.0)
-      rspec (~> 2.9.0)
+      rspec (~> 2.10.0)
     ruby-debug-base19 (0.11.26)
       columnize (>= 0.3.1)
       linecache19 (>= 0.5.11)
@@ -251,7 +251,7 @@ GEM
     ruby_core_source (0.1.5)
       archive-tar-minitar (>= 0.5.2)
     rubyzip (0.9.8)
-    sass (3.1.16)
+    sass (3.1.17)
     sass-rails (3.1.4)
       actionpack (~> 3.1.0)
       railties (~> 3.1.0)
@@ -263,7 +263,7 @@ GEM
       ffi (>= 1.0.7)
       json_pure
       rubyzip
-    spork (0.9.0)
+    spork (0.9.1)
     sprockets (2.0.4)
       hike (~> 1.2)
       rack (~> 1.0)
@@ -272,6 +272,7 @@ GEM
     sqlite3-ruby (1.3.3)
       sqlite3 (>= 1.3.3)
     term-ansicolor (1.0.7)
+    test-unit (2.4.8)
     therubyracer (0.10.1)
       libv8 (~> 3.3.10)
     thor (0.14.6)
@@ -327,5 +328,6 @@ DEPENDENCIES
   spork (~> 0.9.0.rc)
   sprockets (~> 2.0)
   sqlite3-ruby
+  test-unit
   therubyracer
   uglifier

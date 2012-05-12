@@ -1,0 +1,28 @@
+= message_block :on => :item
+%h1 Edit item
+= form_for @item, :url => sku_list_item_url do |f|
+  %table
+    %tr
+      %td= f.label :description
+      %td= f.text_field :description
+    %tr
+      %td= f.label :sku, "sku"
+      %td
+        = @item.sku || "none"
+        = f.hidden_field :sku
+    %tr
+      %td= f.label :upc, "Barcode"
+      %td= @item.upc || "none"
+    %tr
+      %td= f.label :weight_oz, "Weight (oz)"
+      %td= f.text_field :weight_oz
+    %tr
+      %td= f.label :count
+      %td= f.text_field :count
+    %tr
+      %td= f.label :category_id
+      %td
+        = f.select :category_id, category_options(:selected => @item.category_id)
+        = f.hidden_field :canonical
+
+  - submit_or_return_to edit_sku_list_path

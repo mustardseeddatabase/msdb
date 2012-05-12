@@ -1,0 +1,21 @@
+%h1 Select an item to add to the preferred sku list
+#transaction_list_app
+  #container
+    %table
+      %tr
+        %td Enter item description:
+        %td= render :partial => 'shared/fancy_text_box', :locals => {:name => "description", :param => :description, :title => 'Clear input'}
+    #result
+    %span#error_message
+
+    %p= button_tag "Add to list", :id => :add_to_list, :disabled => true
+
+:javascript
+  var categories          = new Application.Categories(#{ Category.to_json });
+  var error_messages      = #{ Item.attribute_error_messages };
+  var authenticity_token  =  "#{ form_authenticity_token }";
+
+  $(function(){ 
+    item_app = new Application.ItemAppView;
+    sku_selector = new Application.SkuListSkuSelectorView({application: item_app})
+    });

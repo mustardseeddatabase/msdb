@@ -23,8 +23,9 @@ class Application.TransactionAppView extends Backbone.View
   no_barcode: ->
     sku_selector = new Application.SkuSelectorView(application : @, include : "New Item")
 
-  initialize: (transaction, urlRoot)->
+  initialize: (transaction, urlRoot, save_method)->
     # a transaction is either a distribution, a donation, or an inventory
+    @save_method = save_method
     @transaction = new Application.Transaction({transaction : transaction, application : @, urlRoot : urlRoot})
     barcode_input = new Application.BarcodeInputView({ application: @}); # the barcode input and related scan errors
     @transaction_items_view = new Application.TransactionItemsView({collection : @transaction.transaction_items})
@@ -33,6 +34,7 @@ class Application.TransactionAppView extends Backbone.View
   blocked_by_incomplete_entry: ->
     @transaction.last_transaction_item_has_errors()
 
+  # a new barcode is not accepted until previous errors have been corrected
   handle_barcode: (barcode)->
     if !@blocked_by_incomplete_entry()
       errorlist.clear_immediate_errors()
@@ -45,4 +47,4 @@ class Application.TransactionAppView extends Backbone.View
     @transaction.transaction_items.add({ quantity : 1, item : item})
 
   save_transaction: ->
-    @transaction.save()
+    @transaction.save(@save_method)

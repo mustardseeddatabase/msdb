@@ -18,8 +18,8 @@ Feature: Client checkout
        | distributions#new    |
        | distributions#create |
        | clients#autocomplete |
-       | items#show           |
-       | items#autocomplete   |
+       | upc_items#show           |
+       | sku_items#autocomplete   |
 
 @javascript
   Scenario: Navigate to individual client checkout page, finding client by autocomplete
@@ -50,19 +50,9 @@ Feature: Client checkout
     When I scan an item with barcode "12341234"
 		Then I should see "Canned Peas" within: "#found_in_db"
     When I press "Save"
-    Then I should see "Checkout completed"
+    Then I should see "Checkout completed for Fanny Arbogast"
+    And I should see "Find client for checkout" within: "h1"
     And There should be "1" "distribution_item" in the database
-    When I press "Save"
-    Then I should see "Checkout completed"
-    And There should be "1" "distribution_item" in the database
-
-  Scenario: Save times out
-	  Given There is an item with a barcode "12341234" and description "Canned Peas" in the database
-    And The server is down
-    When I scan an item with barcode "12341234"
-		Then I should see "Canned Peas" within: "#found_in_db"
-    When I press "Save"
-    Then I should see "Server is down, cannot save, please try later"
 
 @selenium
   Scenario: Scan two existing items with the same barcode with a different one between, doesn't increments quantity

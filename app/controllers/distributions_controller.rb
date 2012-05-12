@@ -9,17 +9,20 @@ class DistributionsController < ApplicationController
   end
 
   def create
-    household    = Client.find(params[:client_id]).household
+    client       = Client.find(params[:client_id])
+    household    = client.household
     distribution = Distribution.new(:household_id => household.id,
                                     :cid => params[:cid],
                                     :distribution_items_attributes => params[:transaction_items_attributes])
 
     if distribution.save
-      render :json => {:flash => {:confirm => ['Checkout completed']},
-                       :transaction => distribution.cid_map,
-                       :transaction_items => distribution.distribution_items_cid_map,
-                       :items => distribution.item_cid_map
-                       }, :status => :ok
+      #render :json => {:flash => {:confirm => ['Checkout completed']},
+                       #:transaction => distribution.cid_map,
+                       #:transaction_items => distribution.distribution_items_cid_map,
+                       #:items => distribution.item_cid_map
+                       #}, :status => :ok
+      flash[:confirm]= "Checkout completed for #{client.first_last_name}"
+      redirect_to distributions_path
     else
       messages = ['A problem prevented the distribution from being saved.']
       messages += distribution.errors.full_messages

@@ -1,0 +1,32 @@
+%h1 Edit preferred sku list
+%table
+  - @item_categories.keys.sort.each do |cat|
+    %tr.sku_list_category
+      %td{:colspan => 3}
+        %h2= cat
+    - @item_categories[cat].sort_by(&:description).each do |item|
+      %tr.edit_item
+        %td{:style => 'padding-left:20px'}
+          = item.description
+          (#{item.weight_oz} oz)
+        %td= link_to "Edit", edit_sku_list_item_path(item, :sku => item.sku)
+        %td
+          = form_for item, :url => sku_list_item_path(item), :method => :delete, :remote => true do |f|
+            = f.hidden_field :canonical, :value => false
+            = link_to_function "Remove", "submit_form()"
+
+= link_to "Add an item", new_sku_list_item_path
+
+:javascript
+  var submit_form = function(){
+    $(event.target).closest('form').submit()
+    return false;
+  }
+
+  $(function(){
+    $('[id ^= "edit_item"]').on("ajax:success", function() {
+        var row = $(this).closest('tr')
+        row.fadeOut();
+      });
+    $('[id ^= "edit_item"]').on("ajax:error", function() { /* what to do? */});
+  })

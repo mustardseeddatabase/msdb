@@ -13,10 +13,11 @@
 %ul
   %li= link_to "Take inventory", new_inventory_path
   %li= link_to "Past inventories", inventories_path
-  %li= link_to "Item status", items_show_path(:format => :html)
+  %li= link_to "Item status", item_path(:id => 'undefined',:format => :html)
   %li= link_to "Generate report"
   %li= link_to "Resume inventory on"
   %li= link_to "Apply corrections to database"
+  %li= link_to "Preferred SKU list", sku_list_path
 %h2 Developer tools
 %ul
   %li= link_to "Scanner test utility", scanner_index_path

@@ -13,7 +13,7 @@ Feature: Receive donations without barcodes
         | items#show         |
         | donations#create   |
         | donations#index    |
-        | items#autocomplete |
+        | sku_items#autocomplete |
 
 @selenium
 	Scenario: Manually enter items with no barcodes that are already in the database
@@ -130,3 +130,12 @@ Feature: Receive donations without barcodes
     When I follow "Remove"
     Then I should not see "Pea soup" within: "#found_in_db"
     And The donated items list length should be "0"
+
+@selenium
+  Scenario: Identify canonical no-barcode item
+    Given There is a no-barcode item with description "Canned Peas, giant" in the database
+    And   There is a no-barcode item with description "Canned Peas, petite" in the database, identified as canonical
+    When I follow "No barcode"
+    When I fill in "description" with "pea"
+    Then I should see "Canned Peas, petite"
+    And I should not see "Canned Peas, giant"

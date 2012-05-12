@@ -10,10 +10,10 @@ Feature: Receive donations
     And I am logged in and on the "donations#new" page
     And permissions are granted for "admin" to visit the following pages:
         | page               |
-        | items#show         |
+        | upc_items#show         |
         | donations#create   |
         | donations#index    |
-        | items#autocomplete |
+        | sku_items#autocomplete |
 
 @selenium
   Scenario: Click save without scanning any barcodes

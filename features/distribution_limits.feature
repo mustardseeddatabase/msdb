@@ -14,8 +14,8 @@ Feature: Distribution limits
     And I am logged in and on the "distributions#new" page for "Fanny Arbogast"
     And permissions are granted for "admin" to visit the following pages:
        | page                 |
-       | items#show           |
-       | items#autocomplete   |
+       | upc_items#show           |
+       | sku_items#autocomplete   |
 
 @selenium
   Scenario: Checkout items with barcode, and change quantity

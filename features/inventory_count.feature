@@ -9,7 +9,7 @@ Feature: Count current inventory
     And I am logged in and on the "home" page
     And permissions are granted for "admin" to visit the following pages:
             | page               |
-            | items#show         |
+            | upc_items#show         |
             | inventories#new    |
             | inventories#create |
 		And I am on the inventories#new page

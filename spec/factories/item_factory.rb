@@ -29,6 +29,6 @@ FactoryGirl.define do
 
   factory :item_with_sku, :parent => :item do
     upc nil
-    sku {rand(999)}
+    sku {rand(9999)}
   end
 end

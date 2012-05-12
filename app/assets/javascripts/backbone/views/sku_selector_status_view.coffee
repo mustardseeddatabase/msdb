@@ -10,12 +10,13 @@ class Application.SkuSelectorStatusView extends Application.SkuSelectorView
     @item_view = new Application.ItemStatusView(model : @item)
     @item.trigger('select')
 
+  # called from SkuSelectorView#initialize
   render: ->
     @_remove_previous()
-    $("#found_in_db").append(@template({barcode : '' , item : @item}))
+    $(@el).append(@template({barcode : '' , item : @item}))
     @configure_autocomplete($(@el), @)
     @
 
   _remove_previous: ->
-    if $("#found_in_db tr").length > 1
-      $("#found_in_db tr:last").remove()
+    if $("tr", @el).length > 1
+      $("tr:last", @el).remove()

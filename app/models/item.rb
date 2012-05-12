@@ -11,6 +11,7 @@ class Item < ActiveRecord::Base
   scope :with_upc, where('upc IS NOT NULL')
   scope :with_description, lambda{|description| where("description like ?", "%#{description}%").order(:description)}
   scope :excluding, lambda { |ids| where("id NOT IN (?)", ids) }
+  scope :canonical, where('canonical = ?', true)
 
   AttributeErrorMessages = {
       :description       => "Invalid description",
@@ -50,6 +51,12 @@ class Item < ActiveRecord::Base
     inventory.inventory_items.each do |inventory_item|
       Item.find(inventory_item.item_id).update_attribute(:qoh,inventory_item.quantity)
     end
+  end
+
+  def self.find_with_attributes(attrs)
+    return where("id = ?",attrs[:id]).first if attrs[:id]
+    return where("upc = ?",attrs[:upc]).first if attrs[:upc]
+    return where("sku = ?",attrs[:sku]).first if attrs[:sku]
   end
 
   def has_identifier?

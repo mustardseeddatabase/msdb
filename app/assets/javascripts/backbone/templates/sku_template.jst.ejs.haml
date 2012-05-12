@@ -1,13 +1,13 @@
 %tr#description_autocomplete
-  %td#sku
+  %td#sku <%= item.get('sku') %>
   %td#description
     %input{:type => 'text',
       :value => "<%= item.get('description') %>".html_safe,
       :id => "description",
       :autocomplete => 'off'}
 
-  %td#weight_oz{ :align => 'center'}
-  %td#count{ :align => 'center'}
-  %td#category
-  %td#qoh
+  %td#weight_oz{ :align => 'center'} <%= item.get('weight_oz') %>
+  %td#count{ :align => 'center'} <%= item.get('count') %>
+  %td#category <%= item.get('category_descriptor') %>
+  %td#qoh <%= item.get('qoh') %>
   %td= link_to 'Remove...', '#', :id => 'remove_transaction_item_link'

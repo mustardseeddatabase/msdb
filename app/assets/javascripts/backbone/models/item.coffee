@@ -36,7 +36,7 @@ class Application.Item extends Backbone.Model
       @category().get('descriptor')
 
   url : ->
-    '/items/' + @get('upc')
+    '/upc_items/' + @get('upc')
 
   sanitized_name: ->
     @get('name').replace(/[^a-z,A-Z]+/g,"")

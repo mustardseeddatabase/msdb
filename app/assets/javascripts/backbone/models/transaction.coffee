@@ -5,7 +5,7 @@ class Application.Transaction extends Backbone.Model
     window.errorlist = new Application.ErrorList({collection : @transaction_items})
     @set({id : attrs.transaction.id})
 
-  save: ->
+  save: (save_method)->
     if @transaction_items.length == 0
       @report_immediate_error("No items to save!")
     else if @uncorrected_errors()
@@ -13,11 +13,44 @@ class Application.Transaction extends Backbone.Model
     else
       @clear_immediate_errors()
 
-      method = if @isNew() then "create" else "update"
+      if save_method == "no-ajax"
+        console.log "save without ajax"
+        @post()
+      else
+        method = if @isNew() then "create" else "update"
 
-      options =
-        success : @remove_deleted_transaction_items
-      Backbone.sync.call(@, method, @, options)
+        options =
+          success : @remove_deleted_transaction_items
+        Backbone.sync.call(@, method, @, options)
+
+  post: ->
+    tmpForm = document.createElement("form")
+    tmpForm.method="post"
+    tmpForm.action = @urlRoot
+    @add_elements_from(@.toJSON(),tmpForm)
+
+    tmpInput = document.createElement("input")
+    tmpInput.setAttribute("name", "authenticity_token")
+    tmpInput.setAttribute("value", window.authenticity_token)
+    tmpForm.appendChild(tmpInput)
+    document.body.appendChild(tmpForm)
+    tmpForm.submit()
+    document.body.removeChild(tmpForm)
+
+  add_elements_from: (obj, form) ->
+    _(obj.transaction_items_attributes).each (tia)=>
+      @create_element("transaction_items_attributes[][quantity]",tia.quantity, form)
+      @create_element("transaction_items_attributes[][item_attributes][category_id]",tia.item_attributes.category_id, form)
+      @create_element("transaction_items_attributes[][item_attributes][count]",tia.item_attributes.count, form)
+      @create_element("transaction_items_attributes[][item_attributes][description]",tia.item_attributes.description, form)
+      @create_element("transaction_items_attributes[][item_attributes][id]",tia.item_attributes.id, form)
+      @create_element("transaction_items_attributes[][item_attributes][weight_oz]",tia.item_attributes.weight_oz, form)
+
+  create_element: (name,value,form) ->
+    tmpInput = document.createElement("input")
+    tmpInput.setAttribute("name", name)
+    tmpInput.setAttribute("value", value)
+    form.appendChild(tmpInput)
 
   uncorrected_errors: ->
     !errorlist.is_empty()

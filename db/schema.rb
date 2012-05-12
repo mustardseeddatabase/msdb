@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120114201723) do
+ActiveRecord::Schema.define(:version => 20120502144800) do
 
   create_table "action_roles", :force => true do |t|
     t.integer  "role_id",    :limit => 8
@@ -176,6 +176,7 @@ ActiveRecord::Schema.define(:version => 20120114201723) do
     t.integer  "qoh",                            :default => 0
     t.integer  "category_id"
     t.integer  "limit_category_id"
+    t.boolean  "canonical"
   end
 
   add_index "items", ["sku", "description"], :name => "index_items_on_sku_and_description"

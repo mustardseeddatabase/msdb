@@ -9,7 +9,7 @@ Feature: Resume a previous inventory
     And I am logged in and on the "home" page
     And permissions are granted for "admin" to visit the following pages:
             | page               |
-            | items#show         |
+            | upc_items#show         |
             | inventories#edit |
             | inventories#update |
 	  And there is an inventory created on 2011-1-1 in the database

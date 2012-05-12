@@ -1,0 +1,19 @@
+%table#found_in_db{:style => "width:340px; border:none; padding-top:20px"}
+  %tr
+    %td{:style => "width:200px"} sku
+    %td#sku <%= item.get('sku') %>
+  %tr
+    %td Description
+    %td#description <%= item.get('description') %>
+  %tr
+    %td Weight oz
+    %td#weight_oz <%= item.get('weight_oz') %>
+  %tr
+    %td Count
+    %td#count <%= item.get('count') %>
+  %tr
+    %td Category
+    %td#category <%= item.get('category_descriptor') %>
+  %tr
+    %td Quantity on hand
+    %td#qoh <%= item.get('qoh') %>

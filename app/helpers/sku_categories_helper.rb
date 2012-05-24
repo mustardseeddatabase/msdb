@@ -1,4 +1,13 @@
 module SkuCategoriesHelper
+  def sku_list_items
+    item_groups = @items.group_by{|i| (i.category && i.category.descriptor) || "No category"}
+    item_groups.inject([]) do |arr,(cat,items)|
+      arr << {:category => cat}
+      arr += items.sort_by(&:description)
+      arr
+    end
+  end
+
   def category_group
     header_factor = 3
     average_column_length = (@items.count.to_f/4)

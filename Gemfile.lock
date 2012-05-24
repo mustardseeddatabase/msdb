@@ -59,6 +59,13 @@ GIT
       json
 
 PATH
+  remote: /Users/lesnightingill/Code/doccex
+  specs:
+    doccex (0.0.1)
+      haml
+      rails (~> 3.1.4)
+
+PATH
   remote: vendor/gems/db_check
   specs:
     db_check (0.0.1)
@@ -302,6 +309,7 @@ DEPENDENCIES
   database_cleaner
   db_check!
   delegate_multiparameter!
+  doccex!
   ejs!
   execjs
   factory_girl_rails

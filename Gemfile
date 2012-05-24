@@ -37,6 +37,7 @@ group :assets do
 end
 
 group :development, :test do
+  gem 'doccex', :path => '/Users/lesnightingill/Code/doccex'
   gem 'faker', :git => 'git://github.com/stympy/faker.git' # due to an I18n problem after updating to Rails 3.1
   gem 'spork', '~> 0.9.0.rc'
   gem 'sqlite3-ruby'
@@ -57,7 +58,7 @@ group :development, :test do
   gem 'ruby-debug19'
 
 
-  #gem 'ruby-debug19', :require => 'ruby-debug'
+  #gem 'ruby-debug19', :require => 'ruby-debug' there seems to be a problem with ruby-debug19 and Ruby 1.9.3
   gem 'rspec'
   gem 'rspec-rails'
   gem 'flexmock'

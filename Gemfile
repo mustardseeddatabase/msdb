@@ -26,6 +26,7 @@ gem 'haml_assets', :git => 'git://github.com/infbio/haml_assets.git' # to use ha
 gem 'ejs', :git => 'git://github.com/sstephenson/ruby-ejs.git'
 gem 'sprockets', '~> 2.0'
 gem 'rbarcode'
+gem 'doccex', :git => 'git://github.com/mustardseeddatabase/doccex.git'
 
 # Gems only required for assets and not required
 # in production environments by default.
@@ -38,7 +39,6 @@ group :assets do
 end
 
 group :development, :test do
-  gem 'doccex', :path => '/Users/lesnightingill/Code/doccex'
   gem 'faker', :git => 'git://github.com/stympy/faker.git' # due to an I18n problem after updating to Rails 3.1
   gem 'spork', '~> 0.9.0.rc'
   gem 'sqlite3-ruby'

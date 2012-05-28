@@ -25,7 +25,7 @@ gem 'client_side_validations'
 gem 'haml_assets', :git => 'git://github.com/infbio/haml_assets.git' # to use haml with backbone assets
 gem 'ejs', :git => 'git://github.com/sstephenson/ruby-ejs.git'
 gem 'sprockets', '~> 2.0'
-gem 'rbarcode'
+gem 'rbarcode', :git => 'git://github.com/mustardseeddatabase/rbarcode.git'
 gem 'doccex', :git => 'git://github.com/mustardseeddatabase/doccex.git'
 
 # Gems only required for assets and not required

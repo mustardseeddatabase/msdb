@@ -1,10 +1,15 @@
 class SkuListsController < ApplicationController
   def show
-    @items = Item.includes(:category).preferred
+    barcodes = params[:barcodes] == "true"
+    @items = Item.includes(:category => :limit_category).preferred
     @categories = @items.map(&:category).uniq
     respond_to do |format|
       format.html
-      format.docx { render :docx => "sku_list" }
+      if barcodes
+        format.docx { render :docx => "sku_list_barcodes", :template => "sku_lists/sku_list_barcodes.xml" }
+      else
+        format.docx { render :docx => "sku_list" } # renders show.builder
+      end
     end
   end
 

@@ -76,7 +76,11 @@ class Item < ActiveRecord::Base
   end
 
   def category_descriptor
-    category.try(:descriptor)
+    begin
+      category.descriptor
+    rescue
+      "No category"
+    end
   end
 
   def escaped_description

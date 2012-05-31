@@ -26,8 +26,7 @@ gem 'haml_assets', :git => 'git://github.com/infbio/haml_assets.git' # to use ha
 gem 'ejs', :git => 'git://github.com/sstephenson/ruby-ejs.git'
 gem 'sprockets', '~> 2.0'
 gem 'rbarcode', :git => 'git://github.com/mustardseeddatabase/rbarcode.git'
-#gem 'doccex', :git => 'git://github.com/mustardseeddatabase/doccex.git'
-gem 'doccex', :path => '/Users/lesnightingill/Code/doccex'
+gem 'doccex', :git => 'git://github.com/mustardseeddatabase/doccex.git'
 
 # Gems only required for assets and not required
 # in production environments by default.

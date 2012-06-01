@@ -2,6 +2,8 @@ Msdb::Application.routes.draw do
   resources :limit_categories do
     put 'update', :on => :collection
   end
+  match '/reports/:title.:format', :to => "reports#show", :via => :get, :as => 'report'
+  resources :reports, :only => :index
   resources :inventories
   resources :distributions
   resource :sku_list

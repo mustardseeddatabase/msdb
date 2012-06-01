@@ -39,7 +39,7 @@ GIT
 
 GIT
   remote: git://github.com/mustardseeddatabase/doccex.git
-  revision: c6a8ecea8f761d4e6898f6c708e97001106fb0f2
+  revision: ace9e63e3431f3e522bd68a37a98200d4d9e5389
   specs:
     doccex (0.0.1)
       haml

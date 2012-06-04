@@ -1,3 +1,9 @@
 %h1 Available Reports
+
 %ul
-  %li= link_to "Second Harvest monthly", report_path(:title => 'second_harvest_monthly', :format => 'docx')
+  %li
+    = form_for @report, :url => report_path(:title => 'second_harvest_monthly', :format => 'docx'), :method => :get  do |f|
+      Second Harvest monthly report for:
+      = f.date_select :for_date, :discard_day => true, :end_year => Time.now.year
+      = f.submit "Generate report"
+

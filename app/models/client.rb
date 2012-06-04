@@ -13,6 +13,10 @@ class Client < ActiveRecord::Base
             "WH" => "White",
             "OT" => "Other" }
 
+  AgeGroups = { "child" => (0..17),
+                "adult" => (18..64),
+                "senior" => (65..120) }
+
   default_scope order('case when birthdate IS NULL then 1 else 0 end, birthdate')
 
   belongs_to :household
@@ -83,6 +87,19 @@ class Client < ActiveRecord::Base
 
   def age
     ( ( Date.today - birthdate.to_date )/365 ).to_i unless birthdate.nil?
+  end
+
+  def age_group
+    case age
+    when nil
+      "unknown"
+    when AgeGroups['child']
+      "child"
+    when AgeGroups['adult']
+      "adult"
+    when AgeGroups['senior']
+      "senior"
+    end
   end
 
   def has_id_doc_in_db?

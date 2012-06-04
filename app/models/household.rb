@@ -204,6 +204,38 @@ class Household < ActiveRecord::Base
       File.exists?(gov_qualdoc.docfile.current_path)
   end
 
+  def counts_by_age_group
+    blank_counts = {:children => 0, :adults => 0, :seniors => 0}
+    counts = clients.group_by(&:age_group).inject({}){|hash,(k,v)| hash[k.pluralize.to_sym] = v.count; hash}
+    blank_counts.merge! counts
+  end
+
+  def counts_by_race
+    blank_counts = {:AA => 0, :AS => 0, :HI => 0, :WH => 0, :UNK => 0, :total => clients.count}
+    counts = clients.group_by(&:race).inject({}) do |hash,(k,v)|
+                if (k == 'OT') || k.nil?
+                  hash[:UNK] = (hash[:UNK] || 0) + v.count # "OTHER" and nil are both classified as "UNKNOWN"
+                else
+                  hash[k.to_sym] = v.count
+                end
+                hash
+              end
+    blank_counts.merge! counts
+  end
+
+  def count_by_homeless
+    value = homeless? ? 1 : 0
+    {:homeless => value}
+  end
+
+  def demographic
+    counts_by_age_group.merge!(counts_by_race).merge!(count_by_homeless)
+  end
+
+  def new_or_continued_in_month(year,month)
+    distributions.in_month(year,month).any?(&:new?) ? :new : :continued
+  end
+
 private
   # to determine the error condition of multiple heads of household
   def head_count

@@ -13,13 +13,13 @@ FactoryGirl.define do
     headOfHousehold  {[true,false].sample}
 
     factory :client_with_expired_id do
-      after_build do |c|
+      after(:build) do |c|
         c.id_qualdoc = FactoryGirl.build(:expired_id_qualdoc)
       end
     end
 
     factory :client_with_current_id do
-      after_build do |c|
+      after(:build) do |c|
         c.id_qualdoc = FactoryGirl.build(:current_id_qualdoc)
       end
     end

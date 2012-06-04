@@ -55,3 +55,18 @@ describe "#is_sole_head_of_household?" do
     c3.is_sole_head_of_household?.should == false
   end
 end
+
+describe "age_group" do
+  it "should return the name of the age group of the client in the child range" do
+    client = FactoryGirl.build(:client, :birthdate => 10.years.ago)
+    client.age_group.should == "child"
+  end
+  it "should return the name of the age group of the client in the adult range" do
+    client = FactoryGirl.build(:client, :birthdate => 20.years.ago)
+    client.age_group.should == "adult"
+  end
+  it "should return the name of the age group of the client in the senior range" do
+    client = FactoryGirl.build(:client, :birthdate => 80.years.ago)
+    client.age_group.should == "senior"
+  end
+end

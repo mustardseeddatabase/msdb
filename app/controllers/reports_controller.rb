@@ -1,10 +1,13 @@
 class ReportsController < ApplicationController
   def index
+    @report = Report.new(:for_date => 1.month.ago, :title => 'second_harvest_monthly') # the most recent report is the end of last month. Set that as the default
   end
 
   def show
     @date = Date.today
-    @month = Date::MONTHNAMES[1.month.ago.month]
+    date_params = [params[:report]["for_date(1i)"].to_i,params[:report]["for_date(2i)"].to_i,params[:report]["for_date(3i)"].to_i]
+    date = Date.new(*date_params)
+    @month = "#{Date::MONTHNAMES[date.month]} #{date.year}"
     @parish = "Saint Bernard"
     @agency_name = "Community Center of St. Bernard"
     @agency_number = "?"

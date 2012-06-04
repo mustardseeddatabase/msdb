@@ -5,6 +5,14 @@ class Distribution < ActiveRecord::Base
   accepts_nested_attributes_for :distribution_items
   attr_accessor :cid
 
+  scope :in_month, lambda{|year,month| where('(YEAR(created_at) = ?) & (MONTH(created_at) = ?)', year, month)}
+
+  def self.demographic_for_month(date)
+    households_in_month = in_month(date.year, date.month).map(&:household).uniq
+    households = HouseholdCollection.new(households_in_month)
+    households.report_demographics(date)
+  end
+
   def item_cid_map
     distribution_items.map(&:item_cid_map)
   end
@@ -16,4 +24,9 @@ class Distribution < ActiveRecord::Base
   def cid_map
     {:id => id, :cid => cid}
   end
+
+  def new?
+    household.distributions.sort_by(&:created_at).index(self) == 0
+  end
+
 end

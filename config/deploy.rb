@@ -35,4 +35,12 @@ namespace :db do
   end
 end
 
-after "deploy:update_code", "db:symlink_yaml"
+namespace :application do
+  desc "symlinks the barcode images to a cache in the shared directory that survives code update"
+  task :symlink_barcode_image_cache do
+    run "mkdir #{shared_path}/barcode_images" # only the first time
+    run "ln -nfs #{shared_path}/barcode_images #{release_path}/tmp/barcode_images"
+  end
+end
+
+after "deploy:update_code", "db:symlink_yaml", "application:symlink_barcode_image_cache"

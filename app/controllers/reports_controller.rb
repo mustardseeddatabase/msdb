@@ -10,28 +10,13 @@ class ReportsController < ApplicationController
     @month = "#{Date::MONTHNAMES[date.month]} #{date.year}"
     @parish = "Saint Bernard"
     @agency_name = "Community Center of St. Bernard"
-    @agency_number = "?"
+    @agency_number = "A10147"
     @address = "1111 LeBeau St., Arabi, LA 70032"
     @contact = "Je'Nae Bailey"
     @phone = "(504) 281-2512"
-    @days_and_hours = "T,W,Th, 10am - 2pm"
-    @demographic = {}
-    [:new, :continued, :total].each do |arg|
-      @demographic[arg] = {}
-      [:household, :children, :adults, :seniors, :homeless, :total].each do |cat|
-        @demographic[arg][cat] = rand(30).to_s
-      end
-    end
+    @days_and_hours = "T,W,Th, 11am - 3pm"
 
-    [:male, :female].each do |arg|
-      @demographic[arg] = {}
-      [:aa, :w, :hisp, :asian, :unk, :total].each do |cat|
-        @demographic[arg][cat] = rand(30).to_s
-      end
-    end
-    [:aa, :w, :hisp, :asian, :unk, :total].each do |cat|
-      @demographic[:total][cat] = rand(30).to_s
-    end
+    @demographic, @clients_with_errors = Distribution.demographic_for_month(date)
 
     @number_of_boxes = rand(50).to_s
     @average_weight = rand(12).to_s
@@ -50,9 +35,9 @@ class ReportsController < ApplicationController
 
     @questionnaires_count = rand(100).to_s
 
-
     respond_to do |format|
       format.docx {render :docx => "second_harvest_monthly", :template=> "document_templates/second_harvest_monthly_report", :from_template => true}
+      format.json {render :json => @clients_with_errors.to_json(:methods => [:missing_gender_flag, :missing_race_flag, :missing_birthdate_flag, :first_last_name])}
     end
   end
 end

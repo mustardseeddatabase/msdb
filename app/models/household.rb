@@ -204,20 +204,18 @@ class Household < ActiveRecord::Base
       File.exists?(gov_qualdoc.docfile.current_path)
   end
 
+  # TODO move this to ClientCollection class
   def counts_by_age_group
     blank_counts = {:children => 0, :adults => 0, :seniors => 0}
     counts = clients.group_by(&:age_group).inject({}){|hash,(k,v)| hash[k.pluralize.to_sym] = v.count; hash}
     blank_counts.merge! counts
   end
 
+  # TODO move this to ClientCollection class
   def counts_by_race
     blank_counts = {:AA => 0, :AS => 0, :HI => 0, :WH => 0, :UNK => 0, :total => clients.count}
-    counts = clients.group_by(&:race).inject({}) do |hash,(k,v)|
-                if (k == 'OT') || k.nil?
-                  hash[:UNK] = (hash[:UNK] || 0) + v.count # "OTHER" and nil are both classified as "UNKNOWN"
-                else
-                  hash[k.to_sym] = v.count
-                end
+    counts = clients.group_by(&:race_or_unknown).inject({}) do |hash,(k,v)|
+                hash[k.to_sym] = v.count
                 hash
               end
     blank_counts.merge! counts
@@ -228,12 +226,10 @@ class Household < ActiveRecord::Base
     {:homeless => value}
   end
 
-  def demographic
-    counts_by_age_group.merge!(counts_by_race).merge!(count_by_homeless)
-  end
-
   def new_or_continued_in_month(year,month)
-    distributions.in_month(year,month).any?(&:new?) ? :new : :continued
+    date_of_first_distribution = distributions.sort_by(&:created_at).first.created_at
+    new = (date_of_first_distribution.year == year) && (date_of_first_distribution.month == month)
+    new ? :new : :continued
   end
 
 private

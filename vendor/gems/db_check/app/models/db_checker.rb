@@ -27,4 +27,8 @@ class DbChecker
     [Donor.with_duplicate_org_names, :donor, "Donors with duplicate organization names"]
   end
 
+  def self.households_with_clients_with_no_first_or_last_name
+    [Client.with_no_first_or_last_name, :household, "Households with clients with neither a first name nor a last name"]
+  end
+
 end

@@ -58,15 +58,31 @@ end
 
 describe "age_group" do
   it "should return the name of the age group of the client in the child range" do
-    client = FactoryGirl.build(:client, :birthdate => 10.years.ago)
+    client = FactoryGirl.build(:client, :birthdate => 17.years.ago)
+    client.age_group.should == "child"
+  end
+  it "should return the name of the age group of the client in the child range" do
+    client = FactoryGirl.build(:client, :birthdate => 1.years.ago)
     client.age_group.should == "child"
   end
   it "should return the name of the age group of the client in the adult range" do
-    client = FactoryGirl.build(:client, :birthdate => 20.years.ago)
+    client = FactoryGirl.build(:client, :birthdate => 18.years.ago)
+    client.age_group.should == "adult"
+  end
+  it "should return the name of the age group of the client in the adult range" do
+    client = FactoryGirl.build(:client, :birthdate => 64.years.ago)
     client.age_group.should == "adult"
   end
   it "should return the name of the age group of the client in the senior range" do
-    client = FactoryGirl.build(:client, :birthdate => 80.years.ago)
+    client = FactoryGirl.build(:client, :birthdate => 65.years.ago)
     client.age_group.should == "senior"
+  end
+  it "should return an out of range indication if there is anomalous data and client age is negative" do
+    client = FactoryGirl.build(:client, :birthdate => 1.year.from_now)
+    client.age_group.should == "out of range"
+  end
+  it "should return an out of range indication if there is anomalous data and client age is > 120" do
+    client = FactoryGirl.build(:client, :birthdate => 121.years.ago)
+    client.age_group.should == "out of range"
   end
 end

@@ -73,16 +73,28 @@ class Client < ActiveRecord::Base
     Household.with_no_addresses.map(&:clients).flatten.uniq.sort_by(&:last_first_name)
   end
 
+  def self.with_no_first_or_last_name
+    where(:firstName => nil, :lastName => nil).map(&:household).compact.uniq
+  end
+
+  def has_report_errors
+    birthdate.nil? || race.nil? || gender.nil? || (age_group == "out of range")
+  end
+
+  def race_or_unknown
+    !race || (race == 'OT') ? 'UNK' : race
+  end
+
   def name_age
     [last_first_name, age].reject(&:blank?).compact.join('. ')
   end
 
   def last_first_name
-    [lastName, firstName].reject(&:blank?).join(", ")
+    [lastName || "(No last name)", firstName || "(No first name)"].join(" ")
   end
 
   def first_last_name
-    [firstName, lastName].reject(&:blank?).join(" ")
+    [firstName || "(No first name)", lastName || "(No last name)"].join(" ")
   end
 
   def age
@@ -99,6 +111,8 @@ class Client < ActiveRecord::Base
       "adult"
     when AgeGroups['senior']
       "senior"
+    else
+      "out of range" # because the legacy database may have anomalous data
     end
   end
 
@@ -119,5 +133,17 @@ class Client < ActiveRecord::Base
 
   def household_size
     household.resident_count
+  end
+
+  def missing_gender_flag
+    "x" unless gender
+  end
+
+  def missing_race_flag
+    "x" unless race
+  end
+
+  def missing_birthdate_flag
+    "x" unless birthdate
   end
 end

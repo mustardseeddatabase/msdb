@@ -8,7 +8,7 @@ class Distribution < ActiveRecord::Base
   scope :in_month, lambda{|year,month| where('(YEAR(created_at) = ?) & (MONTH(created_at) = ?)', year, month)}
 
   def self.demographic_for_month(date)
-    households_in_month = in_month(date.year, date.month).map(&:household).uniq
+    households_in_month = in_month(date.year, date.month).includes(:household => [:distributions, :clients]).map(&:household).uniq
     households = HouseholdCollection.new(households_in_month)
     households.report_demographics(date)
   end

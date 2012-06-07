@@ -3,6 +3,7 @@
   %li= link_to "Households with multiple heads-of-households", url_for(:action => :show, :check_type => :households_multiple_heads)
   %li= link_to "Households without a head-of-household", url_for(:action => :show, :check_type => :households_no_head)
   %li= link_to "Households with no addresses", url_for(:action => :show, :check_type => :households_no_addresses)
+  %li= link_to "Households with clients with no first name or last name", url_for(:action => :show, :check_type => :households_with_clients_with_no_first_or_last_name)
   %li= link_to "Clients with no associated household", url_for(:action => :show, :check_type => :clients_no_household)
   %li= link_to "Clients with no addresses", url_for(:action => :show, :check_type => :clients_no_addresses)
   %li= link_to "Donors with duplicate organization names", url_for(:action => :show, :check_type => :donor_duplicate_org_names)

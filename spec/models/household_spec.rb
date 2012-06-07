@@ -372,6 +372,40 @@ describe 'counts_by_age_group' do
       @counts[:seniors].should == 1
     end
   end
+
+  context 'when some clients have null birthdate' do
+    before(:each) do
+      @client1 = FactoryGirl.create(:client, :birthdate => 10.years.ago)
+      @client1.update_attribute(:birthdate, nil)
+      @client2 = FactoryGirl.create(:client, :birthdate => 20.years.ago)
+      @client3 = FactoryGirl.create(:client, :birthdate => 80.years.ago)
+      @client4 = FactoryGirl.create(:client, :birthdate => 10.years.ago)
+      @client5 = FactoryGirl.create(:client, :birthdate => 20.years.ago)
+      @household = FactoryGirl.create(:household)
+      @household.clients  << @client1
+      @household.clients  << @client2
+      @household.clients  << @client3
+      @household.clients  << @client4
+      @household.clients  << @client5
+      @counts = @household.counts_by_age_group
+    end
+
+    it "should return a hash" do
+      @counts.should be_kind_of(Hash)
+    end
+
+    it "should have keys :children, :adults, :seniors" do
+      @counts.keys.should include(:children)
+      @counts.keys.should include(:adults)
+      @counts.keys.should include(:seniors)
+    end
+
+    it "should count clients by age group" do
+      @counts[:children].should == 1
+      @counts[:adults].should == 2
+      @counts[:seniors].should == 1
+    end
+  end
 end
 
 describe 'counts_by_race' do

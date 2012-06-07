@@ -28,7 +28,7 @@ class HouseholdCollection
     totals = {:total => aggregated_age_group_demographics.merge(ClientCollection.new(clients).aggregated_race_demographics)}
 
     results = grouped_household_demographics.merge(grouped_client_demographics).merge(totals)
-    [results, clients.select(&:has_report_errors)]
+    [results, clients.select(&:has_report_errors).uniq.sort_by{|c| c.lastName || ''}]
   end
 
   # sums the demographic values for each of the households in the collection

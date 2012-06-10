@@ -13,3 +13,4 @@ db/ccstb_test.sqlite3-journal
 public/assets
 public/assets/**/*
 bin/
+vendor/gems/second_harvest_monthly_report

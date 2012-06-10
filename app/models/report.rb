@@ -7,8 +7,6 @@ class Report
   include ActiveModel::Conversion
   extend ActiveModel::Naming
 
-  attr_accessor :for_date, :title
-
   def initialize(attributes = {})
     attributes.each do |name, value|
       send("#{name}=", value)

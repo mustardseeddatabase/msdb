@@ -28,8 +28,8 @@ Feature: Receive donations without barcodes
     When I follow "No barcode"
     Then I should see a blank item row
     When I fill in autocomplete "description" with "pea"
-    Then I should see "Canned Peas"
-		When I click "Canned Peas"
+    Then I should see "Canned Peas(12 oz)"
+		When I click "Canned Peas(12 oz)"
 		And There should be 1 transaction item
     When I press "Save"
 		Then I should see "Donation saved"
@@ -50,8 +50,8 @@ Feature: Receive donations without barcodes
     When I follow "No barcode"
     Then I should see a blank item row
     When I fill in autocomplete "description" with "pan"
-    Then I should see "Bruce's Pancakes"
-		When I click "Bruce's Pancakes"
+    Then I should see "Bruce's Pancakes(12 oz)"
+		When I click "Bruce's Pancakes(12 oz)"
 		And There should be 1 transaction item
     When I press "Save"
 		Then I should see "Donation saved"
@@ -64,7 +64,7 @@ Feature: Receive donations without barcodes
     Given There is a no-barcode item with description "Canned Peas" in the database
     When I follow "No barcode"
     When I fill in autocomplete "description" with "pea"
-    Then I should see "Canned Peas"
+    Then I should see "Canned Peas(12 oz)"
     And I should see "New Item"
     When I click "New Item"
     Then I fill in the following fields:
@@ -87,7 +87,7 @@ Feature: Receive donations without barcodes
     Given There is a no-barcode item with description "Canned Peas" in the database
     When I follow "No barcode"
     When I fill in autocomplete "description" with "pea"
-    Then I should see "Canned Peas"
+    Then I should see "Canned Peas(12 oz)"
     And I should see "New Item"
     When I click "New Item"
     Then I fill in the following fields:
@@ -115,7 +115,7 @@ Feature: Receive donations without barcodes
     Given There is a no-barcode item with description "Canned Peas" in the database
     When I follow "No barcode"
     When I fill in "description" with "pea"
-    Then I should see "Canned Peas"
+    Then I should see "Canned Peas(12 oz)"
     And I should see "New Item"
     When I click "New Item"
     Then I fill in the following fields:
@@ -131,11 +131,12 @@ Feature: Receive donations without barcodes
     Then I should not see "Pea soup" within: "#found_in_db"
     And The donated items list length should be "0"
 
-@selenium
-  Scenario: Identify preferred no-barcode item
-    Given There is a no-barcode item with description "Canned Peas, giant" in the database
-    And   There is a no-barcode item with description "Canned Peas, petite" in the database, identified as preferred
-    When I follow "No barcode"
-    When I fill in "description" with "pea"
-    Then I should see "Canned Peas, petite"
-    And I should not see "Canned Peas, giant"
+# the request currently requests all items, not just preferred. This test is no longer valid.
+#@selenium
+  #Scenario: Identify preferred no-barcode item
+    #Given There is a no-barcode item with description "Canned Peas, giant" in the database
+    #And   There is a no-barcode item with description "Canned Peas, petite" in the database, identified as preferred
+    #When I follow "No barcode"
+    #When I fill in "description" with "pea"
+    #Then I should see "Canned Peas, petite"
+    #And I should not see "Canned Peas, giant"

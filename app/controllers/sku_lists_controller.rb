@@ -1,4 +1,6 @@
 class SkuListsController < ApplicationController
+  helper :sku_categories # should no be necessary, but otherwise problems in Rails 2.3.5, test mode
+
   def show
     barcodes = params[:barcodes] == "true"
     @categorized_items = Item.includes(:category => :limit_category)

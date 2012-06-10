@@ -33,9 +33,13 @@ Then /^The class of the limit bar for category "([^"]*)" should be "([^"]*)"$/ d
 end
 
 Given /^The categories, limit_categories and category_thresholds tables are fully populated$/ do
-  Category.find_by_sql("delete from sqlite_sequence where name='categories';")
-  LimitCategory.find_by_sql("delete from sqlite_sequence where name='limit_categories';")
-  CategoryThreshold.find_by_sql("delete from sqlite_sequence where name='category_thresholds';")
+  ActiveRecord::Base.connection.execute('TRUNCATE TABLE categories')
+  ActiveRecord::Base.connection.execute('TRUNCATE TABLE limit_categories')
+  ActiveRecord::Base.connection.execute('TRUNCATE TABLE category_thresholds')
+  # The following lines truncate the tables when the database is sqlite
+  #Category.find_by_sql("delete from sqlite_sequence where name='categories';")
+  #LimitCategory.find_by_sql("delete from sqlite_sequence where name='limit_categories';")
+  #CategoryThreshold.find_by_sql("delete from sqlite_sequence where name='category_thresholds';")
   categories =[ {:name =>"Food",      :limit_category_name => "Beverages"},
                 {:name =>"Food",      :limit_category_name => "Dairy"},
                 {:name =>"Food",      :limit_category_name => "Fruits"},

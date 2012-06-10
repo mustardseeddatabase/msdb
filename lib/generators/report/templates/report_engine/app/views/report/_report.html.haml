@@ -1,0 +1,5 @@
+%li
+  = form_for @object, :url => path(:format => 'docx'), :method => :get do |f|
+    report_text for:
+    = f.date_select :for_date, :discard_day => true, :end_year => Time.now.year
+    = f.submit "Generate report"

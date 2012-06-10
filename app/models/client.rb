@@ -90,7 +90,7 @@ class Client < ActiveRecord::Base
   end
 
   def last_first_name
-    [lastName || "(No last name)", firstName || "(No first name)"].join(" ")
+    [lastName || "(No last name)", firstName || "(No first name)"].join(", ")
   end
 
   def first_last_name

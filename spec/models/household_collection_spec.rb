@@ -14,7 +14,7 @@ describe "report_demographics class method" do
   context "when there are no households in the collection" do
     it "should return a hash with keys :new and :continued" do
       collection = HouseholdCollection.new([])
-      demographic = collection.report_demographics(Date.today)
+      demographic = collection.report_demographics(Date.today)[0]
       demographic.should be_kind_of(Hash)
       demographic.keys.should include(:new)
       demographic.keys.should include(:continued)
@@ -25,7 +25,7 @@ describe "report_demographics class method" do
 
     it "should return a hash of hashes with keys :household :children, :adults, :seniors, :AA, :AS, :WH, :HI, :UNK, :homeless" do
       collection = HouseholdCollection.new([])
-      demographic = collection.report_demographics(Date.today)
+      demographic = collection.report_demographics(Date.today)[0]
       demographic[:new][:children].should == 0
       demographic[:new][:household].should == 0
       demographic[:new][:adults].should == 0
@@ -73,7 +73,7 @@ describe "report_demographics class method" do
     end
 
     it "should return a hash with keys :new and :continued" do
-      demographic = @household_collection.report_demographics(1.month.ago)
+      demographic = @household_collection.report_demographics(1.month.ago)[0]
       demographic.should be_kind_of(Hash)
       demographic.keys.should include(:new)
       demographic.keys.should include(:continued)
@@ -81,7 +81,7 @@ describe "report_demographics class method" do
     end
 
     it "should return a hash of hashes with keys :children, :adults, :seniors, :AA, :AS, :WH, :HI, :UNK, :homeless" do
-      demographic = @household_collection.report_demographics(Date.today)
+      demographic = @household_collection.report_demographics(Date.today)[0]
       demographic[:new][:household].should == 1
       demographic[:new][:children].should == 1
       demographic[:new][:adults].should == 0

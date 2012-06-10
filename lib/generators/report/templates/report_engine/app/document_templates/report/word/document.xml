@@ -1,0 +1,516 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<w:document xmlns:wpc="http://schemas.microsoft.com/office/word/2010/wordprocessingCanvas" xmlns:mo="http://schemas.microsoft.com/office/mac/office/2008/main" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:mv="urn:schemas-microsoft-com:mac:vml" xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships" xmlns:m="http://schemas.openxmlformats.org/officeDocument/2006/math" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:wp14="http://schemas.microsoft.com/office/word/2010/wordprocessingDrawing" xmlns:wp="http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing" xmlns:w10="urn:schemas-microsoft-com:office:word" xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main" xmlns:w14="http://schemas.microsoft.com/office/word/2010/wordml" xmlns:wpg="http://schemas.microsoft.com/office/word/2010/wordprocessingGroup" xmlns:wpi="http://schemas.microsoft.com/office/word/2010/wordprocessingInk" xmlns:wne="http://schemas.microsoft.com/office/word/2006/wordml" xmlns:wps="http://schemas.microsoft.com/office/word/2010/wordprocessingShape" mc:Ignorable="w14 wp14">
+  <w:body>
+    <w:p w:rsidR="0077143B" w:rsidRDefault="0077143B" w:rsidP="0077143B">
+      <w:pPr>
+        <w:rPr>
+          <w:rFonts w:ascii="Arial" w:eastAsia="Times New Roman" w:hAnsi="Arial" w:cs="Arial"/>
+          <w:color w:val="000000"/>
+          <w:sz w:val="17"/>
+          <w:szCs w:val="17"/>
+        </w:rPr>
+      </w:pPr>
+      <w:r>
+        <w:rPr>
+          <w:noProof/>
+        </w:rPr>
+        <mc:AlternateContent>
+          <mc:Choice Requires="wps">
+            <w:drawing>
+              <wp:anchor distT="0" distB="0" distL="114300" distR="114300" simplePos="0" relativeHeight="251659264" behindDoc="0" locked="0" layoutInCell="1" allowOverlap="1" wp14:anchorId="5AF99EC3" wp14:editId="354C7D07">
+                <wp:simplePos x="0" y="0"/>
+                <wp:positionH relativeFrom="column">
+                  <wp:align>center</wp:align>
+                </wp:positionH>
+                <wp:positionV relativeFrom="paragraph">
+                  <wp:posOffset>-228600</wp:posOffset>
+                </wp:positionV>
+                <wp:extent cx="8229600" cy="1371600"/>
+                <wp:effectExtent l="0" t="0" r="152400" b="152400"/>
+                <wp:wrapTopAndBottom/>
+                <wp:docPr id="3" name="Text Box 3"/>
+                <wp:cNvGraphicFramePr/>
+                <a:graphic xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main">
+                  <a:graphicData uri="http://schemas.microsoft.com/office/word/2010/wordprocessingShape">
+                    <wps:wsp>
+                      <wps:cNvSpPr txBox="1"/>
+                      <wps:spPr>
+                        <a:xfrm>
+                          <a:off x="0" y="0"/>
+                          <a:ext cx="8229600" cy="1371600"/>
+                        </a:xfrm>
+                        <a:prstGeom prst="rect">
+                          <a:avLst/>
+                        </a:prstGeom>
+                        <a:solidFill>
+                          <a:schemeClr val="bg2">
+                            <a:lumMod val="75000"/>
+                          </a:schemeClr>
+                        </a:solidFill>
+                        <a:ln>
+                          <a:solidFill>
+                            <a:schemeClr val="bg2">
+                              <a:lumMod val="25000"/>
+                            </a:schemeClr>
+                          </a:solidFill>
+                        </a:ln>
+                        <a:effectLst>
+                          <a:outerShdw blurRad="50800" dist="88900" dir="2700000" algn="tl" rotWithShape="0">
+                            <a:srgbClr val="000000">
+                              <a:alpha val="43000"/>
+                            </a:srgbClr>
+                          </a:outerShdw>
+                        </a:effectLst>
+                        <a:extLst>
+                          <a:ext uri="{FAA26D3D-D897-4be2-8F04-BA451C77F1D7}">
+                            <ma14:placeholderFlag xmlns:ma14="http://schemas.microsoft.com/office/mac/drawingml/2011/main"/>
+                          </a:ext>
+                          <a:ext uri="{C572A759-6A51-4108-AA02-DFA0A04FC94B}">
+                            <ma14:wrappingTextBoxFlag xmlns:ma14="http://schemas.microsoft.com/office/mac/drawingml/2011/main"/>
+                          </a:ext>
+                        </a:extLst>
+                      </wps:spPr>
+                      <wps:style>
+                        <a:lnRef idx="0">
+                          <a:schemeClr val="accent1"/>
+                        </a:lnRef>
+                        <a:fillRef idx="0">
+                          <a:schemeClr val="accent1"/>
+                        </a:fillRef>
+                        <a:effectRef idx="0">
+                          <a:schemeClr val="accent1"/>
+                        </a:effectRef>
+                        <a:fontRef idx="minor">
+                          <a:schemeClr val="dk1"/>
+                        </a:fontRef>
+                      </wps:style>
+                      <wps:txbx>
+                        <w:txbxContent>
+                          <w:p w:rsidR="0077143B" w:rsidRDefault="0077143B" w:rsidP="0077143B">
+                            <w:pPr>
+                              <w:jc w:val="center"/>
+                              <w:rPr>
+                                <w:rFonts w:ascii="Arial" w:hAnsi="Arial"/>
+                                <w:color w:val="FFFFFF" w:themeColor="background1"/>
+                                <w:sz w:val="52"/>
+                                <w:szCs w:val="52"/>
+                              </w:rPr>
+                            </w:pPr>
+                            <w:r w:rsidRPr="0077143B">
+                              <w:rPr>
+                                <w:rFonts w:ascii="Arial" w:hAnsi="Arial"/>
+                                <w:color w:val="FFFFFF" w:themeColor="background1"/>
+                                <w:sz w:val="52"/>
+                                <w:szCs w:val="52"/>
+                              </w:rPr>
+                              <w:t xml:space="preserve">Monthly Report of </w:t>
+                            </w:r>
+                            <w:r>
+                              <w:rPr>
+                                <w:rFonts w:ascii="Arial" w:hAnsi="Arial"/>
+                                <w:color w:val="FFFFFF" w:themeColor="background1"/>
+                                <w:sz w:val="52"/>
+                                <w:szCs w:val="52"/>
+                              </w:rPr>
+                              <w:t>Financial Data</w:t>
+                            </w:r>
+                          </w:p>
+                          <w:p w:rsidR="0077143B" w:rsidRPr="0077143B" w:rsidRDefault="0077143B" w:rsidP="0077143B">
+                            <w:pPr>
+                              <w:jc w:val="center"/>
+                              <w:rPr>
+                                <w:rFonts w:ascii="Arial" w:hAnsi="Arial"/>
+                                <w:color w:val="FFFFFF" w:themeColor="background1"/>
+                                <w:sz w:val="52"/>
+                                <w:szCs w:val="52"/>
+                              </w:rPr>
+                            </w:pPr>
+                            <w:r>
+                              <w:rPr>
+                                <w:rFonts w:ascii="Arial" w:hAnsi="Arial"/>
+                                <w:color w:val="FFFFFF" w:themeColor="background1"/>
+                                <w:sz w:val="52"/>
+                                <w:szCs w:val="52"/>
+                              </w:rPr>
+                              <w:t><%= @month %></w:t>
+                            </w:r>
+                          </w:p>
+                        </w:txbxContent>
+                      </wps:txbx>
+                      <wps:bodyPr rot="0" spcFirstLastPara="0" vertOverflow="overflow" horzOverflow="overflow" vert="horz" wrap="square" lIns="91440" tIns="365760" rIns="91440" bIns="45720" numCol="1" spcCol="0" rtlCol="0" fromWordArt="0" anchor="t" anchorCtr="0" forceAA="0" compatLnSpc="1">
+                        <a:prstTxWarp prst="textNoShape">
+                          <a:avLst/>
+                        </a:prstTxWarp>
+                        <a:noAutofit/>
+                      </wps:bodyPr>
+                    </wps:wsp>
+                  </a:graphicData>
+                </a:graphic>
+                <wp14:sizeRelH relativeFrom="margin">
+                  <wp14:pctWidth>0</wp14:pctWidth>
+                </wp14:sizeRelH>
+                <wp14:sizeRelV relativeFrom="margin">
+                  <wp14:pctHeight>0</wp14:pctHeight>
+                </wp14:sizeRelV>
+              </wp:anchor>
+            </w:drawing>
+          </mc:Choice>
+          <mc:Fallback>
+            <w:pict>
+              <v:shapetype id="_x0000_t202" coordsize="21600,21600" o:spt="202" path="m0,0l0,21600,21600,21600,21600,0xe">
+                <v:stroke joinstyle="miter"/>
+                <v:path gradientshapeok="t" o:connecttype="rect"/>
+              </v:shapetype>
+              <v:shape id="Text Box 3" o:spid="_x0000_s1026" type="#_x0000_t202" style="position:absolute;margin-left:0;margin-top:-17.95pt;width:9in;height:108pt;z-index:251659264;visibility:visible;mso-wrap-style:square;mso-width-percent:0;mso-height-percent:0;mso-wrap-distance-left:9pt;mso-wrap-distance-top:0;mso-wrap-distance-right:9pt;mso-wrap-distance-bottom:0;mso-position-horizontal:center;mso-position-horizontal-relative:text;mso-position-vertical:absolute;mso-position-vertical-relative:text;mso-width-percent:0;mso-height-percent:0;mso-width-relative:margin;mso-height-relative:margin;v-text-anchor:top" o:gfxdata="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&#xA;di54bWxQSwUGAAAAAAQABADzAAAA3QYAAAAA&#xA;" fillcolor="#c4bc96 [2414]" strokecolor="#484329 [814]">
+                <v:shadow on="t" opacity="28180f" mv:blur="50800f" origin="-.5,-.5" offset="62862emu,62862emu"/>
+                <v:textbox inset=",28.8pt">
+                  <w:txbxContent>
+                    <w:p w:rsidR="0077143B" w:rsidRDefault="0077143B" w:rsidP="0077143B">
+                      <w:pPr>
+                        <w:jc w:val="center"/>
+                        <w:rPr>
+                          <w:rFonts w:ascii="Arial" w:hAnsi="Arial"/>
+                          <w:color w:val="FFFFFF" w:themeColor="background1"/>
+                          <w:sz w:val="52"/>
+                          <w:szCs w:val="52"/>
+                        </w:rPr>
+                      </w:pPr>
+                      <w:r w:rsidRPr="0077143B">
+                        <w:rPr>
+                          <w:rFonts w:ascii="Arial" w:hAnsi="Arial"/>
+                          <w:color w:val="FFFFFF" w:themeColor="background1"/>
+                          <w:sz w:val="52"/>
+                          <w:szCs w:val="52"/>
+                        </w:rPr>
+                        <w:t xml:space="preserve">Monthly Report of </w:t>
+                      </w:r>
+                      <w:r>
+                        <w:rPr>
+                          <w:rFonts w:ascii="Arial" w:hAnsi="Arial"/>
+                          <w:color w:val="FFFFFF" w:themeColor="background1"/>
+                          <w:sz w:val="52"/>
+                          <w:szCs w:val="52"/>
+                        </w:rPr>
+                        <w:t>Financial Data</w:t>
+                      </w:r>
+                    </w:p>
+                    <w:p w:rsidR="0077143B" w:rsidRPr="0077143B" w:rsidRDefault="0077143B" w:rsidP="0077143B">
+                      <w:pPr>
+                        <w:jc w:val="center"/>
+                        <w:rPr>
+                          <w:rFonts w:ascii="Arial" w:hAnsi="Arial"/>
+                          <w:color w:val="FFFFFF" w:themeColor="background1"/>
+                          <w:sz w:val="52"/>
+                          <w:szCs w:val="52"/>
+                        </w:rPr>
+                      </w:pPr>
+                      <w:r>
+                        <w:rPr>
+                          <w:rFonts w:ascii="Arial" w:hAnsi="Arial"/>
+                          <w:color w:val="FFFFFF" w:themeColor="background1"/>
+                          <w:sz w:val="52"/>
+                          <w:szCs w:val="52"/>
+                        </w:rPr>
+                        <w:t><%= @month %></w:t>
+                      </w:r>
+                    </w:p>
+                  </w:txbxContent>
+                </v:textbox>
+                <w10:wrap type="topAndBottom"/>
+              </v:shape>
+            </w:pict>
+          </mc:Fallback>
+        </mc:AlternateContent>
+      </w:r>
+    </w:p>
+    <w:p w:rsidR="0077143B" w:rsidRDefault="0077143B" w:rsidP="0077143B">
+      <w:pPr>
+        <w:rPr>
+          <w:rFonts w:ascii="Arial" w:eastAsia="Times New Roman" w:hAnsi="Arial" w:cs="Arial"/>
+          <w:color w:val="000000"/>
+          <w:sz w:val="17"/>
+          <w:szCs w:val="17"/>
+        </w:rPr>
+      </w:pPr>
+    </w:p>
+    <w:p w:rsidR="0077143B" w:rsidRDefault="0077143B" w:rsidP="0077143B">
+      <w:pPr>
+        <w:rPr>
+          <w:rFonts w:ascii="Arial" w:eastAsia="Times New Roman" w:hAnsi="Arial" w:cs="Arial"/>
+          <w:color w:val="000000"/>
+          <w:sz w:val="17"/>
+          <w:szCs w:val="17"/>
+        </w:rPr>
+      </w:pPr>
+    </w:p>
+    <w:p w:rsidR="0077143B" w:rsidRDefault="0077143B" w:rsidP="0077143B">
+      <w:pPr>
+        <w:rPr>
+          <w:rFonts w:ascii="Arial" w:eastAsia="Times New Roman" w:hAnsi="Arial" w:cs="Arial"/>
+          <w:color w:val="000000"/>
+          <w:sz w:val="17"/>
+          <w:szCs w:val="17"/>
+        </w:rPr>
+      </w:pPr>
+    </w:p>
+    <w:tbl>
+      <w:tblPr>
+        <w:tblStyle w:val="TableGrid"/>
+        <w:tblW w:w="0" w:type="auto"/>
+        <w:tblLook w:val="04A0" w:firstRow="1" w:lastRow="0" w:firstColumn="1" w:lastColumn="0" w:noHBand="0" w:noVBand="1"/>
+      </w:tblPr>
+      <w:tblGrid>
+        <w:gridCol w:w="6228"/>
+        <w:gridCol w:w="6228"/>
+      </w:tblGrid>
+      <w:tr w:rsidR="0077143B" w:rsidTr="0077143B">
+        <w:tc>
+          <w:tcPr>
+            <w:tcW w:w="6228" w:type="dxa"/>
+          </w:tcPr>
+          <w:p w:rsidR="0077143B" w:rsidRDefault="0077143B" w:rsidP="0077143B">
+            <w:pPr>
+              <w:rPr>
+                <w:rFonts w:ascii="Times" w:eastAsia="Times New Roman" w:hAnsi="Times" w:cs="Times New Roman"/>
+                <w:sz w:val="20"/>
+                <w:szCs w:val="20"/>
+              </w:rPr>
+            </w:pPr>
+            <w:r>
+              <w:rPr>
+                <w:rFonts w:ascii="Times" w:eastAsia="Times New Roman" w:hAnsi="Times" w:cs="Times New Roman"/>
+                <w:sz w:val="20"/>
+                <w:szCs w:val="20"/>
+              </w:rPr>
+              <w:t>Month’s receivables</w:t>
+            </w:r>
+          </w:p>
+        </w:tc>
+        <w:tc>
+          <w:tcPr>
+            <w:tcW w:w="6228" w:type="dxa"/>
+          </w:tcPr>
+          <w:p w:rsidR="0077143B" w:rsidRDefault="0077143B" w:rsidP="0077143B">
+            <w:pPr>
+              <w:rPr>
+                <w:rFonts w:ascii="Times" w:eastAsia="Times New Roman" w:hAnsi="Times" w:cs="Times New Roman"/>
+                <w:sz w:val="20"/>
+                <w:szCs w:val="20"/>
+              </w:rPr>
+            </w:pPr>
+            <w:r>
+              <w:rPr>
+                <w:rFonts w:ascii="Times" w:eastAsia="Times New Roman" w:hAnsi="Times" w:cs="Times New Roman"/>
+                <w:sz w:val="20"/>
+                <w:szCs w:val="20"/>
+              </w:rPr>
+              <w:t><%= @month_receivables %></w:t>
+            </w:r>
+          </w:p>
+        </w:tc>
+      </w:tr>
+      <w:tr w:rsidR="0077143B" w:rsidTr="0077143B">
+        <w:tc>
+          <w:tcPr>
+            <w:tcW w:w="6228" w:type="dxa"/>
+          </w:tcPr>
+          <w:p w:rsidR="0077143B" w:rsidRDefault="0077143B" w:rsidP="0077143B">
+            <w:pPr>
+              <w:rPr>
+                <w:rFonts w:ascii="Times" w:eastAsia="Times New Roman" w:hAnsi="Times" w:cs="Times New Roman"/>
+                <w:sz w:val="20"/>
+                <w:szCs w:val="20"/>
+              </w:rPr>
+            </w:pPr>
+            <w:r>
+              <w:rPr>
+                <w:rFonts w:ascii="Times" w:eastAsia="Times New Roman" w:hAnsi="Times" w:cs="Times New Roman"/>
+                <w:sz w:val="20"/>
+                <w:szCs w:val="20"/>
+              </w:rPr>
+              <w:t>Month’s expenses</w:t>
+            </w:r>
+          </w:p>
+        </w:tc>
+        <w:tc>
+          <w:tcPr>
+            <w:tcW w:w="6228" w:type="dxa"/>
+          </w:tcPr>
+          <w:p w:rsidR="0077143B" w:rsidRDefault="0077143B" w:rsidP="0077143B">
+            <w:pPr>
+              <w:rPr>
+                <w:rFonts w:ascii="Times" w:eastAsia="Times New Roman" w:hAnsi="Times" w:cs="Times New Roman"/>
+                <w:sz w:val="20"/>
+                <w:szCs w:val="20"/>
+              </w:rPr>
+            </w:pPr>
+            <w:r>
+              <w:rPr>
+                <w:rFonts w:ascii="Times" w:eastAsia="Times New Roman" w:hAnsi="Times" w:cs="Times New Roman"/>
+                <w:sz w:val="20"/>
+                <w:szCs w:val="20"/>
+              </w:rPr>
+              <w:t><%= @month_expenses %></w:t>
+            </w:r>
+          </w:p>
+        </w:tc>
+      </w:tr>
+      <w:tr w:rsidR="0077143B" w:rsidTr="0077143B">
+        <w:tc>
+          <w:tcPr>
+            <w:tcW w:w="6228" w:type="dxa"/>
+          </w:tcPr>
+          <w:p w:rsidR="0077143B" w:rsidRDefault="0077143B" w:rsidP="0077143B">
+            <w:pPr>
+              <w:rPr>
+                <w:rFonts w:ascii="Times" w:eastAsia="Times New Roman" w:hAnsi="Times" w:cs="Times New Roman"/>
+                <w:sz w:val="20"/>
+                <w:szCs w:val="20"/>
+              </w:rPr>
+            </w:pPr>
+            <w:r>
+              <w:rPr>
+                <w:rFonts w:ascii="Times" w:eastAsia="Times New Roman" w:hAnsi="Times" w:cs="Times New Roman"/>
+                <w:sz w:val="20"/>
+                <w:szCs w:val="20"/>
+              </w:rPr>
+              <w:t>Beginning of month inventory value</w:t>
+            </w:r>
+          </w:p>
+        </w:tc>
+        <w:tc>
+          <w:tcPr>
+            <w:tcW w:w="6228" w:type="dxa"/>
+          </w:tcPr>
+          <w:p w:rsidR="0077143B" w:rsidRDefault="0077143B" w:rsidP="0077143B">
+            <w:pPr>
+              <w:rPr>
+                <w:rFonts w:ascii="Times" w:eastAsia="Times New Roman" w:hAnsi="Times" w:cs="Times New Roman"/>
+                <w:sz w:val="20"/>
+                <w:szCs w:val="20"/>
+              </w:rPr>
+            </w:pPr>
+            <w:r>
+              <w:rPr>
+                <w:rFonts w:ascii="Times" w:eastAsia="Times New Roman" w:hAnsi="Times" w:cs="Times New Roman"/>
+                <w:sz w:val="20"/>
+                <w:szCs w:val="20"/>
+              </w:rPr>
+              <w:t><%= @month_beginning_inventory %></w:t>
+            </w:r>
+          </w:p>
+        </w:tc>
+      </w:tr>
+      <w:tr w:rsidR="0077143B" w:rsidTr="0077143B">
+        <w:tc>
+          <w:tcPr>
+            <w:tcW w:w="6228" w:type="dxa"/>
+          </w:tcPr>
+          <w:p w:rsidR="0077143B" w:rsidRDefault="0077143B" w:rsidP="0077143B">
+            <w:pPr>
+              <w:rPr>
+                <w:rFonts w:ascii="Times" w:eastAsia="Times New Roman" w:hAnsi="Times" w:cs="Times New Roman"/>
+                <w:sz w:val="20"/>
+                <w:szCs w:val="20"/>
+              </w:rPr>
+            </w:pPr>
+            <w:r>
+              <w:rPr>
+                <w:rFonts w:ascii="Times" w:eastAsia="Times New Roman" w:hAnsi="Times" w:cs="Times New Roman"/>
+                <w:sz w:val="20"/>
+                <w:szCs w:val="20"/>
+              </w:rPr>
+              <w:t>End of month inventory</w:t>
+            </w:r>
+          </w:p>
+        </w:tc>
+        <w:tc>
+          <w:tcPr>
+            <w:tcW w:w="6228" w:type="dxa"/>
+          </w:tcPr>
+          <w:p w:rsidR="0077143B" w:rsidRDefault="0077143B" w:rsidP="0077143B">
+            <w:pPr>
+              <w:rPr>
+                <w:rFonts w:ascii="Times" w:eastAsia="Times New Roman" w:hAnsi="Times" w:cs="Times New Roman"/>
+                <w:sz w:val="20"/>
+                <w:szCs w:val="20"/>
+              </w:rPr>
+            </w:pPr>
+            <w:r>
+              <w:rPr>
+                <w:rFonts w:ascii="Times" w:eastAsia="Times New Roman" w:hAnsi="Times" w:cs="Times New Roman"/>
+                <w:sz w:val="20"/>
+                <w:szCs w:val="20"/>
+              </w:rPr>
+              <w:t><%= @end_of_month_inventory %></w:t>
+            </w:r>
+          </w:p>
+        </w:tc>
+      </w:tr>
+      <w:tr w:rsidR="0077143B" w:rsidTr="0077143B">
+        <w:tc>
+          <w:tcPr>
+            <w:tcW w:w="6228" w:type="dxa"/>
+          </w:tcPr>
+          <w:p w:rsidR="0077143B" w:rsidRDefault="0077143B" w:rsidP="0077143B">
+            <w:pPr>
+              <w:rPr>
+                <w:rFonts w:ascii="Times" w:eastAsia="Times New Roman" w:hAnsi="Times" w:cs="Times New Roman"/>
+                <w:sz w:val="20"/>
+                <w:szCs w:val="20"/>
+              </w:rPr>
+            </w:pPr>
+            <w:r>
+              <w:rPr>
+                <w:rFonts w:ascii="Times" w:eastAsia="Times New Roman" w:hAnsi="Times" w:cs="Times New Roman"/>
+                <w:sz w:val="20"/>
+                <w:szCs w:val="20"/>
+              </w:rPr>
+              <w:t>Average number of days on the market</w:t>
+            </w:r>
+          </w:p>
+        </w:tc>
+        <w:tc>
+          <w:tcPr>
+            <w:tcW w:w="6228" w:type="dxa"/>
+          </w:tcPr>
+          <w:p w:rsidR="0077143B" w:rsidRDefault="0077143B" w:rsidP="0077143B">
+            <w:pPr>
+              <w:rPr>
+                <w:rFonts w:ascii="Times" w:eastAsia="Times New Roman" w:hAnsi="Times" w:cs="Times New Roman"/>
+                <w:sz w:val="20"/>
+                <w:szCs w:val="20"/>
+              </w:rPr>
+            </w:pPr>
+            <w:r>
+              <w:rPr>
+                <w:rFonts w:ascii="Times" w:eastAsia="Times New Roman" w:hAnsi="Times" w:cs="Times New Roman"/>
+                <w:sz w:val="20"/>
+                <w:szCs w:val="20"/>
+              </w:rPr>
+              <w:t><%= @avg_days %></w:t>
+            </w:r>
+            <w:bookmarkStart w:id="0" w:name="_GoBack"/>
+            <w:bookmarkEnd w:id="0"/>
+          </w:p>
+        </w:tc>
+      </w:tr>
+    </w:tbl>
+    <w:p w:rsidR="0077143B" w:rsidRPr="0077143B" w:rsidRDefault="0077143B" w:rsidP="0077143B">
+      <w:pPr>
+        <w:rPr>
+          <w:rFonts w:ascii="Times" w:eastAsia="Times New Roman" w:hAnsi="Times" w:cs="Times New Roman"/>
+          <w:sz w:val="20"/>
+          <w:szCs w:val="20"/>
+        </w:rPr>
+      </w:pPr>
+    </w:p>
+    <w:p w:rsidR="00E90715" w:rsidRDefault="00E90715"/>
+    <w:sectPr w:rsidR="00E90715" w:rsidSect="00B32A48">
+      <w:pgSz w:w="15840" w:h="12240" w:orient="landscape"/>
+      <w:pgMar w:top="1440" w:right="1800" w:bottom="1440" w:left="1800" w:header="708" w:footer="708" w:gutter="0"/>
+      <w:cols w:space="708"/>
+      <w:printerSettings r:id="rId5"/>
+    </w:sectPr>
+  </w:body>
+</w:document>

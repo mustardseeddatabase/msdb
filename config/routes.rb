@@ -2,7 +2,9 @@ Msdb::Application.routes.draw do
   resources :limit_categories do
     put 'update', :on => :collection
   end
-  match '/reports/:title.:format', :to => "reports#show", :via => :get, :as => 'report'
+  #namespace :reports do
+    #resource :second_harvest_report, :only => :show
+  #end
   resources :reports, :only => :index
   resources :inventories
   resources :distributions
@@ -45,6 +47,5 @@ Msdb::Application.routes.draw do
 
   # this route is specified as it's used in authengine as the place
   # where logged-in users first land
-  #match 'home', :to => 'households#index'
   match 'home', :to => 'home#index'
 end

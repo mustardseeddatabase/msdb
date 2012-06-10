@@ -1,6 +1,7 @@
 # Manages the workflow for adding and removing items from the preferred sku list
 # Items may also be edited and the user returned to the sku list after edit
 class SkuListItemsController < ApplicationController
+  helper :options
   # select an item for adding to the list
   def new
   end

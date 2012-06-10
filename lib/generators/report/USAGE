@@ -1,0 +1,29 @@
+Description:
+    Generates a blank report generator rails engine in vendor/gems. This gives you the file structure to follow for your own report generator, so just modify the generated engine to produce the reports you want.
+
+Example:
+    rails generate report summary_report
+
+    This will create:
+      vendor
+        |- gems
+            |- summary_report
+                    |- app
+                    |   |- controllers
+                    |   |     |- summary_report
+                    |   |             |- reports_controller.rb
+                    |   |- models
+                    |   |     |- summary_report
+                    |   |             |- report.rb
+                    |   |- views
+                    |         |- summary_report
+                    |               |- _summary_report.html.haml
+                    |- config
+                    |   |- application.rb
+                    |   |- routes.rb
+                    |- lib
+                    |   |- summary_report.rb
+                    |   |- summary_report
+                    |           |- engine.rb
+                    |           |- version.rb
+                    |- summary_report.gemspec

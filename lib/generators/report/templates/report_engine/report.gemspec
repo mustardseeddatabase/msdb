@@ -1,16 +1,16 @@
 # -*- encoding: utf-8 -*-
 $:.push File.expand_path("../lib", __FILE__)
-require "db_check/version"
+require "engine_name/version"
 
 Gem::Specification.new do |s|
-  s.name        = "db_check"
-  s.version     = DbCheck::VERSION
+  s.name        = "engine_name"
+  s.version     = ENGINE_NAME::VERSION
   s.platform    = Gem::Platform::RUBY
-  s.authors     = ["Les Nightingill"]
-  s.email       = ["codehacker@comcast.net"]
+  s.authors     = ["automatically generated"]
+  s.email       = ["auto@example.net"]
   s.homepage    = ""
-  s.summary     = %q{A variety of database checking tools}
-  s.description = %q{A home for database tools to avoid cluttering up the application}
+  s.summary     = %q{Report generation engine}
+  s.description = %q{Includes all the controllers, models, routes and templates to produce MS Word (or other) reports}
 
   s.files         = `git ls-files`.split("\n")
   s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")

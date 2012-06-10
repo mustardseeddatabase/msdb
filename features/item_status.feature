@@ -53,8 +53,8 @@ Feature: Item status
 		When I follow "No barcode"
     Then I should see a blank item row
     When I fill in autocomplete "description" with "bag"
-    Then I should see "Rutabaga"
-		When I click "Rutabaga"
+    Then I should see "Rutabaga(12 oz)"
+		When I click "Rutabaga(12 oz)"
 		Then I should see "Edit" for the item "Rutabaga"
 		When I follow "Edit"
 		And I fill in "weight_oz" with "555"

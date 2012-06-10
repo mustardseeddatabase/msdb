@@ -1,0 +1,62 @@
+%li
+  = form_for @second_harvest_report, :url => second_harvest_monthly_report_path(:format => 'docx'), :method => :get do |f|
+    Second Harvest monthly report for:
+    = f.date_select :for_date, :discard_day => true, :end_year => Time.now.year
+    = f.submit "Generate report"
+  = form_for @second_harvest_report, :url => second_harvest_monthly_report_path(:format => 'json'), :method => :get, :remote => true, :html => {:id => 'error_form'} do |f|
+    = hidden_field_tag 'report[for_date(1i)]', 1.month.ago.year
+    = hidden_field_tag 'report[for_date(2i)]', 1.month.ago.month
+    = hidden_field_tag 'report[for_date(3i)]', 1.month.ago.day
+    %p
+      = link_to_function "Show errors", 'fetch_report_errors(this)'
+      %img{:src => '/assets/ajax-loader.gif', :style => 'margin-left:20px; position:relative; top:4px; display:none', :id => :spinner}
+
+
+  :javascript
+    var fetch_report_errors = function(link){
+      $('#spinner').show()
+      var form = $(link).closest('form')
+      form.submit()
+    }
+
+    $(function(){
+      $('#error_form').on('ajax:success', function(event,data,status,xhr){show_errors(event,data,status,xhr)})
+      $('#report_for_date_1i').on('change', function(element){update_ajax_form(element)})
+      $('#report_for_date_2i').on('change', function(element){update_ajax_form(element)})
+    })
+
+    var update_ajax_form = function(element){
+      var target = element.target.id + "_"
+      $('#'+target).val(element.target.value)
+      }
+
+    var show_errors = function(event,data,status,xhr){
+        $('#spinner').hide()
+        var client_template = _.template($('#client_template').html())
+        if(data.length == 0){
+          $('#errors').html("<p>There were no data errors for this report</p>")}
+        else{
+          $('#errors').html($('#error_table_template').html())
+          for(var i = 0; i<data.length; i++){
+            $('#error_table tbody').append(client_template({client:data[i]}))
+          }
+        }
+      }
+
+  %script#error_table_template{:type => 'text/x-jquery-templ'}
+    %h2#error_heading<
+      The following data errors prevent an accurate<br/>report from being generated:
+    %table#error_table
+      %tr
+        %th Client
+        %th Missing<br/>gender
+        %th Missing<br/>race
+        %th Missing<br/>or errored<br/>birthdate
+
+  %script#client_template{:type => 'text/x-jquery-templ'}
+    %tr
+      %td <%= client.first_last_name %>
+      %td{:style => 'text-align:center'} <%= client.missing_gender_flag %>
+      %td{:style => 'text-align:center'} <%= client.missing_race_flag %>
+      %td{:style => 'text-align:center'} <%= client.missing_birthdate_flag %>
+

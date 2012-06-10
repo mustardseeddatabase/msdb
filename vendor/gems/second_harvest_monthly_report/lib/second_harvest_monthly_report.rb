@@ -1,0 +1,1 @@
+require 'second_harvest_monthly_report/engine'

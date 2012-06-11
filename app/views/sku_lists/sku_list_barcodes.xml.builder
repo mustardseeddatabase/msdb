@@ -4,7 +4,7 @@ xml.w :document, document_namespaces do # document_namespaces helper comes from 
   xml.w :body do
 
     xml << heading1("SKU List Barcodes")
-    footer = Footer.new(render :partial => 'footer.xml')
+    footer = Footer.new(render :partial => 'footer', :formats => [:xml])
     xml << section_properties(:include_footer => true)
 
     @categorized_items.sort.each do |category,items|

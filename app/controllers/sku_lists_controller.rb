@@ -11,7 +11,7 @@ class SkuListsController < ApplicationController
     respond_to do |format|
       format.html
       if barcodes
-        format.docx { render :docx => "sku_list_barcodes", :template => "sku_lists/sku_list_barcodes.xml" }
+        format.docx { render :docx => "sku_list_barcodes", :template => "sku_lists/sku_list_barcodes", :formats => [:xml], :handlers => [:builder] }
       else
         format.docx { render :docx => "sku_list"} # renders show.docx.builder
       end

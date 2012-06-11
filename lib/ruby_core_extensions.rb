@@ -1,4 +1,5 @@
 class String
+  # creates a barcode image of the string at the passed-in file location
   def create_barcode_image(file_path)
     file_name = File.basename(file_path)
     cache = Rails.root.join('tmp', 'cache', 'barcode_images')

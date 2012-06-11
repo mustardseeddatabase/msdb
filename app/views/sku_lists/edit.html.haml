@@ -14,20 +14,19 @@
         %td
           = form_for item, :url => sku_list_item_path(item), :method => :delete, :remote => true do |f|
             = f.hidden_field :preferred, :value => false
-            = link_to_function "Remove", "submit_form()"
+            = link_to "Remove", '#', :id => "remove_#{item.id}"
 
 = link_to "Add an item", new_sku_list_item_path
 
 :javascript
-  var submit_form = function(){
-    $(event.target).closest('form').submit()
-    return false;
-  }
-
   $(function(){
     $('[id ^= "edit_item"]').on("ajax:success", function() {
         var row = $(this).closest('tr')
         row.fadeOut();
       });
     $('[id ^= "edit_item"]').on("ajax:error", function() { /* what to do? */});
+    $('[id ^= "remove"]').on("click", function (event) {
+      $(event.target).closest('form').submit()
+      return false;
+    })
   })

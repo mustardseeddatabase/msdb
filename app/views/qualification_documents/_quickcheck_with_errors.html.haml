@@ -71,4 +71,4 @@
                 return true;
               }});
   $('#docfile_input').click(function(){$('#file_message').hide()});
-  #{(render :partial => 'quickcheck_client_script.js.erb').html_safe}
+  #{(render :partial => 'quickcheck_client_script', :handlers => [:erb], :formats => [:js]).html_safe}

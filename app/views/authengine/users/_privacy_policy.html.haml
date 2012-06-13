@@ -1,5 +1,5 @@
 .user_info
-  = button_to_function 'Next step...', "check_user_info()"
+  = button_to 'Next step...', '#', :onclick => "check_user_info()"
 #privacy_policy{:style=>"display:none; width:600px"}
   %h2 Please read the #{APPLICATION_NAME} Privacy Policy and indicate your commitment to comply by checking all the checkboxes
   %p  #{ORGANIZATION_NAME} Privacy Policy

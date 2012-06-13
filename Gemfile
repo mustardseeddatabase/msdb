@@ -13,7 +13,8 @@ gem 'jquery-rails'
 gem 'haml', :git => 'git://github.com/infbio/haml.git', :branch => 'form_for_fix' # fixes a form_for issue in haml
 gem 'haml-rails'
 gem 'message_block', :git => 'git://github.com/lazylester/message_block.git'
-gem 'authengine', :git => 'git://github.com/mustardseeddatabase/authengine.git'
+#gem 'authengine', :git => 'git://github.com/mustardseeddatabase/authengine.git'
+gem 'authengine', :path => '/Users/lesnightingill/Code/authengine'
 gem 'db_check', :path => 'vendor/gems/db_check'
 gem 'second_harvest_monthly_report', :path => 'vendor/gems/second_harvest_monthly_report'
 gem 'carrierwave'
@@ -66,4 +67,6 @@ group :development, :test do
   gem 'jasminerice'
 
   gem 'test-unit', :require => 'test/unit' # not actually used! included only to workaround pesky bug, see http://stackoverflow.com/questions/9523931/rake-dbtestprepare-in-rails-3-app-fails-with-file-not-found
+
+  gem 'email_spec'
 end

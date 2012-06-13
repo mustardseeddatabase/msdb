@@ -35,7 +35,7 @@ Then /^The "([^"]*)" item in the database should (not )?be designated as preferr
 end
 
 Then /^I should not see any items in the preferred sku list$/ do
-  sleep(0.2) # as it has a fade out effect
+  sleep(0.5) # as it has a fade out effect
   page.all('.edit_item', :visible => true).size.should be_zero
 end
 

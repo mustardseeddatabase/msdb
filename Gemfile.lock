@@ -21,6 +21,23 @@ GIT
       rails (>= 3.0.0)
 
 GIT
+  remote: git://github.com/mustardseeddatabase/authengine.git
+  revision: 6801421d87c793a58cf9b8de286f52ad9220bea5
+  specs:
+    authengine (0.0.1)
+      capybara
+      database_cleaner
+      factory_girl_rails
+      faker
+      flexmock
+      haml
+      message_block
+      rails (~> 3.2.5)
+      rspec (>= 2.0.0)
+      rspec-rails (>= 2.0.0)
+      sqlite3-ruby
+
+GIT
   remote: git://github.com/mustardseeddatabase/doccex.git
   revision: 1e4479a944fe38b38ba5825a9636b5b0c828dc11
   specs:
@@ -55,22 +72,6 @@ GIT
     capybara-webkit (0.12.0)
       capybara (>= 1.0.0, < 1.2)
       json
-
-PATH
-  remote: /Users/lesnightingill/Code/authengine
-  specs:
-    authengine (0.0.1)
-      capybara
-      database_cleaner
-      factory_girl_rails
-      faker
-      flexmock
-      haml
-      message_block
-      rails (~> 3.2.5)
-      rspec (>= 2.0.0)
-      rspec-rails (>= 2.0.0)
-      sqlite3-ruby
 
 PATH
   remote: vendor/gems/db_check

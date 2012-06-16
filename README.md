@@ -131,3 +131,20 @@ The form in this partial requires a model instance, so in the reports_controller
 If you reboot your server and click on the button to generate a report, you'll see an error message indicating that permissions have not yet been configured for this action.
 
 Therefore you must now go to the admin page and manage access privileges for the new report. The route you will be configuring is my_report/reports#show.
+
+== Deployment tips
+
+For performance reasons it's a good idea to cache the barcode images that are generated in the sku list with barcodes document. If you are using Capistrano, you can use this:
+
+    # in config/deploy.rb
+    namespace :application do
+      desc "symlinks the barcode images to a cache in the shared directory that survives code update"
+      task :symlink_barcode_image_cache do
+        run "mkdir -p #{release_path}/tmp/cache"
+        run "ln -nfs #{shared_path}/barcode_images #{release_path}/tmp/cache/barcode_images"
+      end
+    end
+
+    after "deploy:assets:precompile", "application:symlink_barcode_image_cache"
+
+(it's linked after precompiling because the images are created in tmp/cache, and assets:precompile apparently clobbers this during precompiling!)

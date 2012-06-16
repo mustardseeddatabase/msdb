@@ -8,12 +8,9 @@ vendor/bundle/
 gem_graph.png
 public/uploads
 chromedriver.log
-config/environments/env.rb
-lib/local_constants.rb
-lib/tasks/db_import.rake
-lib/tasks/check_import_files.rake
 db/ccstb_test.sqlite3-journal
 .sass-cache/
 public/assets
 public/assets/**/*
 bin/
+vendor/gems/*_report

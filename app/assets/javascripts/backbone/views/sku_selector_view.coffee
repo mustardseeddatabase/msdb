@@ -27,18 +27,22 @@ class Application.SkuSelectorView extends Backbone.View
   # this scenario is where item fields are updating as user moves focus up/down the 
   # autcomplete results list
   update: ->
+    category_id = @item.get('category_id')
+    if category_id
+      descriptor = categories.get(category_id).get('descriptor')
     $('#description_autocomplete td#sku',            @el).text(         @item.get('sku'))
     $('#description_autocomplete input#description', @el).attr('value', @item.get('description'))
-    $('#description_autocomplete td#weight_oz',      @el).text(         @item.get('weight_oz'))
-    $('#description_autocomplete td#count',          @el).text(         @item.get('count'))
-    $('#description_autocomplete td#category',       @el).text(categories.get(@item.get('category_id')).get('descriptor'))
+    $('#description_autocomplete td#weight_oz',      @el).text(         @item.get('weight_oz') || "")
+    $('#description_autocomplete td#count',          @el).text(         @item.get('count') || "")
+    $('#description_autocomplete td#category',       @el).text(descriptor || "")
     $('#description_autocomplete td#qoh',            @el).text(         @item.get('qoh'))
 
-  configure_autocomplete: ($el, context) ->
+  configure_autocomplete: ($el, context, scope = 'all') ->
     $('input#description',$el).autocomplete
-      url           : '/items/autocomplete'
+      url           : '/sku_items/autocomplete'
       minChars      : 3
       paramName     : 'description'
+      extraParams   : { scope : scope}
       onItemSelect  : (item) -> context.select_item(item)
       onItemFocus   : (item) -> context.show_item_details(item) # as focus moves up/down the result list, populate the view with details other than description
       showResult    : (value, data) -> " data-object='"+_(data).escape()+"'>"+value # autocompleter internal callback used to incorporate item attributes into results list

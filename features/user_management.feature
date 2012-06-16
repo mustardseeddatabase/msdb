@@ -38,6 +38,14 @@ Feature: Administration portal
     And I should see "disable"
     And I should see "delete"
     And I should see "edit roles"
+    And "bigal@acme.com" should receive an email
+    When I open the email
+    Then I should see "An account has been created" in the email body
+    When I follow "here" in the email
+    Then I should see "Welcome Albert Einstein"
+    And I should see "Select a login name"
+    And I should see "Select a login password"
+
 
   Scenario: Add a user with an email address that is already in the db
     Given I am on the authengine/users#index page

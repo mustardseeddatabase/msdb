@@ -74,3 +74,6 @@ Capybara.default_wait_time = 5
 
 require 'factory_girl_rails'
 Dir.new(File.join(Rails.root,'spec','factories')).entries.reject{|f| f.match(/^./)}.each { |f| require f }
+
+require 'email_spec'
+require 'email_spec/cucumber'

@@ -12,12 +12,10 @@ class Application.TransactionItemsView extends Backbone.View
     $(@el).html(@template)
     @collection.each((transaction_item) =>
       if transaction_item == @collection.at(0)
-        console.log "mutable item"
         view = new Application.MutableTransactionItemView
           model      : transaction_item
           collection : @collection
       else
-        console.log "immutable item"
         view = new Application.ImmutableTransactionItemView
           model      : transaction_item
           collection : @collection

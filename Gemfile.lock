@@ -7,7 +7,7 @@ GIT
 
 GIT
   remote: git://github.com/infbio/haml_assets.git
-  revision: de7aec4114427fdb385c01de85c8fcf89c8162f4
+  revision: 40bde4fa4556f26f09f61a3d7bf89091bb2d3bbd
   specs:
     haml_assets (0.1.0)
       haml
@@ -22,7 +22,7 @@ GIT
 
 GIT
   remote: git://github.com/mustardseeddatabase/authengine.git
-  revision: ee5434e2a9594ebb46566d579443cc61b580030e
+  revision: 6801421d87c793a58cf9b8de286f52ad9220bea5
   specs:
     authengine (0.0.1)
       capybara
@@ -32,16 +32,31 @@ GIT
       flexmock
       haml
       message_block
-      rails (~> 3.1.3)
+      rails (~> 3.2.5)
       rspec (>= 2.0.0)
       rspec-rails (>= 2.0.0)
       sqlite3-ruby
 
 GIT
-  remote: git://github.com/sstephenson/ruby-ejs.git
-  revision: 6cddc75651537d1c1e5f26e099fdc010dd5ca842
+  remote: git://github.com/mustardseeddatabase/doccex.git
+  revision: c60d097ac0582091ce08a7c7f5150fc92c98beb9
   specs:
-    ejs (1.0.0)
+    doccex (0.0.1)
+      haml
+      rails (~> 3.2.5)
+
+GIT
+  remote: git://github.com/mustardseeddatabase/rbarcode.git
+  revision: ee675879f17c77bd1d2047e5302fc168ec1013b9
+  specs:
+    rbarcode (0.0.1)
+      rmagick
+
+GIT
+  remote: git://github.com/sstephenson/ruby-ejs.git
+  revision: 674a334be4d17e4cee9eecd60fc11733eccfeeb1
+  specs:
+    ejs (1.1.1)
 
 GIT
   remote: git://github.com/stympy/faker.git
@@ -52,9 +67,9 @@ GIT
 
 GIT
   remote: git://github.com/thoughtbot/capybara-webkit.git
-  revision: c2a2bd03761b25ae9e63f22935c8107f2b52f593
+  revision: 5b5067f243e8722e57d475ba3e220b0f9c749939
   specs:
-    capybara-webkit (0.11.0)
+    capybara-webkit (0.12.0)
       capybara (>= 1.0.0, < 1.2)
       json
 
@@ -68,43 +83,48 @@ PATH
   specs:
     delegate_multiparameter (0.0.1)
 
+PATH
+  remote: vendor/gems/second_harvest_monthly_report
+  specs:
+    second_harvest_monthly_report (0.0.1)
+
 GEM
+  remote: https://gems.gemfury.com/8n1rdTK8pezvcsyVmmgJ/
   remote: http://rubygems.org/
   specs:
-    actionmailer (3.1.4)
-      actionpack (= 3.1.4)
-      mail (~> 2.3.0)
-    actionpack (3.1.4)
-      activemodel (= 3.1.4)
-      activesupport (= 3.1.4)
+    actionmailer (3.2.6)
+      actionpack (= 3.2.6)
+      mail (~> 2.4.4)
+    actionpack (3.2.6)
+      activemodel (= 3.2.6)
+      activesupport (= 3.2.6)
       builder (~> 3.0.0)
       erubis (~> 2.7.0)
-      i18n (~> 0.6)
-      rack (~> 1.3.6)
-      rack-cache (~> 1.1)
-      rack-mount (~> 0.8.2)
+      journey (~> 1.0.1)
+      rack (~> 1.4.0)
+      rack-cache (~> 1.2)
       rack-test (~> 0.6.1)
-      sprockets (~> 2.0.3)
+      sprockets (~> 2.1.3)
     active_reload (0.6.1)
-    activemodel (3.1.4)
-      activesupport (= 3.1.4)
+    activemodel (3.2.6)
+      activesupport (= 3.2.6)
       builder (~> 3.0.0)
-      i18n (~> 0.6)
-    activerecord (3.1.4)
-      activemodel (= 3.1.4)
-      activesupport (= 3.1.4)
-      arel (~> 2.2.3)
+    activerecord (3.2.6)
+      activemodel (= 3.2.6)
+      activesupport (= 3.2.6)
+      arel (~> 3.0.2)
       tzinfo (~> 0.3.29)
-    activeresource (3.1.4)
-      activemodel (= 3.1.4)
-      activesupport (= 3.1.4)
-    activesupport (3.1.4)
+    activeresource (3.2.6)
+      activemodel (= 3.2.6)
+      activesupport (= 3.2.6)
+    activesupport (3.2.6)
+      i18n (~> 0.6)
       multi_json (~> 1.0)
-    addressable (2.2.7)
+    addressable (2.2.8)
     archive-tar-minitar (0.5.2)
-    arel (2.2.3)
+    arel (3.0.2)
     builder (3.0.0)
-    capistrano (2.11.2)
+    capistrano (2.12.0)
       highline
       net-scp (>= 1.0.0)
       net-sftp (>= 2.0.0)
@@ -117,129 +137,132 @@ GEM
       rack-test (>= 0.5.4)
       selenium-webdriver (~> 2.0)
       xpath (~> 0.1.4)
-    carrierwave (0.5.8)
-      activesupport (~> 3.0)
-    childprocess (0.3.1)
+    carrierwave (0.6.2)
+      activemodel (>= 3.2.0)
+      activesupport (>= 3.2.0)
+    childprocess (0.3.2)
       ffi (~> 1.0.6)
     client_side_validations (3.1.4)
-    coffee-rails (3.1.1)
+    coffee-rails (3.2.2)
       coffee-script (>= 2.2.0)
-      railties (~> 3.1.0)
+      railties (~> 3.2.0)
     coffee-script (2.2.0)
       coffee-script-source
       execjs
-    coffee-script-source (1.2.0)
+    coffee-script-source (1.3.3)
     columnize (0.3.6)
-    cucumber (1.1.9)
+    cucumber (1.2.1)
       builder (>= 2.1.2)
-      diff-lcs (>= 1.1.2)
-      gherkin (~> 2.9.0)
+      diff-lcs (>= 1.1.3)
+      gherkin (~> 2.11.0)
       json (>= 1.4.6)
-      term-ansicolor (>= 1.0.6)
     cucumber-rails (1.3.0)
       capybara (>= 1.1.2)
       cucumber (>= 1.1.8)
       nokogiri (>= 1.5.0)
-    database_cleaner (0.7.2)
+    database_cleaner (0.8.0)
     diff-lcs (1.1.3)
+    email_spec (1.2.1)
+      mail (~> 2.2)
+      rspec (~> 2.0)
     erubis (2.7.0)
-    execjs (1.3.0)
+    execjs (1.4.0)
       multi_json (~> 1.0)
-    factory_girl (3.0.0)
+    factory_girl (3.4.0)
       activesupport (>= 3.0.0)
-    factory_girl_rails (3.0.0)
-      factory_girl (~> 3.0.0)
+    factory_girl_rails (3.4.0)
+      factory_girl (~> 3.4.0)
       railties (>= 3.0.0)
     ffi (1.0.11)
     flexmock (0.9.0)
-    gherkin (2.9.3)
+    gherkin (2.11.0)
       json (>= 1.4.6)
     haml-rails (0.3.4)
       actionpack (~> 3.0)
       activesupport (~> 3.0)
       haml (~> 3.0)
       railties (~> 3.0)
-    highline (1.6.11)
+    highline (1.6.13)
     hike (1.2.1)
     i18n (0.6.0)
-    jasmine (1.1.2)
-      jasmine-core (>= 1.1.0)
-      rack (>= 1.1)
+    jasmine (1.2.0)
+      jasmine-core (>= 1.2.0)
+      rack (~> 1.0)
       rspec (>= 1.3.1)
       selenium-webdriver (>= 0.1.3)
-    jasmine-core (1.1.0)
+    jasmine-core (1.2.0)
     jasminerice (0.0.8)
       haml
-    jquery-rails (1.0.19)
-      railties (~> 3.0)
+    journey (1.0.4)
+    jquery-rails (2.0.2)
+      railties (>= 3.2.0, < 5.0)
       thor (~> 0.14)
-    json (1.6.6)
-    json_pure (1.6.6)
+    json (1.7.3)
+    json_pure (1.7.3)
     launchy (2.1.0)
       addressable (~> 2.2.6)
     libv8 (3.3.10.4)
-    linecache19 (0.5.12)
+    linecache19 (0.5.13)
       ruby_core_source (>= 0.1.4)
-    mail (2.3.3)
+    mail (2.4.4)
       i18n (>= 0.4.0)
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
     metaclass (0.0.1)
     mime-types (1.18)
-    mocha (0.10.5)
+    mocha (0.11.4)
       metaclass (~> 0.0.1)
-    multi_json (1.2.0)
+    multi_json (1.3.6)
     mysql2 (0.3.11)
     net-scp (1.0.4)
       net-ssh (>= 1.99.1)
     net-sftp (2.0.5)
       net-ssh (>= 2.0.9)
-    net-ssh (2.3.0)
+    net-ssh (2.5.2)
     net-ssh-gateway (1.1.0)
       net-ssh (>= 1.99.1)
-    nokogiri (1.5.2)
+    nokogiri (1.5.4)
     polyglot (0.3.3)
-    rack (1.3.6)
+    rack (1.4.1)
     rack-cache (1.2)
       rack (>= 0.4)
-    rack-mount (0.8.3)
-      rack (>= 1.0.0)
     rack-ssl (1.3.2)
       rack
     rack-test (0.6.1)
       rack (>= 1.0)
-    rails (3.1.4)
-      actionmailer (= 3.1.4)
-      actionpack (= 3.1.4)
-      activerecord (= 3.1.4)
-      activeresource (= 3.1.4)
-      activesupport (= 3.1.4)
+    rails (3.2.6)
+      actionmailer (= 3.2.6)
+      actionpack (= 3.2.6)
+      activerecord (= 3.2.6)
+      activeresource (= 3.2.6)
+      activesupport (= 3.2.6)
       bundler (~> 1.0)
-      railties (= 3.1.4)
-    railties (3.1.4)
-      actionpack (= 3.1.4)
-      activesupport (= 3.1.4)
+      railties (= 3.2.6)
+    railties (3.2.6)
+      actionpack (= 3.2.6)
+      activesupport (= 3.2.6)
       rack-ssl (~> 1.3.2)
       rake (>= 0.8.7)
       rdoc (~> 3.4)
-      thor (~> 0.14.6)
+      thor (>= 0.14.6, < 2.0)
     rake (0.9.2.2)
     rdoc (3.12)
       json (~> 1.4)
-    rspec (2.9.0)
-      rspec-core (~> 2.9.0)
-      rspec-expectations (~> 2.9.0)
-      rspec-mocks (~> 2.9.0)
-    rspec-core (2.9.0)
-    rspec-expectations (2.9.0)
+    rmagick (2.13.1)
+    rspec (2.10.0)
+      rspec-core (~> 2.10.0)
+      rspec-expectations (~> 2.10.0)
+      rspec-mocks (~> 2.10.0)
+    rspec-core (2.10.1)
+    rspec-expectations (2.10.0)
       diff-lcs (~> 1.1.3)
-    rspec-mocks (2.9.0)
-    rspec-rails (2.9.0)
+    rspec-mocks (2.10.1)
+    rspec-rails (2.10.1)
       actionpack (>= 3.0)
       activesupport (>= 3.0)
       railties (>= 3.0)
-      rspec (~> 2.9.0)
-    ruby-debug-base19 (0.11.25)
+      rspec (~> 2.10.0)
+    ruby-debug-base19 (0.11.26)
       columnize (>= 0.3.1)
       linecache19 (>= 0.5.11)
       ruby_core_source (>= 0.1.4)
@@ -249,36 +272,35 @@ GEM
       ruby-debug-base19 (>= 0.11.19)
     ruby_core_source (0.1.5)
       archive-tar-minitar (>= 0.5.2)
-    rubyzip (0.9.6.1)
-    sass (3.1.15)
-    sass-rails (3.1.6)
-      actionpack (~> 3.1.0)
-      railties (~> 3.1.0)
+    rubyzip (0.9.8)
+    sass (3.1.19)
+    sass-rails (3.2.5)
+      railties (~> 3.2.0)
       sass (>= 3.1.10)
-      tilt (~> 1.3.2)
+      tilt (~> 1.3)
     selenium-webdriver (2.0.1)
       childprocess (>= 0.1.9)
       ffi (>= 1.0.7)
       json_pure
       rubyzip
-    spork (0.9.0)
-    sprockets (2.0.3)
+    spork (0.9.2)
+    sprockets (2.1.3)
       hike (~> 1.2)
       rack (~> 1.0)
       tilt (~> 1.1, != 1.3.0)
-    sqlite3 (1.3.5)
+    sqlite3 (1.3.6)
     sqlite3-ruby (1.3.3)
       sqlite3 (>= 1.3.3)
-    term-ansicolor (1.0.7)
-    therubyracer (0.9.10)
+    test-unit (2.5.0)
+    therubyracer (0.10.1)
       libv8 (~> 3.3.10)
-    thor (0.14.6)
+    thor (0.15.2)
     tilt (1.3.3)
     treetop (1.4.10)
       polyglot
       polyglot (>= 0.3.1)
-    tzinfo (0.3.32)
-    uglifier (1.2.3)
+    tzinfo (0.3.33)
+    uglifier (1.2.4)
       execjs (>= 0.3.0)
       multi_json (>= 1.0.2)
     xpath (0.1.4)
@@ -294,12 +316,14 @@ DEPENDENCIES
   capybara-webkit!
   carrierwave
   client_side_validations
-  coffee-rails (~> 3.1.0)
+  coffee-rails (~> 3.2.1)
   cucumber-rails (>= 0.5.1)
   database_cleaner
   db_check!
   delegate_multiparameter!
+  doccex!
   ejs!
+  email_spec
   execjs
   factory_girl_rails
   faker!
@@ -311,17 +335,22 @@ DEPENDENCIES
   jasminerice
   jquery-rails
   launchy
+  linecache19 (>= 0.5.13)
   message_block!
   mocha
   mysql2
-  rails (~> 3.1.3)
+  rails (~> 3.2.0)
+  rbarcode!
   rspec
   rspec-rails
+  ruby-debug-base19 (>= 0.11.26)
   ruby-debug19
-  sass-rails (~> 3.1.0)
+  sass-rails (~> 3.2.3)
+  second_harvest_monthly_report!
   selenium-webdriver (= 2.0.1)
   spork (~> 0.9.0.rc)
-  sprockets (~> 2.0)
+  sprockets
   sqlite3-ruby
+  test-unit
   therubyracer
-  uglifier
+  uglifier (>= 1.0.3)

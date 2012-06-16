@@ -1,4 +1,5 @@
 class QualificationDocumentsController < ApplicationController
+  helper :checkin, :clients, :households # SHOULD NOT BE NECESSARY! but required for testing (not dev) after upgrade to Rails 3.2.5
   # the index method with no parameters presents the page into which ajax
   # results may be inserted. The index method responding to an ajax
   # request requires a client id.

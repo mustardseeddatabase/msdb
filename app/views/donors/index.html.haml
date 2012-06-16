@@ -1,0 +1,27 @@
+= message_block
+%h1 List of Donors
+%table
+  %tr
+  - for donor in @donors
+    %tr
+      %td{:colspan => 4}
+        %h2= donor.organization || '(no organization name)'
+    %tr
+      %td
+        - if donor.donations.empty?
+          = link_to "Delete (no donations)", donor_path(donor), :method => 'delete'
+    %tr
+      %td Contact
+      %td= donor.contactName
+      %td Contact title
+      %td= donor.contactTitle
+    %tr
+      %td Address
+      %td= donor.full_address
+      %td Phone
+      %td= donor.phone
+    %tr
+      %td Fax
+      %td= donor.fax
+      %td email
+      %td= donor.email

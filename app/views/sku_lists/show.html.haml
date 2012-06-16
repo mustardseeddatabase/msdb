@@ -1,0 +1,5 @@
+%h1 SKU List
+- category_group
+%span#link_span= link_to "Download as a document", sku_list_path(:format => :docx)
+%span#link_span= link_to "Download as a document with barcodes", sku_list_path(:format => :docx, :barcodes => true)
+%span#link_span= link_to "Edit", edit_sku_list_path

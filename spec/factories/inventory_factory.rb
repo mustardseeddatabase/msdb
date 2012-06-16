@@ -1,6 +1,6 @@
 FactoryGirl.define do
   factory :inventory do
-    after_create do | inventory |
+    after(:create) do | inventory |
       FactoryGirl.create_list(:inventory_item, 3, :transaction_id => inventory.id)
     end
   end

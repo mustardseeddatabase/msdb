@@ -12,7 +12,7 @@ Feature: Edit donations
         | donations#index    |
         | donations#edit     |
         | donations#update   |
-        | items#show         |
+        | upc_items#show         |
 
 @selenium
   Scenario: Navigate to edit page, add an item to a donation, and save it

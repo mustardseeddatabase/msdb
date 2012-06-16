@@ -16,7 +16,7 @@
     %th ID status
     %th Number of warnings
     %th
-  -for client in clients
+  - for client in clients
     %tr.client{:class => ('with_errors' if !client.id_current?), :data => {:object_id => client.id_qualdoc.id, :param => 'id_warnings', :qualification_error_message => qualification_error_message(client), :upload_link_text => upload_link_text(:id)}}
       %td= link_to client.name_age, client_path(client)
       %td= client.id_date && client.id_date.to_date.to_formatted_s(:rfc822)
@@ -71,4 +71,4 @@
                 return true;
               }});
   $('#docfile_input').click(function(){$('#file_message').hide()});
-  #{(render :partial => 'quickcheck_client_script.js.erb').html_safe}
+  #{(render :partial => 'quickcheck_client_script', :handlers => [:erb], :formats => [:js]).html_safe}

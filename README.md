@@ -92,3 +92,42 @@ A bootstrap rake task is provided to configure the first admin account (see abov
 Roles, with user-defined names, are configured, and access privileges are assigned to the roles. When a user account is added, the user is assigned one (or more) roles.
 
 Since a food pantry operation may be staffed by a transient cast of volunteers, an account may be temporarily downgraded (for the duration of the session) so that the computer may be used for, for instance, client checkout, without exposing the full database to the temporary staffer.
+
+Another account should be configured, and the default account removed. It is a serious security vulnerability to leave the default account configured.
+
+## Making One-click Reports
+The reports are generated as Microsoft Word documents, as this facilitates editing. Other formats, such as .html, .pdf, .xslx and .csv are possible by stipulating the format in the link that generates the report (or form action url), and supplying the required rendering handler.
+
+Report generators are organized as rails engines in the vendor/gems directory, in order so that each report can keep its controller, views, routes, and templates in an isolated location, vs. sprinkled throughout the application.
+
+A generator is provided that will generate an outline structure for a new report engine. Run:
+
+    rails generate report my_report
+
+and you will see in vendor/gems/my_report a new Rails engine that will produce Microsoft Word reports. An example report is included that you can use as a base to modify to suit your needs.
+
+You will also need to add the new engine to the Gemfile as a dependency, so:
+
+    # Gemfile
+    gem 'my_report', :path => 'vendor/gems/my_report'
+
+To fix this engine/gem in Gemfile.lock run:
+
+    bundle install
+
+The new report engine includes a view partial that includes a button that generates the report. There is also a form in the partial that allows the user to set a report parameter, e.g. month.
+
+Include the partial in the reports#index view like this:
+
+    render :partial => 'my_report/report.html.haml'
+
+The form in this partial requires a model instance, so in the reports_controller.rb, create an instance of the new report:
+
+    # in reports_controller.rb
+    def index
+      @my_report = MyReport::Report.new
+    end
+
+If you reboot your server and click on the button to generate a report, you'll see an error message indicating that permissions have not yet been configured for this action.
+
+Therefore you must now go to the admin page and manage access privileges for the new report. The route you will be configuring is my_report/reports#show.

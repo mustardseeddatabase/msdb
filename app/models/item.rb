@@ -8,8 +8,10 @@ class Item < ActiveRecord::Base
   attr_accessor :cid
 
   scope :with_sku, where('sku IS NOT NULL')
+  scope :with_upc, where('upc IS NOT NULL')
   scope :with_description, lambda{|description| where("description like ?", "%#{description}%").order(:description)}
   scope :excluding, lambda { |ids| where("id NOT IN (?)", ids) }
+  scope :preferred, where('preferred = ?', true)
 
   AttributeErrorMessages = {
       :description       => "Invalid description",
@@ -51,6 +53,12 @@ class Item < ActiveRecord::Base
     end
   end
 
+  def self.find_with_attributes(attrs)
+    return where("id = ?",attrs[:id]).first if attrs[:id]
+    return where("upc = ?",attrs[:upc]).first if attrs[:upc]
+    return where("sku = ?",attrs[:sku]).first if attrs[:sku]
+  end
+
   def has_identifier?
     [sku, upc].any?
   end
@@ -68,7 +76,11 @@ class Item < ActiveRecord::Base
   end
 
   def category_descriptor
-    category.try(:descriptor)
+    begin
+      category.descriptor
+    rescue
+      "No category"
+    end
   end
 
   def escaped_description
@@ -76,7 +88,9 @@ class Item < ActiveRecord::Base
   end
 
   def for_autocompleter
-    description + "|" + self.to_json(:except => [:created_at, :updated_at])
+    self.count = 1 if count == 0 # this is a convenience hack to avoid the user constantly having to fix zero-count items
+    details = self.to_json(:methods => [:source, :category_descriptor, :category_name, :limit_category_id], :except => [:created_at, :updated_at])
+    description == "New Item" ? [description, "|", details].join : [description,"(",weight_oz," oz)", "|", details].join
   end
 
   def cid_map

@@ -11,7 +11,7 @@ FactoryGirl.define do
     association :temp_address, :factory => :temp_address
 
       factory :household_with_docs do
-        after_create do |hh|
+        after(:create) do |hh|
           FactoryGirl.create(:res_qualdoc, :association_id => hh.id)
           FactoryGirl.create(:inc_qualdoc, :association_id => hh.id)
           FactoryGirl.create(:gov_qualdoc, :association_id => hh.id)
@@ -19,7 +19,7 @@ FactoryGirl.define do
       end
 
       factory :household_with_current_docs do
-        after_create do |hh|
+        after(:create) do |hh|
           FactoryGirl.create(:current_res_qualdoc, :association_id => hh.id)
           FactoryGirl.create(:current_inc_qualdoc, :association_id => hh.id)
           FactoryGirl.create(:current_gov_qualdoc, :association_id => hh.id)
@@ -27,7 +27,7 @@ FactoryGirl.define do
       end
 
       factory :household_with_expired_docs do
-        after_create do |hh|
+        after(:create) do |hh|
           FactoryGirl.create(:expired_res_qualdoc, :association_id => hh.id)
           FactoryGirl.create(:expired_inc_qualdoc, :association_id => hh.id)
           FactoryGirl.create(:expired_gov_qualdoc, :association_id => hh.id)

@@ -18,8 +18,8 @@ Feature: Client checkout
        | distributions#new    |
        | distributions#create |
        | clients#autocomplete |
-       | items#show           |
-       | items#autocomplete   |
+       | upc_items#show           |
+       | sku_items#autocomplete   |
 
 @selenium
   Scenario: Scan an item that is not in the database

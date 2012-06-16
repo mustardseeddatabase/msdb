@@ -1,6 +1,7 @@
 require File.expand_path('../boot', __FILE__)
 
 require 'rails/all'
+require 'sprockets/railtie'
 
 
 # Rails 3.0.x:
@@ -23,6 +24,8 @@ module Msdb
 
     # Custom directories with classes and modules you want to be autoloadable.
     # config.autoload_paths += %W(#{config.root}/extras)
+    config.autoload_paths += %W(#{config.root}/app/models/reports)
+    config.autoload_paths += %W(#{config.root}/app/controllers/reports)
 
     # Only load the plugins named here, in the order given (default is alphabetical).
     # :all can be used as a placeholder for all plugins not explicitly named.
@@ -41,6 +44,19 @@ module Msdb
 
     # Enable the asset pipeline
     config.assets.enabled = true
+
+    # the following lines seem to be required due to a bug in Rails? It's a workaround for assets not being found
+    config.assets.paths << Rails.root.join("app", "assets", "stylesheets")
+    config.assets.paths << Rails.root.join("app", "assets", "javascripts")
+    config.assets.paths << Rails.root.join("vendor", "assets", "stylesheets")
+    config.assets.paths << Rails.root.join("vendor", "assets", "javascripts")
+    config.assets.paths << Rails.root.join("lib", "assets", "javascripts")
+    config.assets.paths << Authengine::Engine.root.join("app", "assets", "stylesheets")
+    config.assets.paths << Authengine::Engine.root.join("app", "assets", "images")
+    config.assets.paths << Jquery::Rails::Engine.root.join("vendor", "assets", "javascripts")
+    config.assets.paths << Rails.root.join("app", "themes", "ccstb", "assets")
+    config.assets.paths << Rails.root.join("app", "themes", "ccstb", "assets", "images")
+
 
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'

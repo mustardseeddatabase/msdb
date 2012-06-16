@@ -13,6 +13,10 @@ class Client < ActiveRecord::Base
             "WH" => "White",
             "OT" => "Other" }
 
+  AgeGroups = { "child" => (0..17),
+                "adult" => (18..64),
+                "senior" => (65..120) }
+
   default_scope order('case when birthdate IS NULL then 1 else 0 end, birthdate')
 
   belongs_to :household
@@ -46,7 +50,7 @@ class Client < ActiveRecord::Base
   # for household search
   def self.lastNames_matching(lastName)
     select(:lastName).
-      where("lastName LIKE '%#{lastName}%'").
+      where("lastName LIKE '%#{lastName.gsub("'","''")}%'").
       map(&:lastName).
       uniq.compact.sort.
       reject(&:blank?)
@@ -55,7 +59,7 @@ class Client < ActiveRecord::Base
   # returns matching lastname and id, for quickcheck
   def self.lastNames_matching_extended(lastName)
     select([:id, :lastName, :firstName, :birthdate]).
-      where("lastName LIKE '%#{lastName}%'").
+      where("lastName LIKE '%#{lastName.gsub("'","''")}%'").
       map{|c| c.name_age + '|' + c.id.to_s}.
       uniq.compact.sort.
       reject(&:blank?)
@@ -69,20 +73,47 @@ class Client < ActiveRecord::Base
     Household.with_no_addresses.map(&:clients).flatten.uniq.sort_by(&:last_first_name)
   end
 
+  def self.with_no_first_or_last_name
+    where(:firstName => nil, :lastName => nil).map(&:household).compact.uniq
+  end
+
+  def has_report_errors
+    birthdate.nil? || race.nil? || gender.nil? || (age_group == "out of range")
+  end
+
+  def race_or_unknown
+    !race || (race == 'OT') ? 'UNK' : race
+  end
+
   def name_age
     [last_first_name, age].reject(&:blank?).compact.join('. ')
   end
 
   def last_first_name
-    [lastName, firstName].reject(&:blank?).join(", ")
+    [lastName || "(No last name)", firstName || "(No first name)"].join(", ")
   end
 
   def first_last_name
-    [firstName, lastName].reject(&:blank?).join(" ")
+    [firstName || "(No first name)", lastName || "(No last name)"].join(" ")
   end
 
   def age
     ( ( Date.today - birthdate.to_date )/365 ).to_i unless birthdate.nil?
+  end
+
+  def age_group
+    case age
+    when nil
+      "unknown"
+    when AgeGroups['child']
+      "child"
+    when AgeGroups['adult']
+      "adult"
+    when AgeGroups['senior']
+      "senior"
+    else
+      "out of range" # because the legacy database may have anomalous data
+    end
   end
 
   def has_id_doc_in_db?
@@ -102,5 +133,17 @@ class Client < ActiveRecord::Base
 
   def household_size
     household.resident_count
+  end
+
+  def missing_gender_flag
+    "x" unless gender
+  end
+
+  def missing_race_flag
+    "x" unless race
+  end
+
+  def missing_birthdate_flag
+    "x" unless birthdate
   end
 end

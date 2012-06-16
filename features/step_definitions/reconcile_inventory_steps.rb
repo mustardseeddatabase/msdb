@@ -5,7 +5,7 @@ Given /^there are (\d+) items in the database each with qoh greater than (\d+)$/
 end
 
 Then /^(\d+) items in the database should have qoh (\d+)$/ do |count, value|
-  sleep(0.1)
+  sleep(0.4)
   Item.all.select{|item| item.qoh == value.to_i}.size.should == count.to_i
 end
 

@@ -1,3 +1,5 @@
+# Manages the element that collects the barcode
+# associated with an Application.Barcode model
 class Application.BarcodeInputView extends Backbone.View
   initialize: (args) ->
     @application = args['application']

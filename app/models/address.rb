@@ -3,6 +3,7 @@ class Address < ActiveRecord::Base
   scope :matching, lambda{ |address_hash| with_fields_matching(address_hash)}
 
   def self.with_fields_matching(address_hash)
+    # TODO surely this can be simplified? a sql LIKE %% means match anything, doesn't it?
     a = where("address LIKE ?", '%'+address_hash[:address]+'%') unless address_hash[:address].blank?
     b = where("city    LIKE ?", '%'+address_hash[:city]+'%')    unless address_hash[:city].blank?
     c = where("zip     LIKE ?", '%'+address_hash[:zip]+'%')     unless address_hash[:zip].blank?

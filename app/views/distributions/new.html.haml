@@ -10,6 +10,7 @@
     = render :partial => 'shared/transaction_list', :locals => { :return_path => distributions_path}
 
 :javascript
+  var authenticity_token  = '#{ escape_javascript form_authenticity_token }'
   var category_thresholds = {#{CategoryThreshold.thresholds_where_resident_count_is(@client.household_size)}};
   var categories          = new Application.Categories(#{ Category.to_json });
   var limit_categories    = new Application.LimitCategories(#{ LimitCategory.to_json})

@@ -319,3 +319,183 @@ describe "#has_multiple_heads? method" do
     @household.has_multiple_heads?.should == false
   end
 end
+
+describe 'counts_by_age_group' do
+  context 'when the household does not have any clients' do
+    before(:each) do
+      @household = FactoryGirl.create(:household)
+      @counts = @household.counts_by_age_group
+    end
+
+    it "should return a hash" do
+      @counts.should be_kind_of(Hash)
+    end
+
+    it "should have keys :children, :adults, :seniors" do
+      @counts.keys.should include(:children)
+      @counts.keys.should include(:adults)
+      @counts.keys.should include(:seniors)
+    end
+
+    it "should count clients by age group" do
+      @counts[:children].should == 0
+      @counts[:adults].should == 0
+      @counts[:seniors].should == 0
+    end
+  end
+
+  context 'when the household has clients' do
+    before(:each) do
+      @client1 = FactoryGirl.create(:client, :birthdate => 10.years.ago)
+      @client2 = FactoryGirl.create(:client, :birthdate => 20.years.ago)
+      @client3 = FactoryGirl.create(:client, :birthdate => 80.years.ago)
+      @client4 = FactoryGirl.create(:client, :birthdate => 10.years.ago)
+      @client5 = FactoryGirl.create(:client, :birthdate => 20.years.ago)
+      @household = FactoryGirl.create(:household)
+      @household.clients = [@client1, @client2, @client3, @client4, @client5]
+      @counts = @household.counts_by_age_group
+    end
+
+    it "should return a hash" do
+      @counts.should be_kind_of(Hash)
+    end
+
+    it "should have keys :children, :adults, :seniors" do
+      @counts.keys.should include(:children)
+      @counts.keys.should include(:adults)
+      @counts.keys.should include(:seniors)
+    end
+
+    it "should count clients by age group" do
+      @counts[:children].should == 2
+      @counts[:adults].should == 2
+      @counts[:seniors].should == 1
+    end
+  end
+
+  context 'when some clients have null birthdate' do
+    before(:each) do
+      @client1 = FactoryGirl.create(:client, :birthdate => 10.years.ago)
+      @client1.update_attribute(:birthdate, nil)
+      @client2 = FactoryGirl.create(:client, :birthdate => 20.years.ago)
+      @client3 = FactoryGirl.create(:client, :birthdate => 80.years.ago)
+      @client4 = FactoryGirl.create(:client, :birthdate => 10.years.ago)
+      @client5 = FactoryGirl.create(:client, :birthdate => 20.years.ago)
+      @household = FactoryGirl.create(:household)
+      @household.clients  << @client1
+      @household.clients  << @client2
+      @household.clients  << @client3
+      @household.clients  << @client4
+      @household.clients  << @client5
+      @counts = @household.counts_by_age_group
+    end
+
+    it "should return a hash" do
+      @counts.should be_kind_of(Hash)
+    end
+
+    it "should have keys :children, :adults, :seniors" do
+      @counts.keys.should include(:children)
+      @counts.keys.should include(:adults)
+      @counts.keys.should include(:seniors)
+    end
+
+    it "should count clients by age group" do
+      @counts[:children].should == 1
+      @counts[:adults].should == 2
+      @counts[:seniors].should == 1
+    end
+  end
+end
+
+describe 'counts_by_race' do
+  context "when the household does not have any clients" do
+    before(:each) do
+      @household = FactoryGirl.create(:household)
+      @counts = @household.counts_by_race
+    end
+
+    it "should return a hash" do
+      @counts.should be_kind_of(Hash)
+    end
+
+    it "should have keys :AA, :AS, :HI, :WH, :UNK, :total" do
+      @counts.keys.should include(:AA)
+      @counts.keys.should include(:AS)
+      @counts.keys.should include(:HI)
+      @counts.keys.should include(:WH)
+      @counts.keys.should include(:UNK)
+      @counts.keys.should include(:total)
+    end
+
+    it "should count clients by race" do
+      @counts[:AA].should == 0
+      @counts[:AS].should == 0
+      @counts[:HI].should == 0
+      @counts[:WH].should == 0
+      @counts[:UNK].should == 0
+      @counts[:total].should == 0
+    end
+  end
+
+  context "when the household has clients" do
+    before(:each) do
+      @client1 = FactoryGirl.create(:client, :race => 'AA')
+      @client2 = FactoryGirl.create(:client, :race => 'AS')
+      @client3 = FactoryGirl.create(:client, :race => 'HI')
+      @client4 = FactoryGirl.create(:client, :race => 'WH')
+      @client5 = FactoryGirl.create(:client, :race => 'OT')
+      @client6 = FactoryGirl.create(:client, :race => nil)
+      @household = FactoryGirl.create(:household)
+      @household.clients = [@client1, @client2, @client3, @client4, @client5, @client6]
+      @counts = @household.counts_by_race
+    end
+
+    it "should return a hash" do
+      @counts.should be_kind_of(Hash)
+    end
+
+    it "should have keys :AA, :AS, :HI, :WH, :UNK, :total" do
+      @counts.keys.should include(:AA)
+      @counts.keys.should include(:AS)
+      @counts.keys.should include(:HI)
+      @counts.keys.should include(:WH)
+      @counts.keys.should include(:UNK)
+      @counts.keys.should include(:total)
+    end
+
+    it "should count clients by race" do
+      @counts[:AA].should == 1
+      @counts[:AS].should == 1
+      @counts[:HI].should == 1
+      @counts[:WH].should == 1
+      @counts[:UNK].should == 2
+      @counts[:total].should == 6
+    end
+
+    it "should have equal totals by race and by age" do
+      count_by_age_group = @counts.slice([:children, :adults, :seniors, :homeless]).values.flatten.count
+      count_by_race = @counts.slice([:AA, :AS, :HI, :WH, :OT]).values.flatten.count
+      count_by_age_group.should == count_by_race
+    end
+  end
+end
+
+describe "new_or_continued_in_month method" do
+  it "should return true if any of the distributions in the month for this household are new" do
+    dist1 = FactoryGirl.create(:distribution, :created_at => Date.today)
+    @household = FactoryGirl.create(:household, :distributions => [dist1])
+    dist1.update_attribute(:household_id, @household.id)
+    @household.new_or_continued_in_month(Date.today.year, Date.today.month).should == :new
+  end
+
+  it "should return false if all of the distributions in the month for this household are not new" do
+    dist1 = FactoryGirl.create(:distribution, :created_at => Date.today)
+    dist2 = FactoryGirl.create(:distribution, :created_at => 1.month.ago)
+    @household = FactoryGirl.create(:household, :distributions => [dist1, dist2])
+    dist1.update_attribute(:household_id, @household.id)
+    dist2.update_attribute(:household_id, @household.id)
+    @household.new_or_continued_in_month(Date.today.year, Date.today.month).should == :continued
+  end
+end
+

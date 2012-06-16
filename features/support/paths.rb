@@ -60,7 +60,7 @@ module NavigationHelpers
     when /the items#index page/
       items_path
     when /the item status page/
-      items_show_path
+      item_path(:id => 'undefined',:format => :html)
     when /the inventories#new page/
       new_inventory_path
     when /the inventories#show page for the inventory on (.*)/
@@ -71,6 +71,8 @@ module NavigationHelpers
       date = Date.parse($1)
       inventory = Inventory.all.detect { |d| d.created_at.to_date == date }
       edit_inventory_path(inventory)
+    when /the sku_lists#show page/
+      sku_list_path
 
     # Add more mappings here.
     # Here is an example that pulls values out of the Regexp:

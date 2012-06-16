@@ -4,6 +4,7 @@ Then /^There should be "([^"]*)" "([^"]*)" in the database$/ do |count, model|
 end
 
 When /^I fill in autocomplete "([^"]*)" with "([^"]*)"$/ do |selector, value|
+  page.should have_selector("#" + selector) # because the fill_in_autocompleter does not raise an exception if the element defined by selector is not present
   fill_in_autocomplete(selector, value)
 end
 

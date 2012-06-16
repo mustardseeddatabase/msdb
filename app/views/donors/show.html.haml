@@ -1,0 +1,26 @@
+%h1 Donor: #{@donor.organization || '(no organization name)'}
+%table
+  %tr
+    %td Organization
+    %td= @donor.organization || '(no organization name)'
+  %tr
+    %td Contact name
+    %td= @donor.contactName || '(no contact name)'
+  %tr
+    %td Contact title
+    %td= @donor.contactTitle || '(no title)'
+  %tr
+    %td Address
+    %td= @donor.full_address
+  %tr
+    %td Phone
+    %td= @donor.phone
+  %tr
+    %td Fax
+    %td= @donor.fax
+  %tr
+    %td email
+    %td= @donor.email
+  - if @donor.donations.empty?
+    %tr
+      %td= link_to "Delete", donor_path(@donor), :method => :delete

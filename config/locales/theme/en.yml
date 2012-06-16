@@ -2,8 +2,8 @@
 # See http://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
 
 en:
-  banner_text: "Food Pantry at the Community Center of St. Bernard"
+  banner_text: "Mustard Seed Database"
   title: "Mustard Seed Database"
-  theme: "ccstb"
+  theme: "default"
 
 

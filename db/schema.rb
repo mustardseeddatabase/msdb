@@ -11,11 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-<<<<<<< HEAD
-ActiveRecord::Schema.define(:version => 20120401061000) do
-=======
 ActiveRecord::Schema.define(:version => 20120502144800) do
->>>>>>> ccstb
 
   create_table "action_roles", :force => true do |t|
     t.integer  "role_id",    :limit => 8

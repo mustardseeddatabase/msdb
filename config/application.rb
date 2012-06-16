@@ -54,8 +54,8 @@ module Msdb
     config.assets.paths << Authengine::Engine.root.join("app", "assets", "stylesheets")
     config.assets.paths << Authengine::Engine.root.join("app", "assets", "images")
     config.assets.paths << Jquery::Rails::Engine.root.join("vendor", "assets", "javascripts")
-    config.assets.paths << Rails.root.join("app", "themes", "ccstb", "assets")
-    config.assets.paths << Rails.root.join("app", "themes", "ccstb", "assets", "images")
+    config.assets.paths << Rails.root.join("app", "themes", "default", "assets")
+    config.assets.paths << Rails.root.join("app", "themes", "default", "assets", "images")
 
 
     # Version of your assets, change this if you want to expire all your assets

@@ -14,7 +14,11 @@ module NAMESPACE
         @avg_days = rand(30).to_s
 
         respond_to do |format|
-          format.docx {render :docx => "report_name", :template=> "/" + NAMESPACE::Engine.root.join("app/document_templates/report_name").to_s, :from_template => true}
+          format.docx do
+            render :docx => "report_name",
+                   :template=> Report.template,
+                   :from_template => true
+          end
         end
       else
         flash[:warn] = "You haven't been granted permission to generate that report"

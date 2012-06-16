@@ -17,6 +17,7 @@ private
     gsub_file "vendor/gems/#{file_name}/app/controllers/#{file_name}/reports_controller.rb", /report_name/, "#{file_name}"
     copy_file 'report_engine/app/models/report.rb', "vendor/gems/#{file_name}/app/models/#{file_name}/report.rb"
     gsub_file "vendor/gems/#{file_name}/app/models/#{file_name}/report.rb", /NAMESPACE/, "#{file_name.classify}"
+    gsub_file "vendor/gems/#{file_name}/app/models/#{file_name}/report.rb", /report_name/, "#{file_name}"
     copy_file 'report_engine/app/views/report/_report.html.haml', "vendor/gems/#{file_name}/app/views/#{file_name}/_report.html.haml"
     gsub_file "vendor/gems/#{file_name}/app/views/#{file_name}/_report.html.haml", /object/, "#{file_name}"
     gsub_file "vendor/gems/#{file_name}/app/views/#{file_name}/_report.html.haml", /path/, "#{file_name}_path"

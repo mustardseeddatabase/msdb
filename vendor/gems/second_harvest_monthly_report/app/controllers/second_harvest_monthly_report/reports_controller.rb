@@ -33,10 +33,17 @@ module SecondHarvestMonthlyReport
       @questionnaires_count = rand(100).to_s
 
       respond_to do |format|
-        # prepending "/" to the template path is necessary b/c ActionController removes the leading "/", so add a second one that it can have its way with!
-        # This behaviour is fixed by a commit to action_controller/metal/comptibility.rb but hasn't shown up in Rails yet
-        format.docx {render :docx => "second_harvest_monthly", :template=> "/"+SecondHarvestMonthlyReport::Engine.root.join("app/document_templates/second_harvest_monthly_report").to_s, :from_template => true}
-        format.json {render :json => @clients_with_errors.to_json(:methods => [:missing_gender_flag, :missing_race_flag, :missing_birthdate_flag, :first_last_name])}
+        format.docx do
+          render :docx => "second_harvest_monthly",
+                 :template=> Report.template,
+                 :from_template => true
+        end
+
+        format.json do
+          render :json => @clients_with_errors.to_json(
+                    :methods => [:missing_gender_flag, :missing_race_flag, :missing_birthdate_flag, :first_last_name]
+                  )
+        end
       end
     end
   end

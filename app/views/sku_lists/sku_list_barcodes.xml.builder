@@ -17,8 +17,6 @@ xml.w :document, document_namespaces do # document_namespaces helper comes from 
                                {:align => 'right', :twips => 3456, :cell_contents => 'sku_lists/cell2_contents.xml'}])
       xml << section_properties(:num_cols => 2)
     end
-    xml << section_properties(:num_cols => 4)
-
 
     # the following paragraph and section properties seems to be necessary in order
     # for MSWord not to append a spurious page

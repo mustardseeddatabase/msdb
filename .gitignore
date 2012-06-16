@@ -14,3 +14,4 @@ public/assets
 public/assets/**/*
 bin/
 vendor/gems/*_report
+config/deploy

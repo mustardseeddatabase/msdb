@@ -1,6 +1,6 @@
 = message_block :on => [:client, :household]
 %h1 Household information
-%p= link_to 'Delete this household', household_path(@household), :method => :delete, :confirm => 'Are you sure?'
+%p= link_to 'Delete this household', household_path(@household), :method => :delete, :data => {:confirm => 'Are you sure?'}
 %p= link_to 'Edit this household', edit_household_path(@household)
 %table
   %tr

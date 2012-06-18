@@ -72,7 +72,7 @@
   %tr
     %td= link_to 'Edit this client', edit_client_path(@client)
   %tr
-    %td{:colspan => '2'}= link_to 'Delete this client', client_path(@client, :return_to => @return_to), :method => :delete, :id => :delete_client_link, :confirm => 'Are you sure?'
+    %td{:colspan => '2'}= link_to 'Delete this client', client_path(@client, :return_to => @return_to), :method => :delete, :id => :delete_client_link, :data => {:confirm => 'Are you sure?'}
 
 :javascript
   $(function(){

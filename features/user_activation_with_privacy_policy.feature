@@ -10,7 +10,6 @@ Feature: User activation
     When I am on activation url with a valid activation code
     And I fill in "user_password" with "something"
     And I fill in "user_password_confirmation" with "something"
-    # occasionally this next step fails, unresolved problem
     And I press "Next step..."
 		Then I should see "indicate your commitment to comply" within: "h2"
     Then I check all 9 checkboxes
@@ -24,7 +23,6 @@ Feature: User activation
     When I am on activation url with a valid activation code
     And I fill in "user_password" with "something"
     And I fill in "user_password_confirmation" with "something"
-    # occasionally this next step fails, unresolved problem
     And I press "Next step..."
 		Then I should see "indicate your commitment to comply" within: "h2"
     Then I don't check all checkboxes

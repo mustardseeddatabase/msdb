@@ -60,7 +60,7 @@
               %td= client.last_first_name
               %td= client.age
               %td= "(head of household)" if client.headOfHousehold?
-              %td{:style => "padding-left:40px"}= link_to 'Remove resident', household_household_client_path(@household, client), :method => :delete, :confirm => 'are you sure?', :class => (:remove_head if client.is_sole_head_of_household?)
+              %td{:style => "padding-left:40px"}= link_to 'Remove resident', household_household_client_path(@household, client), :method => :delete, :data => {:confirm => 'are you sure?'}, :class => (:remove_head if client.is_sole_head_of_household?)
         %tr{:height => "30px", :valign => "bottom"}
           %td= link_to "Add resident...", new_household_household_client_path(@household)
     %table{:style => "padding-top:20px"}

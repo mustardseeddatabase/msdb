@@ -20,5 +20,5 @@
 
 %table{:style => 'margin-top:20px'}
   %tr
-    %td{:width => '320em'}= link_to "Reset database to match inventory", update_all_items_path(@inventory), :method => :put, :confirm => "Are you sure?"
+    %td{:width => '320em'}= link_to "Reset database to match inventory", update_all_items_path(@inventory), :method => :put, :data => {:confirm => "Are you sure?"}
     %td= link_to "Back", :back

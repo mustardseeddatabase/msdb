@@ -22,7 +22,7 @@ GIT
 
 GIT
   remote: git://github.com/mustardseeddatabase/authengine.git
-  revision: 6801421d87c793a58cf9b8de286f52ad9220bea5
+  revision: 6427f6a296e7df5bf7404242b15091276a95df31
   specs:
     authengine (0.0.1)
       capybara

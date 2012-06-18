@@ -64,14 +64,5 @@ Msdb::Application.configure do
   # actionmailer configuration
   config.action_mailer.raise_delivery_errors = true
   config.action_mailer.delivery_method = :smtp
-  config.action_mailer.smtp_settings = {
-    :address => "localhost",
-    :port => 25,
-    :domain => "ccstb.railsplayground.net",
-    :authentication => :login,
-    :user_name => "dbadmin@ccstb.railsplayground.net",
-    :password => "ZFzZZpWf7Cq7Gk",
-    :enable_starttls_auto => false
-  }
-  
+  # action_mailer smtp settings should be configured in config/initializers/action_mailer.rb
 end

@@ -1,5 +1,6 @@
 Given /^I have a user account that has not been activated$/ do
-  @user = User.create(:login => Faker::Name::first_name,
+  while(login=Faker::Name.first_name; login.length < 7);end
+  @user = User.create(:login => login,
               :email => Faker::Internet::email,
               :firstName => Faker::Name::first_name,
               :lastName => Faker::Name::last_name)

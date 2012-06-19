@@ -1,5 +1,5 @@
 # for the mailer
-SITE_URL = "ccstb.railsplayground.net"
+SITE_URL = "your_domain.com"
 ADMIN_EMAIL = "dbadmin@#{SITE_URL}"
-APPLICATION_NAME = "CCStB database"
-ORGANIZATION_NAME = "Community Center of St. Bernard"
+APPLICATION_NAME = "Mustard Seed Database"
+ORGANIZATION_NAME = "Food Pantry"

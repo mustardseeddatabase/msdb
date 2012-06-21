@@ -52,8 +52,8 @@ Prepare the test database:
 
 Run the tests:
 
-    cucumber features
-    rspec spec
+    bundle exec cucumber features
+    bundle exec rspec spec
 
 Run the javascript tests by starting the rails server:
 
@@ -96,6 +96,7 @@ Since a food pantry operation may be staffed by a transient cast of volunteers, 
 Another account should be configured, and the default account removed. It is a serious security vulnerability to leave the default account configured.
 
 ## Making One-click Reports
+
 The reports are generated as Microsoft Word documents, as this facilitates editing. Other formats, such as .html, .pdf, .xslx and .csv are possible by stipulating the format in the link that generates the report (or form action url), and supplying the required rendering handler.
 
 Report generators are organized as rails engines in the vendor/gems directory, in order so that each report can keep its controller, views, routes, and templates in an isolated location, vs. sprinkled throughout the application.

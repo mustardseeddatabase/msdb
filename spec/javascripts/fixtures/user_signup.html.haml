@@ -1,0 +1,50 @@
+:javascript
+  ORGANIZATION_NAME = "Mustard Seed Database"
+#flash_message
+.user_info
+  %table
+    %tr
+      %td
+        %label{:for => "login" } Select a login name:
+      %td= text_field :user, :login
+      %td#login_errors
+    %tr
+      %td
+        %label{:for => "email" } Your email address:
+      %td= text_field :user, :email
+      %td#email_errors
+    %tr
+      %td
+        %label{:for => "password" } Select a login password:
+      %td= password_field :user, :password
+      %td#password_errors
+    %tr
+      %td
+        %label{:for => "password_confirmation" } Re-enter your password to confirm:
+      %td= password_field :user, :password_confirmation
+      %td#password_confirmation_errors
+
+  = button_tag 'Next step...', :type => 'button', :id => "next_step"
+
+#privacy_policy{:style=>"display:none; width:600px"}
+  %p Privacy Policy
+  %table
+    %tr{:valign => 'top'}
+      %td= check_box "user[cb]", :cb1
+    %tr{:valign => 'top'}
+      %td= check_box "user[cb]", :cb2
+    %tr{:valign => 'top'}
+      %td= check_box "user[cb]", :cb3
+    %tr{:valign => 'top'}
+      %td= check_box "user[cb]", :cb4
+    %tr{:valign => 'top'}
+      %td= check_box "user[cb]", :cb5
+    %tr{:valign => 'top'}
+      %td= check_box "user[cb]", :cb6
+    %tr{:valign => 'top'}
+      %td= check_box "user[cb]", :cb7
+    %tr{:valign => 'top'}
+      %td= check_box "user[cb]", :cb8
+    %tr{:valign => 'top'}
+      %td= check_box "user[cb]", :cb9
+  %p= submit_tag 'Sign up'

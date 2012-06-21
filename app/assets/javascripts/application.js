@@ -13,3 +13,4 @@
 //= require backbone
 //= require ./backbone/transactions
 //= require fancy_text_box
+//= require user_signup

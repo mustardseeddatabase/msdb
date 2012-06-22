@@ -82,5 +82,7 @@ module Msdb
       g.template_engine :haml
     end
 
+    config.action_mailer.default_url_options = {:host => SITE_URL}
+
   end
 end

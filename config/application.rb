@@ -2,7 +2,7 @@ require File.expand_path('../boot', __FILE__)
 
 require 'rails/all'
 require 'sprockets/railtie'
-
+require File.expand_path('../../lib/constants', __FILE__)
 
 # Rails 3.0.x:
 # If you have a Gemfile, require the gems listed there, including any gems

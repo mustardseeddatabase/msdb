@@ -13,7 +13,7 @@ gem 'jquery-rails'
 gem 'haml', :git => 'git://github.com/infbio/haml.git', :branch => 'form_for_fix' # fixes a form_for issue in haml
 gem 'haml-rails'
 gem 'message_block', :git => 'git://github.com/lazylester/message_block.git'
-gem 'authengine', :git => 'git://github.com/mustardseeddatabase/authengine.git'
+gem 'authengine', "0.0.2", :git => 'git://github.com/mustardseeddatabase/authengine.git'
 gem 'db_check', :path => 'vendor/gems/db_check'
 gem 'carrierwave'
 gem 'delegate_multiparameter', :path => 'vendor/gems/delegate_multiparameter'

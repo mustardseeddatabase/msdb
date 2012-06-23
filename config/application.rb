@@ -55,13 +55,6 @@ module Msdb
     config.assets.paths << Rails.root.join("app", "themes", "default", "assets")
     config.assets.paths << Rails.root.join("app", "themes", "default", "assets", "images")
     config.assets.paths << Rails.root.join("spec", "javascripts")
-    config.assets.paths << Jasminerice::Engine.root.join("app", "assets", "images")
-    config.assets.paths << Jasminerice::Engine.root.join("app", "assets", "javascripts")
-    config.assets.paths << Jasminerice::Engine.root.join("app", "assets", "stylesheets")
-    config.assets.paths << Jasminerice::Engine.root.join("vendor", "assets", "images")
-    config.assets.paths << Jasminerice::Engine.root.join("vendor", "assets", "javascripts")
-    config.assets.paths << Jasminerice::Engine.root.join("vendor", "assets", "stylesheets")
-
 
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'

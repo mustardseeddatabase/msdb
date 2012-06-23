@@ -15,7 +15,7 @@ Includes admistration facilities:
 
   * Inventory cycle count.
   * Resolve database to actual inventory.
-  * Report generation (future).
+  * Report generation.
   * Database validation.
   * Role-based access control. Long-term staff may be assigned access accounts. Access may be configured for temporary or short-term staff that limits privileges and expires at the end of the session.
 

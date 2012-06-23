@@ -39,5 +39,13 @@ Msdb::Application.configure do
   # with SQLite, MySQL, and PostgreSQL)
   config.active_record.auto_explain_threshold_in_seconds = 0.5
 
+  # the following lines seem to be required after upgrade to Rails 3.2.5 (bug?) It's a workaround for assets not being found
+  config.assets.paths << Jasminerice::Engine.root.join("app", "assets", "images")
+  config.assets.paths << Jasminerice::Engine.root.join("app", "assets", "javascripts")
+  config.assets.paths << Jasminerice::Engine.root.join("app", "assets", "stylesheets")
+  config.assets.paths << Jasminerice::Engine.root.join("vendor", "assets", "images")
+  config.assets.paths << Jasminerice::Engine.root.join("vendor", "assets", "javascripts")
+  config.assets.paths << Jasminerice::Engine.root.join("vendor", "assets", "stylesheets")
+
 end
 

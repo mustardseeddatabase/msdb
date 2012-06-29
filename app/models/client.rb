@@ -13,9 +13,19 @@ class Client < ActiveRecord::Base
             "WH" => "White",
             "OT" => "Other" }
 
-  AgeGroups = { "child" => (0..17),
+  AgeGroups = { "infant" => (0..5),
+                "youth" => (6..17),
                 "adult" => (18..64),
-                "senior" => (65..120) }
+                "senior adult" => (65..74),
+                "elder" => (75..120) }
+
+  def self.age_group_base_count
+    (AgeGroups.keys << "unknown").inject({}){|hash, key| hash[key.pluralize.sub(/ /,'_').to_sym] = 0; hash}
+  end
+
+  def self.race_base_count
+    (Races.keys << "UNK").inject({}){|hash, key| hash[key.to_sym] = 0; hash}
+  end
 
   default_scope order('case when birthdate IS NULL then 1 else 0 end, birthdate')
 
@@ -102,18 +112,27 @@ class Client < ActiveRecord::Base
   end
 
   def age_group
-    case age
-    when nil
-      "unknown"
-    when AgeGroups['child']
-      "child"
-    when AgeGroups['adult']
-      "adult"
-    when AgeGroups['senior']
-      "senior"
-    else
-      "out of range" # because the legacy database may have anomalous data
+    group = case age
+            when nil
+              "unknown"
+            when AgeGroups['infant']
+              "infant"
+            when AgeGroups['youth']
+              "youth"
+            when AgeGroups['adult']
+              "adult"
+            when AgeGroups['senior adult']
+              "senior adult"
+            when AgeGroups['elder']
+              "elder"
+            else
+              "out of range" # because the legacy database may have anomalous data
+            end
+
+    def group.to_key
+      self.pluralize.gsub(/ /,'_').to_sym
     end
+    group
   end
 
   def has_id_doc_in_db?

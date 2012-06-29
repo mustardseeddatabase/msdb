@@ -23,5 +23,44 @@ FactoryGirl.define do
         c.id_qualdoc = FactoryGirl.build(:current_id_qualdoc)
       end
     end
-  end
-end
+
+    trait :infant do
+			birthdate 3.years.ago
+		end
+    trait :youth  do
+			birthdate 7.years.ago
+		end
+    trait :adult  do
+			birthdate 27.years.ago
+		end
+    trait :senior_adult  do
+			birthdate 67.years.ago
+		end
+    trait :elder  do
+			birthdate 77.years.ago
+		end
+
+    trait :male do
+			gender "M"
+		end
+    trait :female do
+			gender "F"
+		end
+
+    trait :AA do
+      race "AA"
+    end
+    trait :AS do
+      race "AS"
+    end
+    trait :HI do
+      race "HI"
+    end
+    trait :WH do
+      race "WH"
+    end
+    trait :OT do
+      race "OT"
+    end
+  end #/:client
+end #/FactoryGirl

@@ -33,12 +33,17 @@ class HouseholdCollection
 
   # sums the demographic values for each of the households in the collection
   def aggregated_age_group_demographics
-    blank_counts = { :household => 0,
-                     :children => 0,
-                     :adults => 0,
-                     :seniors => 0,
-                     :homeless => 0} # ensures all keys are present
-    households.inject(blank_counts){|hash,hh| hash.merge!(hh.counts_by_age_group.merge hh.count_by_homeless){|k,a,b| a+b}; hash}.merge({:household => households.size})
+    clients = ClientCollection.new(households.map(&:clients).flatten)
+    client_counts = clients.counts_by_age_group
+    client_counts.merge!({:household => size, :homeless => homeless_resident_count})
+  end
+
+  def size
+    households.size
+  end
+
+  def homeless_resident_count
+    households.select(&:homeless).map(&:clients).flatten.count
   end
 
   def clients

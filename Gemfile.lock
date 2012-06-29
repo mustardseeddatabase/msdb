@@ -22,28 +22,22 @@ GIT
 
 GIT
   remote: git://github.com/mustardseeddatabase/authengine.git
-  revision: 6427f6a296e7df5bf7404242b15091276a95df31
+  revision: 090276948f96e3cb72571700cc5a8e1cba8e1ccc
   specs:
-    authengine (0.0.1)
+    authengine (0.0.2)
       capybara
       database_cleaner
       factory_girl_rails
       faker
       flexmock
       haml
+      jasmine
+      jasminerice
       message_block
       rails (~> 3.2.5)
       rspec (>= 2.0.0)
       rspec-rails (>= 2.0.0)
       sqlite3-ruby
-
-GIT
-  remote: git://github.com/mustardseeddatabase/doccex.git
-  revision: 10bb5e2a81aec8514444f5db56ebbeb028abaf88
-  specs:
-    doccex (0.0.1)
-      haml
-      rails (~> 3.2.5)
 
 GIT
   remote: git://github.com/mustardseeddatabase/rbarcode.git
@@ -74,6 +68,13 @@ GIT
       json
 
 PATH
+  remote: /Users/lesnightingill/Code/doccex
+  specs:
+    doccex (0.0.1)
+      haml
+      rails (~> 3.2.5)
+
+PATH
   remote: vendor/gems/db_check
   specs:
     db_check (0.0.1)
@@ -82,6 +83,11 @@ PATH
   remote: vendor/gems/delegate_multiparameter
   specs:
     delegate_multiparameter (0.0.1)
+
+PATH
+  remote: vendor/gems/summary_report
+  specs:
+    summary_report (0.0.1)
 
 GEM
   remote: https://gems.gemfury.com/8n1rdTK8pezvcsyVmmgJ/
@@ -306,7 +312,7 @@ PLATFORMS
 
 DEPENDENCIES
   active_reload
-  authengine!
+  authengine (= 0.0.2)!
   capistrano
   capybara-webkit!
   carrierwave
@@ -345,6 +351,7 @@ DEPENDENCIES
   spork (~> 0.9.0.rc)
   sprockets
   sqlite3-ruby
+  summary_report!
   test-unit
   therubyracer
   uglifier (>= 1.0.3)

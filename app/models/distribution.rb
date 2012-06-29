@@ -1,4 +1,6 @@
 class Distribution < ActiveRecord::Base
+  include DistributionReport
+
   belongs_to :household
   has_many :distribution_items, :foreign_key => :transaction_id, :dependent => :destroy, :autosave => true
   has_many :items, :through => :distribution_items, :dependent => :destroy

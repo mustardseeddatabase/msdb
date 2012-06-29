@@ -204,23 +204,6 @@ class Household < ActiveRecord::Base
       File.exists?(gov_qualdoc.docfile.current_path)
   end
 
-  # TODO move this to ClientCollection class
-  def counts_by_age_group
-    blank_counts = {:children => 0, :adults => 0, :seniors => 0}
-    counts = clients.group_by(&:age_group).inject({}){|hash,(k,v)| hash[k.pluralize.to_sym] = v.count; hash}
-    blank_counts.merge! counts
-  end
-
-  # TODO move this to ClientCollection class
-  def counts_by_race
-    blank_counts = {:AA => 0, :AS => 0, :HI => 0, :WH => 0, :UNK => 0, :total => clients.count}
-    counts = clients.group_by(&:race_or_unknown).inject({}) do |hash,(k,v)|
-                hash[k.to_sym] = v.count
-                hash
-              end
-    blank_counts.merge! counts
-  end
-
   def count_by_homeless
     value = homeless? ? 1 : 0
     {:homeless => value}

@@ -33,6 +33,10 @@ FactoryGirl.define do
           FactoryGirl.create(:expired_gov_qualdoc, :association_id => hh.id)
         end
       end # /factory
+
+      trait :homeless do
+        homeless true
+      end
   end # /factory
 
 end # /define

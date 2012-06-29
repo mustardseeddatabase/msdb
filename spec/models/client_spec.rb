@@ -57,13 +57,21 @@ describe "#is_sole_head_of_household?" do
 end
 
 describe "age_group" do
-  it "should return the name of the age group of the client in the child range" do
-    client = FactoryGirl.build(:client, :birthdate => 17.years.ago)
-    client.age_group.should == "child"
-  end
-  it "should return the name of the age group of the client in the child range" do
+  it "should return the name of the age group of the client in the infants range" do
     client = FactoryGirl.build(:client, :birthdate => 1.years.ago)
-    client.age_group.should == "child"
+    client.age_group.should == "infant"
+  end
+  it "should return the name of the age group of the client in the infants range" do
+    client = FactoryGirl.build(:client, :birthdate => 5.years.ago)
+    client.age_group.should == "infant"
+  end
+  it "should return the name of the age group of the client in the youth range" do
+    client = FactoryGirl.build(:client, :birthdate => 6.years.ago)
+    client.age_group.should == "youth"
+  end
+  it "should return the name of the age group of the client in the youth range" do
+    client = FactoryGirl.build(:client, :birthdate => 17.years.ago)
+    client.age_group.should == "youth"
   end
   it "should return the name of the age group of the client in the adult range" do
     client = FactoryGirl.build(:client, :birthdate => 18.years.ago)
@@ -73,9 +81,17 @@ describe "age_group" do
     client = FactoryGirl.build(:client, :birthdate => 64.years.ago)
     client.age_group.should == "adult"
   end
-  it "should return the name of the age group of the client in the senior range" do
+  it "should return the name of the age group of the client in the senior adult range" do
     client = FactoryGirl.build(:client, :birthdate => 65.years.ago)
-    client.age_group.should == "senior"
+    client.age_group.should == "senior adult"
+  end
+  it "should return the name of the age group of the client in the senior adult range" do
+    client = FactoryGirl.build(:client, :birthdate => 74.years.ago)
+    client.age_group.should == "senior adult"
+  end
+  it "should return the name of the age group of the client in the senior range" do
+    client = FactoryGirl.build(:client, :birthdate => 75.years.ago)
+    client.age_group.should == "elder"
   end
   it "should return an out of range indication if there is anomalous data and client age is negative" do
     client = FactoryGirl.build(:client, :birthdate => 1.year.from_now)
@@ -84,5 +100,9 @@ describe "age_group" do
   it "should return an out of range indication if there is anomalous data and client age is > 120" do
     client = FactoryGirl.build(:client, :birthdate => 121.years.ago)
     client.age_group.should == "out of range"
+  end
+  it "should return 'unknown' if the birthdate is nil" do
+    client = FactoryGirl.build(:client, :birthdate => nil)
+    client.age_group.should == "unknown"
   end
 end

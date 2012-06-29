@@ -2,11 +2,29 @@ require 'spec_helper'
 
 describe "aggregated_age_group_demographics class method" do
   it "should sum the values of the demographics of the households in the collection" do
-    household1 = flexmock(Household.new, :counts_by_age_group => {:children=>0, :adults=>0, :seniors=>0}, :count_by_homeless => {:homeless=>0})
-    household2 = flexmock(Household.new, :counts_by_age_group => {:children=>1, :adults=>2, :seniors=>3}, :count_by_homeless => {:homeless=>9})
-    household3 = flexmock(Household.new, :counts_by_age_group => {:children=>2, :adults=>3, :seniors=>4}, :count_by_homeless => {:homeless=>0})
+    household1 = FactoryGirl.build(:household)
+    household1.clients << FactoryGirl.build_list(:client, 10, :infant)
+    household1.clients << FactoryGirl.build_list(:client, 0,  :youth)
+    household1.clients << FactoryGirl.build_list(:client, 0,  :adult)
+    household1.clients << FactoryGirl.build_list(:client, 1,  :senior_adult)
+    household1.clients << FactoryGirl.build_list(:client, 0,  :elder)
+
+    household2 = FactoryGirl.build(:household)
+    household2.clients << FactoryGirl.build_list(:client, 12, :infant)
+    household2.clients << FactoryGirl.build_list(:client, 1,  :youth)
+    household2.clients << FactoryGirl.build_list(:client, 2,  :adult)
+    household2.clients << FactoryGirl.build_list(:client, 1,  :senior_adult)
+    household2.clients << FactoryGirl.build_list(:client, 3,  :elder)
+
+    household3 = FactoryGirl.build(:household, :homeless)
+    household3.clients << FactoryGirl.build_list(:client, 81, :infant)
+    household3.clients << FactoryGirl.build_list(:client, 2,  :youth)
+    household3.clients << FactoryGirl.build_list(:client, 3,  :adult)
+    household3.clients << FactoryGirl.build_list(:client, 1,  :senior_adult)
+    household3.clients << FactoryGirl.build_list(:client, 4,  :elder)
+
     households = HouseholdCollection.new([household1, household2, household3])
-    households.aggregated_age_group_demographics.should == {:household => 3, :children=>3, :adults=>5, :seniors=>7, :homeless=>9}
+    households.aggregated_age_group_demographics.should == {:children => 106, :household => 3, :infants => 103, :youths=>3, :adults=>5, :senior_adults => 3, :seniors => 10, :elders=>7, :homeless=>91, :unknowns => 0}
   end
 end
 

@@ -30,7 +30,7 @@ describe 'new?' do
   end
 end
 
-describe 'days_of_distribution_in_month class method' do
+describe 'days_of_distribution class method' do
   before(:each) do
     @household = FactoryGirl.create(:household)
     @distribution1 = FactoryGirl.create(:distribution, :created_at => Date.new(2012,6,1), :household_id => @household.id)
@@ -39,19 +39,22 @@ describe 'days_of_distribution_in_month class method' do
   end
 
   it 'should return 2 days when the passed-in date is 2012,6,20' do
-    Distribution.days_of_distribution_in_month(Date.new(2012,6,20)).count.should == 2
+    collection = DistributionCollection.new(Date.new(2012,6,20))
+    collection.days_of_distribution.count.should == 2
   end
 
   it 'should return 1 days when the passed-in date is 2012,7,20' do
-    Distribution.days_of_distribution_in_month(Date.new(2012,7,20)).count.should == 1
+    collection = DistributionCollection.new(Date.new(2012,7,20))
+    collection.days_of_distribution.count.should == 1
   end
 
   it 'should return 0 days when the passed-in date is 2012,5,20' do
-    Distribution.days_of_distribution_in_month(Date.new(2012,5,20)).count.should == 0
+    collection = DistributionCollection.new(Date.new(2012,5,20))
+    collection.days_of_distribution.count.should == 0
   end
 end
 
-describe 'unique_households_in_month class method' do
+describe 'unique_households class method' do
   before(:each) do
     household = FactoryGirl.create(:household)
     distribution1 = FactoryGirl.create(:distribution, :created_at => Date.new(2012,6,1), :household_id => household.id)
@@ -63,28 +66,31 @@ describe 'unique_households_in_month class method' do
   end
 
   it 'should return 2 when the passed in date is 2012,6,20' do
-    Distribution.unique_households_in_month(Date.new(2012,6,20)).count.should == 2
+    collection = DistributionCollection.new(Date.new(2012,6,20))
+    collection.unique_households.count.should == 2
   end
 
   it 'should return 1 when the passed in date is 2012,7,20' do
-    Distribution.unique_households_in_month(Date.new(2012,7,20)).count.should == 1
+    collection = DistributionCollection.new(Date.new(2012,7,20))
+    collection.unique_households.count.should == 1
   end
 
   it 'should return 0 when the passed in date is 2012,5,20' do
-    Distribution.unique_households_in_month(Date.new(2012,5,20)).count.should == 0
+    collection = DistributionCollection.new(Date.new(2012,5,20))
+    collection.unique_households.count.should == 0
   end
 end
 
-describe 'unique_residents_in_month class method' do
+describe 'unique_residents class method' do
   before(:all) do
     Client.delete_all
     client = FactoryGirl.create_list(:client, 5)
     household = FactoryGirl.create(:household)
-    household.client_ids = [1,2,3]
+    household.client_ids = Client.all.map(&:id)[0..2]
     distribution1 = FactoryGirl.create(:distribution, :created_at => Date.new(2012,6,1), :household_id => household.id)
     distribution2 = FactoryGirl.create(:distribution, :created_at => Date.new(2012,6,1), :household_id => household.id)
     household = FactoryGirl.create(:household)
-    household.client_ids = [3,4,5]
+    household.client_ids = Client.all.map(&:id)[2..-1]
     distribution3 = FactoryGirl.create(:distribution, :created_at => Date.new(2012,6,8), :household_id => household.id)
     household = FactoryGirl.create(:household)
     household.client_ids = []
@@ -92,19 +98,22 @@ describe 'unique_residents_in_month class method' do
   end
 
   it 'should return 5 when the passed in date is 2012,6,20' do
-    Distribution.unique_residents_in_month(Date.new(2012,6,20)).count.should == 5
+    collection = DistributionCollection.new(Date.new(2012,6,20))
+    collection.unique_residents.count.should == 5
   end
 
   it 'should return 0 when the passed in date is 2012,7,20' do
-    Distribution.unique_residents_in_month(Date.new(2012,7,20)).count.should == 0
+    collection = DistributionCollection.new(Date.new(2012,7,20))
+    collection.unique_residents.count.should == 0
   end
 
   it 'should return 0 when the passed in date is 2012,5,20' do
-    Distribution.unique_residents_in_month(Date.new(2012,5,20)).count.should == 0
+    collection = DistributionCollection.new(Date.new(2012,5,20))
+    collection.unique_residents.count.should == 0
   end
 end
 
-describe 'new_households_in_month class method' do
+describe 'new_households class method' do
   before(:all) do
     Household.delete_all
     Distribution.delete_all
@@ -118,15 +127,17 @@ describe 'new_households_in_month class method' do
   end
 
   it "should return 1 when the passed-in date is 2012,6,20" do
-    Distribution.new_households_in_month(Date.new(2012,6,20)).count.should == 1
+    collection = DistributionCollection.new(Date.new(2012,6,20))
+    collection.new_households.count.should == 1
   end
 
   it "should return 1 when the passed-in date is 2012,5,20" do
-    Distribution.new_households_in_month(Date.new(2012,5,20)).count.should == 1
+    collection = DistributionCollection.new(Date.new(2012,5,20))
+    collection.new_households.count.should == 1
   end
 end
 
-describe 'lbs_of_food_distributed_in_month class method' do
+describe 'lbs_of_food_distributed class method' do
   before(:all) do
     Distribution.delete_all
     DistributionItem.delete_all
@@ -138,6 +149,7 @@ describe 'lbs_of_food_distributed_in_month class method' do
   end
 
   it "should total the number of pounds in all distributions for the month" do
-    Distribution.lbs_of_food_distributed_in_month(Date.new(2012,5,30)).should == 110.to_f/16
+    collection = DistributionCollection.new(Date.new(2012,5,30))
+    collection.lbs_of_food_distributed.should == (110.to_f/16).round(2)
   end
 end

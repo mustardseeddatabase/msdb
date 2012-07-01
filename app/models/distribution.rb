@@ -1,5 +1,4 @@
 class Distribution < ActiveRecord::Base
-  include DistributionReport
 
   belongs_to :household
   has_many :distribution_items, :foreign_key => :transaction_id, :dependent => :destroy, :autosave => true
@@ -29,6 +28,10 @@ class Distribution < ActiveRecord::Base
 
   def new?
     household.distributions.sort_by(&:created_at).index(self) == 0
+  end
+
+  def weight_lb
+    distribution_items.map(&:weight_lb).sum
   end
 
 end

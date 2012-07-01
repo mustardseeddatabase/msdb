@@ -19,12 +19,16 @@ class Client < ActiveRecord::Base
                 "senior adult" => (65..74),
                 "elder" => (75..120) }
 
-  def self.age_group_base_count
-    (AgeGroups.keys << "unknown").inject({}){|hash, key| hash[key.pluralize.sub(/ /,'_').to_sym] = 0; hash}
+  def self.age_group_empty_groups
+    (AgeGroups.keys << "unknown").inject({}){|hash, key| hash[key.pluralize.sub(/ /,'_').to_sym] = []; hash}
   end
 
-  def self.race_base_count
-    (Races.keys << "UNK").inject({}){|hash, key| hash[key.to_sym] = 0; hash}
+  def self.race_empty_groups
+    (Races.keys << "Unknown" << "Total").inject({}){|hash, key| hash[key] = []; hash}
+  end
+
+  def self.age_group_base_count
+    (AgeGroups.keys << "unknown").inject({}){|hash, key| hash[key.pluralize.sub(/ /,'_').to_sym] = 0; hash}
   end
 
   default_scope order('case when birthdate IS NULL then 1 else 0 end, birthdate')

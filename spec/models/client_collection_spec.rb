@@ -17,31 +17,22 @@ describe "aggregated_race_demographics" do
   end
 end
 
-describe "counts_by_age_group method" do
-  context "when no clients are present" do
+describe "counts_by_gender method" do
+  context "when no clients are in the collection" do
     before(:each) do
       collection = ClientCollection.new([])
-      @counts = collection.counts_by_age_group
+      @counts = collection.counts_by_gender
     end
 
-    it "should return a hash with keys [:infants, :youth, :adult, :senior_adult, :elders]" do
-      [:infants, :youths, :adults, :senior_adults, :elders, :children, :seniors].each do |k|
-        @counts.should have_key(k)
-      end
-    end
-
-    it "should return a hash with values representing the counts in the collection" do
-      @counts[:infants].should       == 0
-      @counts[:youths].should        == 0
-      @counts[:children].should      == 0
-      @counts[:adults].should        == 0
-      @counts[:senior_adults].should == 0
-      @counts[:elders].should        == 0
-      @counts[:seniors].should       == 0
+    it "should return a hash with zero values" do
+      @counts[:m].should == 0
+      @counts[:f].should == 0
+      @counts[:u].should == 0
+      @counts[:t].should == 0
     end
   end
 
-  context "when clients are present" do
+  context "when clients are in the collection" do
     before(:each) do
       clients  = [FactoryGirl.build(:client, :infant,      :male)]
       clients  << FactoryGirl.build(:client, :infant,      :female)
@@ -54,73 +45,45 @@ describe "counts_by_age_group method" do
       clients  << FactoryGirl.build(:client, :elder,       :male)
       clients  << FactoryGirl.build(:client, :elder,       :female)
       collection = ClientCollection.new(clients)
-      @counts = collection.counts_by_age_group
-    end
-
-    it "should return a hash with keys [:infants, :youth, :adult, :senior_adult, :elders]" do
-      [:infants, :youths, :adults, :senior_adults, :elders, :children, :seniors].each do |k|
-        @counts.should have_key(k)
-      end
+      @counts = collection.counts_by_gender
     end
 
     it "should return a hash with values representing the counts in the collection" do
-      @counts[:infants].should       == 2
-      @counts[:youths].should        == 2
-      @counts[:children].should      == 4
-      @counts[:adults].should        == 2
-      @counts[:senior_adults].should == 2
-      @counts[:elders].should        == 2
-      @counts[:seniors].should       == 4
+      @counts[:m].should == 5
+      @counts[:f].should == 5
+      @counts[:u].should == 0
+      @counts[:t].should == 10
     end
   end
 
-  context "when one of the clients has a null birthdate" do
-    before(:each) do
-      clients  = [FactoryGirl.build(:client, :infant,      :male)]
-      clients  << FactoryGirl.build(:client, :female, :birthdate => nil)
-      collection = ClientCollection.new(clients)
-      @counts = collection.counts_by_age_group
-    end
-
-    it "should return a hash with keys [:infants, :youth, :adult, :senior_adult, :elders]" do
-      [:infants, :youths, :adults, :senior_adults, :elders, :children, :seniors, :unknowns].each do |k|
-        @counts.should have_key(k)
-      end
-    end
-
-    it "should return a hash with values representing the counts in the collection" do
-      @counts[:infants].should       == 1
-      @counts[:youths].should        == 0
-      @counts[:children].should      == 1
-      @counts[:adults].should        == 0
-      @counts[:senior_adults].should == 0
-      @counts[:elders].should        == 0
-      @counts[:seniors].should       == 0
-      @counts[:unknowns].should      == 1
-    end
-  end
 end
 
 describe 'counts_by_age_group_and_gender' do
-  context 'when the household does not have any clients' do
+  context 'when the collection does not have any clients' do
     before(:each) do
       collection = ClientCollection.new([])
       @counts = collection.counts_by_age_group_and_gender
     end
 
     it "should count clients by age group" do
-      @counts[:m][:infants].should       == 0
-      @counts[:f][:infants].should       == 0
-      @counts[:m][:youths].should        == 0
-      @counts[:f][:youths].should        == 0
-      @counts[:m][:adults].should        == 0
-      @counts[:f][:adults].should        == 0
-      @counts[:m][:senior_adults].should == 0
-      @counts[:f][:senior_adults].should == 0
-      @counts[:m][:elders].should        == 0
-      @counts[:f][:elders].should        == 0
-      @counts[:m][:unknowns].should      == 0
-      @counts[:f][:unknowns].should      == 0
+      @counts[:infants][:m].should       == 0
+      @counts[:infants][:f].should       == 0
+      @counts[:infants][:u].should       == 0
+      @counts[:youths][:m].should        == 0
+      @counts[:youths][:f].should        == 0
+      @counts[:youths][:u].should        == 0
+      @counts[:adults][:m].should        == 0
+      @counts[:adults][:f].should        == 0
+      @counts[:adults][:u].should        == 0
+      @counts[:senior_adults][:m].should == 0
+      @counts[:senior_adults][:f].should == 0
+      @counts[:senior_adults][:u].should == 0
+      @counts[:elders][:m].should        == 0
+      @counts[:elders][:f].should        == 0
+      @counts[:elders][:u].should        == 0
+      @counts[:unknowns][:m].should      == 0
+      @counts[:unknowns][:f].should      == 0
+      @counts[:unknowns][:u].should      == 0
     end
   end
 
@@ -141,18 +104,24 @@ describe 'counts_by_age_group_and_gender' do
     end
 
     it "should count clients by age group and gender" do
-      @counts[:m][:infants].should       == 1
-      @counts[:f][:infants].should       == 1
-      @counts[:m][:youths].should        == 1
-      @counts[:f][:youths].should        == 1
-      @counts[:m][:adults].should        == 1
-      @counts[:f][:adults].should        == 1
-      @counts[:m][:senior_adults].should == 1
-      @counts[:f][:senior_adults].should == 1
-      @counts[:m][:elders].should        == 1
-      @counts[:f][:elders].should        == 1
-      @counts[:m][:unknowns].should      == 0
-      @counts[:f][:unknowns].should      == 0
+      @counts[:infants][:m].should       == 1
+      @counts[:infants][:f].should       == 1
+      @counts[:infants][:u].should       == 0
+      @counts[:youths][:m].should        == 1
+      @counts[:youths][:f].should        == 1
+      @counts[:youths][:u].should        == 0
+      @counts[:adults][:m].should        == 1
+      @counts[:adults][:f].should        == 1
+      @counts[:adults][:u].should        == 0
+      @counts[:senior_adults][:m].should == 1
+      @counts[:senior_adults][:f].should == 1
+      @counts[:senior_adults][:u].should == 0
+      @counts[:elders][:m].should        == 1
+      @counts[:elders][:f].should        == 1
+      @counts[:elders][:u].should        == 0
+      @counts[:unknowns][:m].should      == 0
+      @counts[:unknowns][:f].should      == 0
+      @counts[:unknowns][:u].should      == 0
     end
   end
 
@@ -165,49 +134,20 @@ describe 'counts_by_age_group_and_gender' do
     end
 
     it "should count clients by age group" do
-      @counts[:m][:infants].should       == 1
-      @counts[:f][:unknowns].should      == 1
+      @counts[:infants][:m].should       == 1
+      @counts[:unknowns][:f].should      == 1
+      @counts[:unknowns][:u].should      == 0
     end
   end
 end
 
-describe 'counts_by_race' do
-  context "when the household does not have any clients" do
-    before(:each) do
-      @counts = ClientCollection.new([]).counts_by_race
+describe 'grouped_by_race' do
+  context "when there are no clients in the collection" do
+    it "should have keys ['African American', 'Asian', 'Hispanic', 'White', 'Other', 'Unknown', 'Total'] and all values zero" do
+      ['African American', 'Asian', 'Hispanic', 'White', 'Other', 'Unknown', 'Total'].each do |key|
+        ClientCollection.new([]).grouped_by_race.keys.should include key
+      end
     end
-
-    it "should count clients by race" do
-      @counts[:AA].should == 0
-      @counts[:AS].should == 0
-      @counts[:HI].should == 0
-      @counts[:WH].should == 0
-      @counts[:UNK].should == 0
-      @counts[:total].should == 0
-    end
-  end
-
-  context "when clients are non-empty" do
-    before(:each) do
-      clients = [FactoryGirl.create(:client, :AA)]
-      clients << FactoryGirl.create(:client, :AS)
-      clients << FactoryGirl.create(:client, :HI)
-      clients << FactoryGirl.create(:client, :WH)
-      clients << FactoryGirl.create(:client, :OT)
-      clients << FactoryGirl.create(:client, :race => nil)
-      @counts = ClientCollection.new(clients).counts_by_race
-    end
-
-    it "should count clients by race" do
-      @counts[:AA].should == 1
-      @counts[:AS].should == 1
-      @counts[:HI].should == 1
-      @counts[:WH].should == 1
-      @counts[:OT].should == 1
-      @counts[:UNK].should == 1
-      @counts[:total].should == 6
-    end
-
   end
 end
 
@@ -218,18 +158,18 @@ describe 'counts_by_race_and_gender' do
     end
 
     it "should count clients by race" do
-      @counts[:m][:AA].should == 0
-      @counts[:m][:AS].should == 0
-      @counts[:m][:HI].should == 0
-      @counts[:m][:WH].should == 0
-      @counts[:m][:UNK].should == 0
-      @counts[:m][:total].should == 0
-      @counts[:f][:AA].should == 0
-      @counts[:f][:AS].should == 0
-      @counts[:f][:HI].should == 0
-      @counts[:f][:WH].should == 0
-      @counts[:f][:UNK].should == 0
-      @counts[:f][:total].should == 0
+      @counts['African American'][:m].should == 0
+      @counts['Asian'][:m].should == 0
+      @counts['Hispanic'][:m].should == 0
+      @counts['White'][:m].should == 0
+      @counts['Unknown'][:m].should == 0
+      @counts['Total'][:m].should == 0
+      @counts['African American'][:f].should == 0
+      @counts['Asian'][:f].should == 0
+      @counts['Hispanic'][:f].should == 0
+      @counts['White'][:f].should == 0
+      @counts['Unknown'][:f].should == 0
+      @counts['Total'][:f].should == 0
     end
   end
 
@@ -251,20 +191,20 @@ describe 'counts_by_race_and_gender' do
     end
 
     it "should count clients by race" do
-      @counts[:m][:AA].should == 1
-      @counts[:m][:AS].should == 1
-      @counts[:m][:HI].should == 1
-      @counts[:m][:WH].should == 1
-      @counts[:m][:OT].should == 1
-      @counts[:m][:UNK].should == 1
-      @counts[:m][:total].should == 6
-      @counts[:f][:AA].should == 1
-      @counts[:f][:AS].should == 1
-      @counts[:f][:HI].should == 1
-      @counts[:f][:WH].should == 1
-      @counts[:f][:OT].should == 1
-      @counts[:f][:UNK].should == 1
-      @counts[:f][:total].should == 6
+      @counts['African American'][:m].should == 1
+      @counts['Asian'][:m].should == 1
+      @counts['Hispanic'][:m].should == 1
+      @counts['White'][:m].should == 1
+      @counts['Other'][:m].should == 1
+      @counts['Unknown'][:m].should == 1
+      @counts['Total'][:m].should == 6
+      @counts['African American'][:f].should == 1
+      @counts['Asian'][:f].should == 1
+      @counts['Hispanic'][:f].should == 1
+      @counts['White'][:f].should == 1
+      @counts['Other'][:f].should == 1
+      @counts['Unknown'][:f].should == 1
+      @counts['Total'][:f].should == 6
     end
 
   end

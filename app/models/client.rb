@@ -139,6 +139,22 @@ class Client < ActiveRecord::Base
     group
   end
 
+  def adult
+    age >= 18 unless !age
+  end
+
+  def child
+    age < 18 unless !age
+  end
+
+  def male
+    gender == "M" unless !gender
+  end
+
+  def female
+    gender == "F" unless !gender
+  end
+
   def has_id_doc_in_db?
     id_qualdoc && id_qualdoc.in_db?
   end

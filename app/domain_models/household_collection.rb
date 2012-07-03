@@ -33,9 +33,68 @@ class HouseholdCollection
 
   # sums the demographic values for each of the households in the collection
   def aggregated_age_group_demographics
-    clients = ClientCollection.new(households.map(&:clients).flatten)
-    client_counts = clients.counts_by_age_group
-    client_counts.merge!({:household => size, :homeless => homeless_resident_count})
+    client_collection = ClientCollection.new(clients).counts_by_age_group
+    client_collection.merge!({:household => size, :homeless => homeless_resident_count})
+  end
+
+  def ssi_count
+    households.select(&:ssi?).length
+  end
+
+  def food_stamp_count
+    households.select(&:foodstamps?).length
+  end
+
+  def medicaid_count
+    households.select(&:medicaid?).length
+  end
+
+  def government_assistance
+    [
+      ['Supplemental Security Assistance', ssi_count],
+      ['Food Stamps', food_stamp_count],
+      ['Medicaid', medicaid_count]
+    ]
+  end
+
+  def physically_disabled_count
+    households.select(&:physDisabled?).length
+  end
+
+  def mentally_disabled_count
+    households.select(&:mentDisabled?).length
+  end
+
+  def single_parent_count
+    households.select(&:singleParent?).length
+  end
+
+  def diabetic_count
+    households.select(&:diabetic?).length
+  end
+
+  def retired_count
+    households.select(&:retired?).length
+  end
+
+  def unemployed_count
+    households.select(&:unemployed?).length
+  end
+
+  def homeless_count
+    households.select(&:homeless?).length
+  end
+
+  def special_circumstances
+    [
+      ['Physically disabled', physically_disabled_count ],
+      ['Mentally disabled', mentally_disabled_count ],
+      ['Single parent', single_parent_count ],
+      ['Diabetic', diabetic_count ],
+      ['Retired', retired_count ],
+      ['Unemployed', unemployed_count ],
+      ['Homeless', homeless_count ]
+    ]
   end
 
   def size
@@ -48,6 +107,47 @@ class HouseholdCollection
 
   def clients
     households.map(&:clients).flatten.uniq
+  end
+
+  def length
+    households.uniq.length
+  end
+
+  def new(date)
+    households.select{|h| h.new_in?(date.year, date.month)}.uniq
+  end
+
+  def new_clients(date)
+    new(date).map(&:clients).uniq.length
+  end
+
+  def income_ranges
+    range_count = Household.blank_income_range_count
+    grouped_households = households.group_by(&:income_range)
+    range_count.merge!(grouped_households) do |range, c1, c2|
+      client_count = c2 && c2.map(&:clients).flatten.length
+      {:household_count => c2.length,
+       :resident_count => client_count}
+    end
+  end
+
+  def zip_codes
+    counts = households.group_by(&:permanent_zip).inject([]) do |arr, (zip,hh)|
+                arr << [zip || "Unknown", {:household_count => hh.length, :resident_count => hh.map(&:clients).flatten.length}]
+                arr
+              end
+    counts.sort_by!{|el| el[0].to_i}
+  end
+
+  def family_structures
+    structures = {"one person household" => 0,
+                  "single male parent" => 0,
+                  "single female parent" => 0,
+                  "couple w/ children" => 0,
+                  "couple w/o children" => 0,
+                  "other family structure" => 0 }
+    groups = households.group_by(&:family_structure)
+    structures.merge(groups){|k,c1,c2| c2.length}
   end
 
 end

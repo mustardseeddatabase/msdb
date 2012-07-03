@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120502144800) do
+ActiveRecord::Schema.define(:version => 20120702004836) do
 
   create_table "action_roles", :force => true do |t|
     t.integer  "role_id",    :limit => 8
@@ -217,6 +217,8 @@ ActiveRecord::Schema.define(:version => 20120502144800) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "transaction_items", ["transaction_id"], :name => "index_transaction_items_on_transaction_id"
 
   create_table "user_roles", :force => true do |t|
     t.integer  "role_id",    :limit => 8, :null => false

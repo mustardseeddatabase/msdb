@@ -26,10 +26,6 @@ class Distribution < ActiveRecord::Base
     {:id => id, :cid => cid}
   end
 
-  def new?
-    household.distributions.sort_by(&:created_at).index(self) == 0
-  end
-
   def weight_lb
     distribution_items.map(&:weight_lb).sum
   end

@@ -140,3 +140,60 @@ describe "report_demographics class method" do
     end
   end
 end
+
+describe "income_ranges" do
+  context "when all income ranges are present" do
+    before do
+      households =  [FactoryGirl.build(:household, :income => 5000, :clients => FactoryGirl.build_list(:client, 3))]
+      households << FactoryGirl.build(:household, :income => 10000, :clients => FactoryGirl.build_list(:client, 3))
+      households << FactoryGirl.build(:household, :income => 25000, :clients => FactoryGirl.build_list(:client, 3))
+      households << FactoryGirl.build(:household, :income => 35000, :clients => FactoryGirl.build_list(:client, 3))
+      households << FactoryGirl.build(:household, :income => 50000, :clients => FactoryGirl.build_list(:client, 3))
+      households << FactoryGirl.build(:household, :income => nil, :clients => FactoryGirl.build_list(:client, 3))
+      collection = HouseholdCollection.new(households)
+      @ranges = collection.income_ranges
+    end
+
+    it "should return a hash with income ranges, household_counts and resident_counts" do
+      @ranges["Under $10,000"][:household_count].should == 1
+      @ranges["Under $10,000"][:resident_count].should == 3
+      @ranges["$10,000 - $24,999"][:household_count].should == 1
+      @ranges["$10,000 - $24,999"][:resident_count].should == 3
+      @ranges["$25,000 - $34,999"][:household_count].should == 1
+      @ranges["$25,000 - $34,999"][:resident_count].should == 3
+      @ranges["$35,000 - $49,999"][:household_count].should == 1
+      @ranges["$50,000 and above"][:resident_count].should == 3
+      @ranges["Unknown"][:household_count].should == 1
+      @ranges["Unknown"][:resident_count].should == 3
+      @ranges["$50,000 and above"][:household_count].should == 1
+      @ranges["$35,000 - $49,999"][:resident_count].should == 3
+    end
+  end
+
+  context "when some income ranges are missing" do
+    before do
+      households = [FactoryGirl.build(:household, :income => 10000, :clients => FactoryGirl.build_list(:client, 3))]
+      households << FactoryGirl.build(:household, :income => 25000, :clients => FactoryGirl.build_list(:client, 3))
+      households << FactoryGirl.build(:household, :income => 35000, :clients => FactoryGirl.build_list(:client, 3))
+      households << FactoryGirl.build(:household, :income => 50000, :clients => FactoryGirl.build_list(:client, 3))
+      households << FactoryGirl.build(:household, :income => nil, :clients => FactoryGirl.build_list(:client, 3))
+      collection = HouseholdCollection.new(households)
+      @ranges = collection.income_ranges
+    end
+
+    it "should return a hash with income ranges, household_counts and resident_counts" do
+      @ranges["Under $10,000"][:household_count].should == 0
+      @ranges["Under $10,000"][:resident_count].should == 0
+      @ranges["$10,000 - $24,999"][:household_count].should == 1
+      @ranges["$10,000 - $24,999"][:resident_count].should == 3
+      @ranges["$25,000 - $34,999"][:household_count].should == 1
+      @ranges["$25,000 - $34,999"][:resident_count].should == 3
+      @ranges["$35,000 - $49,999"][:household_count].should == 1
+      @ranges["$50,000 and above"][:resident_count].should == 3
+      @ranges["Unknown"][:household_count].should == 1
+      @ranges["Unknown"][:resident_count].should == 3
+      @ranges["$50,000 and above"][:household_count].should == 1
+      @ranges["$35,000 - $49,999"][:resident_count].should == 3
+    end
+  end
+end

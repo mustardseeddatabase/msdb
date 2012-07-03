@@ -63,4 +63,8 @@ class ClientCollection
     groups.inject({}){|hash, (k,v)| if Client::Races.keys.include?(k); hash[Client::Races[k]] = v ; else; hash[k] = v; end; hash}
   end
 
+  def length
+    clients.uniq.length
+  end
+
 end

@@ -339,3 +339,46 @@ describe "new_or_continued_in_month method" do
   end
 end
 
+describe "ssi? method" do
+  it "should return true if ssi field is true" do
+    hh = FactoryGirl.build(:household, :ssi => true)
+    hh.ssi?.should be_true
+  end
+end
+
+describe "family_structure method" do
+  it "should return 'one person household' if there is exactly 1 client" do
+    client1 = FactoryGirl.build(:client)
+    household = FactoryGirl.build(:household, :clients => [client1])
+    household.family_structure.should == 'one person household'
+  end
+
+  it "should return 'single male parent' if # adults = 1, the adult is male, and # children >= 1" do
+    client1 = FactoryGirl.build(:client, :adult, :male)
+    client2 = FactoryGirl.build(:client, :youth)
+    household = FactoryGirl.build(:household, :clients => [client1, client2])
+    household.family_structure.should == 'single male parent'
+  end
+
+  it "should return 'single female parent' if # adults = 1, the adult is female, and # children >= 1" do
+    client1 = FactoryGirl.build(:client, :adult, :female)
+    client2 = FactoryGirl.build(:client, :youth)
+    household = FactoryGirl.build(:household, :clients => [client1, client2])
+    household.family_structure.should == 'single female parent'
+  end
+
+  it "should return 'couple w/ children' if # adults = 2, and # children >= 1" do
+    client1 = FactoryGirl.build(:client, :adult)
+    client2 = FactoryGirl.build(:client, :adult)
+    client3 = FactoryGirl.build(:client, :youth)
+    household = FactoryGirl.build(:household, :clients => [client1, client2, client3])
+    household.family_structure.should == 'couple w/ children'
+  end
+
+  it "should return 'couple w/o children' if # adults = 2, and # children = 0" do
+    client1 = FactoryGirl.build(:client, :adult)
+    client2 = FactoryGirl.build(:client, :adult)
+    household = FactoryGirl.build(:household, :clients => [client1, client2])
+    household.family_structure.should == 'couple w/o children'
+  end
+end

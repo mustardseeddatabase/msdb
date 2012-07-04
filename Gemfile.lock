@@ -40,6 +40,14 @@ GIT
       sqlite3-ruby
 
 GIT
+  remote: git://github.com/mustardseeddatabase/doccex.git
+  revision: f8735b4a3efb134564aa5c0bdbede28052f79b93
+  specs:
+    doccex (0.0.1)
+      haml
+      rails (~> 3.2.5)
+
+GIT
   remote: git://github.com/mustardseeddatabase/rbarcode.git
   revision: ee675879f17c77bd1d2047e5302fc168ec1013b9
   specs:
@@ -66,13 +74,6 @@ GIT
     capybara-webkit (0.12.0)
       capybara (>= 1.0.0, < 1.2)
       json
-
-PATH
-  remote: /Users/lesnightingill/Code/doccex
-  specs:
-    doccex (0.0.1)
-      haml
-      rails (~> 3.2.5)
 
 PATH
   remote: vendor/gems/db_check

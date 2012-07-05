@@ -1,0 +1,1 @@
+Rails.application.routes.draw { match 'summary_report/report(.:format)' => 'summary_report/reports#show', :as => 'summary_report'}

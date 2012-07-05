@@ -7,30 +7,30 @@ FactoryGirl.define do
     income  {rand(40)*1000}
     otherConcerns  {Faker::Lorem.paragraph}
 
-    association :perm_address, :factory => :perm_address
-    association :temp_address, :factory => :temp_address
+    perm_address
+    temp_address
 
       factory :household_with_docs do
         after(:create) do |hh|
-          FactoryGirl.create(:res_qualdoc, :association_id => hh.id)
-          FactoryGirl.create(:inc_qualdoc, :association_id => hh.id)
-          FactoryGirl.create(:gov_qualdoc, :association_id => hh.id)
+          FactoryGirl.create(:res_qualdoc, :household => hh)
+          FactoryGirl.create(:inc_qualdoc, :household => hh)
+          FactoryGirl.create(:gov_qualdoc, :household => hh)
         end
       end
 
       factory :household_with_current_docs do
         after(:create) do |hh|
-          FactoryGirl.create(:current_res_qualdoc, :association_id => hh.id)
-          FactoryGirl.create(:current_inc_qualdoc, :association_id => hh.id)
-          FactoryGirl.create(:current_gov_qualdoc, :association_id => hh.id)
+          FactoryGirl.create(:res_qualdoc, :current, :household => hh)
+          FactoryGirl.create(:inc_qualdoc, :current, :household => hh)
+          FactoryGirl.create(:gov_qualdoc, :current, :household => hh)
         end
       end
 
       factory :household_with_expired_docs do
         after(:create) do |hh|
-          FactoryGirl.create(:expired_res_qualdoc, :association_id => hh.id)
-          FactoryGirl.create(:expired_inc_qualdoc, :association_id => hh.id)
-          FactoryGirl.create(:expired_gov_qualdoc, :association_id => hh.id)
+          FactoryGirl.create(:res_qualdoc, :expired, :household => hh)
+          FactoryGirl.create(:inc_qualdoc, :expired, :household => hh)
+          FactoryGirl.create(:gov_qualdoc, :expired, :household => hh)
         end
       end # /factory
 

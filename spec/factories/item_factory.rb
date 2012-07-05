@@ -15,20 +15,26 @@ FactoryGirl.define do
     category_id {1+rand(4)}
     count 1
     qoh {rand(10) + 1}
-  end
 
-  factory :item_with_barcode, :parent => :item do
-    sku nil
-    upc {until(!Item.select(:upc ).map(&:upc ).include?(i = (1+rand(99999999998)))); end; i}
-  end
+    trait :with_barcode do
+      sku nil
+      upc {until(!Item.select(:upc ).map(&:upc ).include?(i = (1+rand(99999999998)))); end; i}
+    end
 
-  factory :item_with_known_barcode, :parent => :item do
-    sku nil
-    upc 12341234
-  end
+    trait :with_known_barcode do
+      sku nil
+      upc 12341234
+    end
 
-  factory :item_with_sku, :parent => :item do
-    upc nil
-    sku{until(!Item.select(:sku).map(&:sku).include?(i = (1+rand(998)))); end; i}
+    trait :with_sku do
+      upc nil
+      sku{until(!Item.select(:sku).map(&:sku).include?(i = (1+rand(998)))); end; i}
+    end
+
+    factory :item_with_barcode, :traits => [:with_barcode]
+
+    factory :item_with_known_barcode, :traits => [:with_known_barcode]
+
+    factory :item_with_sku, :traits => [:with_sku]
   end
 end

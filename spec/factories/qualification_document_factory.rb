@@ -1,7 +1,7 @@
 include ActionDispatch::TestProcess
 
 FactoryGirl.define do
-  factory :id_qualdoc do
+  factory :qualification_document do
     confirm  [true,false].sample
     date  {Date.today - rand(365)}
     warnings  0
@@ -10,66 +10,28 @@ FactoryGirl.define do
       iq.send("write_attribute", :docfile, "arbogast_id.pdf")
     end
 
-    factory :current_id_qualdoc do
+    trait :current do
       date 1.month.ago
     end
 
-    factory :expired_id_qualdoc do
+    trait :expired do
       date 1.year.ago
     end
-  end
 
-  factory :res_qualdoc do
-    confirm  [true,false].sample
-    date  {Date.today - rand(365)}
-    warnings  0
-    vi  [true,false].sample
-    after(:build) do |rq|
-      rq.send("write_attribute", :docfile, "arbogast_id.pdf")
+    factory :id_qualdoc, :class => IdQualdoc do
+      type "IdQualdoc"
     end
 
-    factory :current_res_qualdoc do
-      date 1.month.ago
+    factory :res_qualdoc, :class => ResQualdoc do
+      type "ResQualdoc"
     end
 
-    factory :expired_res_qualdoc do
-      date 1.year.ago
-    end
-  end
-
-  factory :inc_qualdoc do
-    confirm  [true,false].sample
-    date  {Date.today - rand(365)}
-    warnings  0
-    vi  [true,false].sample
-    after(:build) do |iq|
-      iq.send("write_attribute", :docfile, "arbogast_id.pdf")
+    factory :inc_qualdoc, :class => IncQualdoc do
+      type "IncQualdoc"
     end
 
-    factory :current_inc_qualdoc do
-      date 1.month.ago
-    end
-
-    factory :expired_inc_qualdoc do
-      date 1.year.ago
-    end
-  end
-
-  factory :gov_qualdoc do
-    confirm  [true,false].sample
-    date  {Date.today - rand(365)}
-    warnings  0
-    vi  [true,false].sample
-    after(:build) do |gq|
-      gq.send("write_attribute", :docfile, "arbogast_id.pdf")
-    end
-
-    factory :current_gov_qualdoc do
-      date 1.month.ago
-    end
-
-    factory :expired_gov_qualdoc do
-      date 1.year.ago
+    factory :gov_qualdoc, :class => GovQualdoc do
+      type "GovQualdoc"
     end
   end
 end

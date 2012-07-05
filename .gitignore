@@ -13,7 +13,6 @@ db/ccstb_test.sqlite3-journal
 public/assets
 public/assets/**/*
 bin/
-vendor/gems/*_report
 config/deploy
 config/initializers/action_mailer.rb
 lib/tasks/check_import_files.rake

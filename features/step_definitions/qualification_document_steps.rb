@@ -52,7 +52,7 @@ Then /^The uploaded file should be present in the uploaded file storage location
 end
 
 Then /^I should not see a file selector$/ do
-  not_in_the_dom = page.has_no_selector?(:xpath, ".//input[@type='file']")
+  not_in_the_dom = !page.has_selector?(:xpath, ".//input[@type='file']")
   not_visible = page.has_selector?(:xpath, ".//input[@type='file']", :visible => false)
   not_in_the_dom || not_visible
 end

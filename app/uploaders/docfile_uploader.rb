@@ -17,7 +17,7 @@ class DocfileUploader < CarrierWave::Uploader::Base
     if Rails.env.production?
       File.join(Rails.root, "../../shared", path) # assumes Capistrano directory hierarchy
     elsif Rails.env.test?
-      File.join(Rails.root, 'features', 'support', 'upload_files')
+      File.join(Rails.root, 'features', 'support', 'uploaded_files')
     else
       path
     end

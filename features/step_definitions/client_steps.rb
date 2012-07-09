@@ -79,7 +79,7 @@ Given /^there is a client with last name "([^"]*)", first name "([^"]*)", age "(
                        :date => 1.month.ago,
                        :warnings => 0,
                        :vi => 1,
-                       :docfile => File.new(File.join(Rails.root,'features', 'support', 'upload_files','arbogast_id.pdf')))
+                       :docfile => File.new(File.join(Rails.root,'features', 'support', 'uploadable_files','arbogast_id.pdf')))
   FactoryGirl.create(:client, :lastName => last_name,
           :firstName => first_name,
           :birthdate => age.to_i.years.ago,
@@ -111,72 +111,12 @@ Given /^there is a household with residency, income and govtincome current in th
                  :perm_address_id => perm_address.id)
 end
 
-
-Then /^I should see that the residency information has expired$/ do
-  find(:xpath,".//table/*/tr[contains(.,'Residency verification information') and contains(.,'expired on')]")
-end
-
-Then /^I should see that the income information is expiring$/ do
-  find(:xpath,".//table/*/tr[contains(.,'Income verification information') and contains(.,'expires on')]")
-end
-
-Then /^I should see that the govt income information is valid$/ do
-  find(:xpath,".//table/*/tr[contains(.,'Government income verification information') and contains(.,'current')]")
-end
-
-Given /^I am quickchecking Fanny Arbogast/ do
-  steps %Q{ Given I am on the client quickcheck page
-            And I fill in "lastName" with "gas"
-            Then I should see "Arbogast, Fanny. 20"
-            When I click "Arbogast, Fanny. 20"
-            Then I should see "Permanent address"}
-end
-
-Given /^I am quickchecking Norman Normal/ do
-  steps %Q{ Given I am on the client quickcheck page
-            And I fill in "lastName" with "norm"
-            Then I should see "Normal, Norman. 20"
-            When I click "Normal, Norman. 20"
-            Then I should see "Permanent address"}
-end
-
-Given /^I am quickchecking a client without errors, Fanny Arbogast/ do
-  steps %Q{ Given I am on the client quickcheck page
-            And I fill in "lastName" with "gas"
-            Then I should see "Arbogast, Fanny. 20"
-            When I click "Arbogast, Fanny. 20" }
-end
-
-Then /^I should see "([^"]*)" warnings for "([^"]*)"$/ do |count, category|
-  find(:xpath,".//table/*/tr[contains(.,'#{category}')]/td[4]").text.should == count
-end
-
 Then /^I should (not )?see a button called "([^"]*)"$/ do |yes_or_no, button_name|
   if yes_or_no == 'not '
     page.should have_xpath(".//input[@value = '#{button_name}'][@type = 'submit'][contains(@style,'display: none')]")
   else
     page.should have_xpath(".//input[@value = '#{button_name}'][@type = 'submit'][contains(@style,'display: block')]")
   end
-end
-
-Then /^I should see a file selector$/ do
-  page.should have_selector(:xpath, ".//input[@type='file']", :visible => true)
-end
-
-Then /^I should not see a file selector$/ do
-  not_in_the_dom = page.has_no_selector?(:xpath, ".//input[@type='file']")
-  not_visible = page.has_selector?(:xpath, ".//input[@type='file']", :visible => false)
-  not_in_the_dom || not_visible
-end
-
-Then /^Fanny Arbogast should have (\d+) id warning$/ do |count|
-  client = Client.find_by_lastName('Arbogast')
-  client.id_warnings.should == count.to_i
-end
-
-When /^I upload a file$/ do
-  attach_file( "docfile_input", File.join(::Rails.root.to_s, 'features', 'support', 'upload_files', 'arbogast_id.pdf'))
-  click_button "Upload file"
 end
 
 Then /^I should (not )?see a link to "([^"]*)"$/ do |yes_no, link_name|
@@ -245,5 +185,3 @@ end
 Then /^there should be "([^"]*)" "([^"]*)" in the database$/ do |count, model|
   model.singularize.classify.constantize.send('count').should == count.to_i
 end
-
-

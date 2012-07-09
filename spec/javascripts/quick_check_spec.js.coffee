@@ -26,3 +26,11 @@ describe "Waive the requirements for each client and qualification document in s
     expect($($('.count')[5])).toHaveText("0")
     $('#warn').click()
     expect($($('.count')[5])).toHaveText("1")
+
+describe "Upload document for the first client", ->
+  beforeEach ->
+    loadFixtures 'client_quickcheck'
+
+  it "should make the upload form visible when 'upload...' is clicked", ->
+    $('#upload').click()
+    expect($('#upload_form')).toBeVisible()

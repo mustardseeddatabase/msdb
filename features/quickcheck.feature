@@ -140,9 +140,6 @@ Feature: Client check in
     When I press "Upload file"
     Then I should see "You must first select a file to upload"
 
-# TODO CHECK THIS, it can't be working. It probably appears to work b/c
-# FactoryGirl.create(:id_qualdoc) includes a qualification document already, before 
-# even a document is uploaded
 @selenium
   Scenario: Follow the document check sequence, upload the final document to complete checkout
     Given there is a household with residency, income and govtincome current in the database
@@ -153,8 +150,8 @@ Feature: Client check in
     When I upload a file
     Then I should see "Document saved"
     Then I should see "Documents for household and clients are current"
+    And The uploaded file should be present in the uploaded file storage location
     And I should see "Color code is red"
-
 
 @selenium
   Scenario: Follow the document check sequence, test that checkins are recorded

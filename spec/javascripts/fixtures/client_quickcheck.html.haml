@@ -54,7 +54,7 @@
       %td{:colspan=>'4'}
         #action_links
           %a#warn{:href=>"#"} Warn and waive requirement, this visit...
-          %a.upload{:href=>"#"} Upload new ID document...
+          %a#upload{:href=>"#"} Upload new ID document...
           #upload_form{:style=>'display:none'}
             %form{:accept_charset=>"UTF-8", :action=>"/qualification_documents?client_id=9159", :enctype=>"multipart/form-data", :id=>"docform", :method=>"post"}
               %input{:name=>"utf8", :type=>"hidden", :value=>"&#x2713;"}
@@ -73,7 +73,7 @@
             %input{:name=>"commit", :style=>"display: none", :type=>"submit", :value=>"Quickcheck completed"}
 
 %script
-  = render :partial => 'qualification_documents/quickcheck_client_script', :formats => [:js], :handlers => [:erb]
+  = render :partial => 'qualification_documents/quickcheck_client_script', :formats => [:js]
 
 :javascript
   $('#warn').click(function(){ increment_warnings_for_next(); $('#upload_form').hide(); return false});

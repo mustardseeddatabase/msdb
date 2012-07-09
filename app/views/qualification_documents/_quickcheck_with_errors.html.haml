@@ -14,7 +14,7 @@
     %th Household residents (#{household && household.clients.size})
     %th ID date
     %th ID status
-    %th Number of warnings
+    %th Number of<br/>warnings
     %th
   - for client in clients
     %tr.client{:class => ('with_errors' if !client.id_current?), :data => {:object_id => client.id_qualdoc.id, :param => 'id_warnings', :qualification_error_message => qualification_error_message(client), :upload_link_text => upload_link_text(:id)}}
@@ -28,7 +28,7 @@
     %th Qualification information
     %th Date of record
     %th Status
-    %th Number of warnings
+    %th Number of<br/>warnings
   - ['res', 'inc', 'gov'].each do |param|
     %tr.household{:class => ('with_errors' if !household.send(param + "_current?")), :data => {:object_id => household.send(param + '_qualdoc').id, :param => param + '_warnings', :qualification_error_message => qualification_error_message(household, param), :upload_link_text => upload_link_text(param)}}
       %td= household_document_link(param,household)

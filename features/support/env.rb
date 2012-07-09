@@ -60,6 +60,7 @@ end
 
 After do
   DatabaseCleaner.clean
+  `rm -f features/support/uploaded_files/*`
 end
 
 #require 'capybara/envjs'

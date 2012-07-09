@@ -96,3 +96,8 @@ end
 Then /^"\#error_message' should be blank$/ do
   find(:css, '#error_message').text().should == ""
 end
+
+Then /^The input field should have focus$/ do
+  page.find('#lastName').should be_true
+  page.evaluate_script("document.activeElement.id").should == 'lastName'
+end

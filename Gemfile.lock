@@ -339,7 +339,6 @@ DEPENDENCIES
   haml!
   haml-rails
   haml_assets!
-  jasmine
   jasminerice
   jquery-rails
   launchy

@@ -63,7 +63,6 @@ group :development, :test do
   gem 'mocha'
   gem 'capistrano'
   gem 'active_reload'
-  gem 'jasmine'
   gem 'jasminerice'
 
   gem 'test-unit', :require => 'test/unit' # not actually used! included only to workaround pesky bug, see http://stackoverflow.com/questions/9523931/rake-dbtestprepare-in-rails-3-app-fails-with-file-not-found

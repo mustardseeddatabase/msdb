@@ -19,12 +19,12 @@ class DocfileUploader < CarrierWave::Uploader::Base
     elsif Rails.env.test?
       File.join(Rails.root, 'features', 'support', 'uploaded_files')
     else
-      path
+      Rails.root.join("public", path)
     end
   end
 
   def present?
-    File.exists?(File.join(store_dir,file.filename))
+    file && File.exists?(File.join(store_dir,file.filename))
   end
 
   # Provide a default URL as a default if there hasn't been a file uploaded:

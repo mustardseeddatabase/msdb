@@ -24,17 +24,9 @@ class QualificationDocumentsController < ApplicationController
   end
 
   def update
-    @household = Household.find(params[:household_id]) if params[:household_id]
     @client    = Client.find(params[:client_id])       if params[:client_id]
-    quickcheck = !params[:household_id]
 
-    return_page = @household ?
-      edit_household_url(@household) : # documents are being uploaded from the household edit page
-      qualification_documents_url(:client_id => params[:client_id]) # documents are being uploaded during quickcheck
-
-    if quickcheck
-      checkin = @client.checkins.build # for the head of household, takes the warnings for household qualdocs (inc, res, gov)
-    end
+    checkin = @client.checkins.build # for the head of household, takes the warnings for household qualdocs (inc, res, gov)
 
     params[:qualification_documents].each do |qualdoc_id,val|
       upload = (val.keys.include? 'docfile')
@@ -57,7 +49,7 @@ class QualificationDocumentsController < ApplicationController
     respond_to do |format|
       format.js # the "quickcheck complete" scenario
       format.html do # after a document has been uploaded
-        redirect_to return_page
+        redirect_to qualification_documents_url(:client_id => params[:client_id]) # documents are being uploaded during quickcheck
       end
     end
   end

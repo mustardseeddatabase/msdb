@@ -266,11 +266,15 @@ class Household < ActiveRecord::Base
   end
 
   def one_male_adult
-    clients.select(&:adult).select(&:male).length == 1
+    adults = clients.select(&:adult)
+    adult_males = adults.select(&:male)
+    (adult_count == 1) && (adult_males.length == 1)
   end
 
   def one_female_adult
-    clients.select(&:adult).select(&:female).length == 1
+    adults = clients.select(&:adult)
+    adult_females = adults.select(&:female)
+    (adult_count == 1) && (adult_females.length == 1)
   end
 
   def adult_count

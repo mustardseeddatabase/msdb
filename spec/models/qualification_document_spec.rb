@@ -55,3 +55,64 @@ describe "#belongs_to? method" do
     client = FactoryGirl.build(:client_with_current_id)
   end
 end
+
+describe "docfile attribute" do
+  it "should be an instance of DocfileUploader" do
+    qd = ResQualdoc.new(:docfile => 'foo.pdf')
+    qd.docfile.should be_kind_of(DocfileUploader)
+  end
+
+  it "present? method should respond true if the file is present in the filesystem" do
+    filename = Rails.root.join("tmp","foo.txt")
+    ff = File.open(filename, "w+")
+    qd = ResQualdoc.new(:docfile => ff)
+    qd.save
+    qd.docfile.present?.should == true
+    `rm -f #{qd.docfile.path}`
+    qd.docfile.present?.should == false
+    `rm -f #{filename}` # cleanup
+  end
+end
+
+# testing my test tools here!
+describe "FactoryGirl qualification document" do
+  context "using create strategy" do
+    before(:all) do
+      @doc = FactoryGirl.create(:res_qualdoc)
+    end
+
+    it "should create a qualification document instance in the database" do
+      ResQualdoc.find(@doc.id).should be_true
+    end
+
+    it "should create a file document in the filesystem" do
+      # for test env the file location is features/support/uploaded_files
+      @doc.docfile.present?.should == true
+    end
+
+    it "should remove the source file from the filesystem" do
+      # can only match part of the file name as they also have a random component
+      Dir.new(Rails.root.join("tmp")).entries.any?{|e| e.match /factory_res_qualdoc/}.should == false
+    end
+  end
+
+  context "using build strategy" do
+    before(:all) do
+      @doc = FactoryGirl.build(:res_qualdoc)
+    end
+
+    it "should not create a qualification document instance in the database" do
+      @doc.id.should be_nil
+    end
+
+    it "should not create a file document in the filesystem" do
+      # for test env the file location is features/support/uploaded_files
+      @doc.docfile.should be_blank
+    end
+
+    it "should not create a source file" do
+      # can only match part of the file name as they also have a random component
+      Dir.new(Rails.root.join("tmp")).entries.any?{|e| e.match /factory_res_qualdoc/}.should == false
+    end
+  end
+end

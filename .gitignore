@@ -20,3 +20,4 @@ lib/tasks/db_import.rake
 lib/tasks/mark_preferred_items.rake
 lib/tasks/populate_item_category_associations.rake
 lib/tasks/populate_transaction_items_table.rake
+features/support/uploaded_files/*

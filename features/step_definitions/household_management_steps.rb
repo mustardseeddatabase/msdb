@@ -6,14 +6,12 @@ end
 
 Then /^I select dates for the following fields:$/ do |table|
   table.hashes.each do |hash|
-    #select_date( hash[:field], :with => hash[:value] ) # old format
     select_date( hash[:value], :from => hash[:field] )
   end
 end
 
 Then /^I select dynamic dates for the following fields:$/ do |table|
   table.hashes.each do |hash|
-    #select_date( hash[:field], :with => eval(hash[:value]) ) # old format
     select_date( eval(hash[:value]), :from => hash[:field] )
   end
 end

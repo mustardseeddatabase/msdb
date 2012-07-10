@@ -23,6 +23,10 @@ class DocfileUploader < CarrierWave::Uploader::Base
     end
   end
 
+  def present?
+    File.exists?(File.join(store_dir,file.filename))
+  end
+
   # Provide a default URL as a default if there hasn't been a file uploaded:
   # def default_url
   #   "/images/fallback/" + [version_name, "default.png"].compact.join('_')

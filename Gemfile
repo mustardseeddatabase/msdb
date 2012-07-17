@@ -24,6 +24,9 @@ gem 'sprockets'
 gem 'rbarcode', :git => 'git://github.com/mustardseeddatabase/rbarcode.git'
 gem 'doccex', :git => 'git://github.com/mustardseeddatabase/doccex.git'
 gem 'summary_report', :path => 'vendor/gems/summary_report'
+gem 'factory_girl_rails'
+gem 'factory_girl', :git => "https://github.com/thoughtbot/factory_girl.git" #in order to pick up commit 4e2b7e0b, when there's a new release incorporating this commit, pull from rubygems instead.
+gem 'faker', :git => 'git://github.com/stympy/faker.git' # due to an I18n problem after updating to Rails 3.1
 
 # Gems only required for assets and not required
 # in production environments by default.
@@ -36,7 +39,6 @@ group :assets do
 end
 
 group :development, :test do
-  gem 'faker', :git => 'git://github.com/stympy/faker.git' # due to an I18n problem after updating to Rails 3.1
   gem 'spork', '~> 0.9.0.rc'
   gem 'sqlite3-ruby'
   gem 'database_cleaner'
@@ -44,8 +46,6 @@ group :development, :test do
   gem 'cucumber-rails', '>=0.5.1', :require => false
   gem 'capybara-webkit', :git => "git://github.com/thoughtbot/capybara-webkit.git" #, :branch => '1.0'
   gem 'selenium-webdriver', '2.0.1'
-  gem 'factory_girl_rails'
-  gem 'factory_girl', :git => "https://github.com/thoughtbot/factory_girl.git" #in order to pick up commit 4e2b7e0b, when there's a new release incorporating this commit, pull from rubygems instead.
 
 
   # official unofficial ruby-debug19 fix

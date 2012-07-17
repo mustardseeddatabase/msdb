@@ -46,6 +46,7 @@ Msdb::Application.configure do
   config.assets.paths << Jasminerice::Engine.root.join("vendor", "assets", "images")
   config.assets.paths << Jasminerice::Engine.root.join("vendor", "assets", "javascripts")
   config.assets.paths << Jasminerice::Engine.root.join("vendor", "assets", "stylesheets")
+  config.assets.paths << Rails.root.join("spec", "javascripts")
 
 end
 

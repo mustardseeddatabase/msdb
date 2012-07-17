@@ -54,7 +54,9 @@ module Msdb
     config.assets.paths << Jquery::Rails::Engine.root.join("vendor", "assets", "javascripts")
     config.assets.paths << Rails.root.join("app", "themes", "default", "assets")
     config.assets.paths << Rails.root.join("app", "themes", "default", "assets", "images")
-    config.assets.paths << Rails.root.join("spec", "javascripts")
+    #it causes precompile errors to include this for production environment, so just include it for development
+    #this relates to a particular fixture (client_quickcheck.html.haml), that renders a script as a partial.
+    #config.assets.paths << Rails.root.join("spec", "javascripts")
 
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'

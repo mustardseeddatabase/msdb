@@ -11,9 +11,9 @@ require File.expand_path('../../lib/constants', __FILE__)
 
 if defined?(Bundler)
   # if you precompile assets before deploying to production, use this line:
-  Bundler.require *Rails.groups(:assets => %w(development test))
+  # Bundler.require *Rails.groups(:assets => %w(development test))
   # if you want your assets lazily compiled in production, use this line:
-  # Bundler.require(:default, :assets, Rails.env)
+  Bundler.require(:default, :assets, Rails.env)
 end
 
 module Msdb

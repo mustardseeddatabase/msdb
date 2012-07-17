@@ -75,6 +75,10 @@ A sample set of data may be loaded into the database so you can explore the appl
 
 (See above regarding appending RAILS_ENV=production to this command if you have loaded the application on a server)
 
+Precompile the assets, (this step would typically be automated in your Capistrano recipe, but here we do it manually)
+
+    rake assets:precompile
+
 ## Customize the color scheme and graphics
 
 Run the rake task:

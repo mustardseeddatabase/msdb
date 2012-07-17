@@ -2,7 +2,7 @@
 .rvmrc
 db/*.sqlite3
 log/*.log
-tmp/
+tmp/**/*
 vendor/bundle/
 .DS_Store
 gem_graph.png

@@ -16,6 +16,8 @@ module NavigationHelpers
       authengine_users_path
     when /the authengine\/roles#index page/
       authengine_roles_path
+    when /the authengine\/actions#index page/
+      authengine_actions_path
     when /activation url with a valid activation code/
       "/authengine/activate/123456789abcdef"
     when /activation url with no activation code/

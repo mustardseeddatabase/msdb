@@ -202,13 +202,11 @@ describe "color method" do
 end
 
 describe "qualification" do
-  it "should return a hash of household and client qualification vectors" do
+  it "should return a hash of household document qualification vectors" do
     household = FactoryGirl.create(:household_with_docs)
-    client1 = FactoryGirl.build(:client, :household_id => household.id)
-    client2 = FactoryGirl.build(:client, :household_id => household.id)
     household.qualification.should be_kind_of(Hash)
-    household.qualification.size.should ==2 # :household and :clients
-    [:household, :clients].each do |type|
+    household.qualification.size.should ==3 # :household and :clients
+    [:res, :gov, :inc].each do |type|
       household.qualification.keys.should include(type)
     end
   end

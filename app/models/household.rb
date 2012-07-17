@@ -183,10 +183,13 @@ class Household < ActiveRecord::Base
   # returns information about any and all expired documentation for the
   # household and its clients. Used during client check in.
   def qualification
-    {:clients => clients.map(&:id_qualification_vector).compact,
-     :household => [:res => res_qualification_vector,
-                    :inc => inc_qualification_vector,
-                    :gov => gov_qualification_vector]}
+     [res_qualification_vector,
+      inc_qualification_vector,
+      gov_qualification_vector]
+  end
+
+  def client_docs
+    clients.sort_by(&:age_or_zero).map(&:id_qualification_vector).compact
   end
 
   def with_errors

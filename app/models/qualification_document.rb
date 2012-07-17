@@ -40,7 +40,11 @@ class QualificationDocument < ActiveRecord::Base
   end
 
   def qualification_vector
-    { :expired? => expired?, :expiry_date => expiry_date}
+    {:description => self.class::Description.capitalize, :doctype => document_type, :expired? => expired?, :expiry_date => expiry_date, :status => information_status, :warnings => warnings, :date => date, :doc_link => doc_link}
+  end
+
+  def doc_link
+    #TODO
   end
 
   def in_db?

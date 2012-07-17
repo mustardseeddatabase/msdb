@@ -1,3 +1,5 @@
+require Rails.root.join('lib', 'factory_girl', 'create_without_validation_strategy')
+
 Msdb::Application.configure do
   # Settings specified here will take precedence over those in config/application.rb
 

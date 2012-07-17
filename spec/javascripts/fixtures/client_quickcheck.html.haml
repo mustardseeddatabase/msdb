@@ -1,90 +1,24 @@
 #quickcheck
-  %table
-    %tr
+  %table#quickcheck_table
+    %tr#client_headings
       %th Household residents (3)
       %th ID date
       %th ID status
       %th Number of warnings
       %th
-    %tr.client.with_errors{:data_object_id=>'8752', :data_param=>'id_warnings', :data_qualification_error_message=>'Date expired: Identification verification information expired on  4 Aug 2011 for Fred Sasinoski', :data_upload_link_text=>'identification verification'}
-      %td
-        %a{:href=>"/clients/8752"} Sasinoski, Fred. 51
-      %td 4 Aug 2010
-      %td expired on  4 Aug 2011
-      %td.count 0
-      %td
-    %tr.client.with_errors{:data_object_id=>'9159', :data_param=>'id_warnings', :data_qualification_error_message=>'Date expired: Identification verification information expired on 11 Sep 2010 for Lisa Sasinoski', :data_upload_link_text=>'identification verification'}
-      %td
-        %a{:href=>"/clients/9159"}Sasinoski, Lisa. 49
-      %td 11 Sep 2009
-      %td expired on 11 Sep 2010
-      %td.count 0
-      %td
-    %tr.client.with_errors{:data_object_id=>'11146', :data_param=>'id_warnings', :data_qualification_error_message=>'Date missing: There is no identification verification information on file for Bryan Michaelis', :data_upload_link_text=>'identification verification'}
-      %td
-        %a{:href=>"/clients/11146"}Michaelis, Bryan. 25
-      %td
-      %td date not available
-      %td.count 0
-      %td
-    %tr
+    %tr#household_headings
       %th Qualification information
       %th Date of record
       %th Status
       %th Number of warnings
-    %tr.household.with_errors{:data_object_id=>'23752', :data_param=>'res_warnings', :data_qualification_error_message=>'Date expired: Residency verification information expired on  9 May 2010 for this household', :data_upload_link_text=>'residency verification'}
-      %td Residency verification information
-      %td 9 Nov 2009
-      %td expired on  9 May 2010
-      %td.count 0
-    %tr.household.with_errors{:data_object_id=>'23753', :data_param=>'inc_warnings', :data_qualification_error_message=>'Date expired: Income verification information expired on  8 Oct 2010 for this household', :data_upload_link_text=>'income verification'}
-      %td Income verification information
-      %td 8 Apr 2010
-      %td expired on  8 Oct 2010
-      %td.count 0
-    %tr.household.with_errors{:data_object_id=>'23754', :data_param=>'gov_warnings', :data_qualification_error_message=>'Date expired: Government income verification information expired on  8 Oct 2010 for this household', :data_upload_link_text=>'government income verification'}
-      %td Government income verification information
-      %td 8 Apr 2010
-      %td expired on  8 Oct 2010
-      %td.count 0
-    %tr
-      %td{:colspan=>'4'}
-        #error_message
-    %tr
-      %td{:colspan=>'4'}
-        #action_links
-          %a#warn{:href=>"#"} Warn and waive requirement, this visit...
-          %a#upload{:href=>"#"} Upload new ID document...
-          #upload_form{:style=>'display:none'}
-            %form{:accept_charset=>"UTF-8", :action=>"/qualification_documents?client_id=9159", :enctype=>"multipart/form-data", :id=>"docform", :method=>"post"}
-              %input{:name=>"utf8", :type=>"hidden", :value=>"&#x2713;"}
-              %input{:name=>"_method", :type=>"hidden", :value=>"put"}
-              %input{:name=>"authenticity_token", :type=>"hidden", :value=>"Pj1WA6pUJaA3XTE/lLssgEE0KXzX43fQoLxyBTUMhQE="}
-              %input#docfile_input{:name=>"qualification_document[][docfile]", :type=>"file"}
-              %input{:name=>"commit", :type=>"submit", :value=>"Upload file"}
-              %span#file_message{:style=>'display:none'} You must first select a file to upload
-          %form{:accept_charset=>"UTF-8", :action=>"/qualification_documents?client_id=9159", :data_remote=>"true", :id=>"quickcheck_complete", :method=>"post"}
-            %input{:name=>"utf8", :type=>"hidden", :value=>"&#x2713;"}
-            %input{:name=>"_method", :type=>"hidden", :value=>"put"}
-            %input{:name=>"authenticity_token", :type=>"hidden", :value=>"Pj1WA6pUJaA3XTE/lLssgEE0KXzX43fQoLxyBTUMhQE="}
-            %input#qualification_documents_23752_warnings{:name=>"qualification_documents[23752][warnings]", :type=>"hidden", :value=>"0"}
-            %input#qualification_documents_23753_warnings{:name=>"qualification_documents[23753][warnings]", :type=>"hidden", :value=>"0"}
-            %input#qualification_documents_23754_warnings{:name=>"qualification_documents[23754][warnings]", :type=>"hidden", :value=>"0"}
-            %input{:name=>"commit", :style=>"display: none", :type=>"submit", :value=>"Quickcheck completed"}
-
-%script
-  = render :partial => 'qualification_documents/quickcheck_client_script', :formats => [:js]
 
 :javascript
-  $('#warn').click(function(){ increment_warnings_for_next(); $('#upload_form').hide(); return false});
-  $('#upload').click(function(){$('#upload_form').show(); return false});
-  $("input[value = 'Upload file']").click(function(){ 
-    if($('#docfile_input').val().length == 0){
-                $('#file_message').show();
-                return false;
-              }else{
-                return true;
-              }});
-  $('#docfile_input').click(function(){$('#file_message').hide()});
+  var client_docs = [{"head_of_household":false,"doctype":"id","expired?":false,"expiry_date":"2013-07-10","status":"current","warnings":0,"date":"2012-07-10","doc_link":null,"url":"/clients/13451","name_age":"Cantrell, Charlene. 48"},
+                     {"head_of_household":true,"doctype":"id","expired?":true,"expiry_date":null,"status":"date not available","warnings":0,"date":null,"doc_link":null,"url":"/clients/13440","name_age":"Farragut, Stanley. 43"},
+                     {"head_of_household":false,"doctype":"id","expired?":true,"expiry_date":null,"status":"date not available","warnings":0,"date":null,"doc_link":null,"url":"/clients/13452","name_age":"Farragut, Paige."}];
 
+  var qualdoc = new Quickcheck.QualdocView(client_docs)
 
+  var household_docs = [{"description":"Residency verification information","doctype":"res","expired?":true,"expiry_date":"2011-07-13","status":"expired on 13 Jul 2011","warnings":0,"date":"2011-01-13","doc_link":null},
+                        {"description":"Income verification information","doctype":"inc","expired?":true,"expiry_date":"2011-07-13","status":"expired on 13 Jul 2011","warnings":0,"date":"2011-01-13","doc_link":null},
+                        {"description":"Government income verification information","doctype":"gov","expired?":true,"expiry_date":null,"status":"date not available","warnings":0,"date":null,"doc_link":null}]

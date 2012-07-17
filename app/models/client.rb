@@ -1,5 +1,6 @@
 class Client < ActiveRecord::Base
   include ActiveModel::Validations
+  include Rails.application.routes.url_helpers
   include BooleanRender
 
   HumanizedAttributes = { :lastName => "Last name",
@@ -35,7 +36,7 @@ class Client < ActiveRecord::Base
 
   belongs_to :household
   delegate :with_errors, :to => :household, :prefix => true
-  delegate :upload_link_text, :qualification_error_message, :qualification_vector, :current?, :confirm, :warnings, :vi, :confirm=, :warnings=, :vi=, :to => :id_qualdoc, :prefix => :id
+  delegate :upload_link_text, :qualification_error_message, :current?, :confirm, :warnings, :vi, :confirm=, :warnings=, :vi=, :to => :id_qualdoc, :prefix => :id
   delegate_multiparameter :date, :to => :id_qualdoc, :prefix => :id
 
   has_one :id_qualdoc, :foreign_key => :association_id, :dependent => :destroy, :autosave => true
@@ -95,6 +96,15 @@ class Client < ActiveRecord::Base
     birthdate.nil? || race.nil? || gender.nil? || (age_group == "out of range")
   end
 
+  def missing_data_errors
+    errors = []
+    errors << "Missing birthdate" unless birthdate
+    errors << "Missing race" unless race
+    errors << "Missing gender" unless gender
+    errors << "Age out of range" if (age_group == "out of range")
+    errors
+  end
+
   def race_or_unknown
     !race || (race == 'OT') ? 'UNK' : race
   end
@@ -113,6 +123,10 @@ class Client < ActiveRecord::Base
 
   def age
     ( ( Date.today - birthdate.to_date )/365 ).to_i unless birthdate.nil?
+  end
+
+  def age_or_zero
+    age.to_i
   end
 
   def age_group
@@ -153,6 +167,12 @@ class Client < ActiveRecord::Base
 
   def female
     gender == "F" unless !gender
+  end
+
+  def id_qualification_vector
+    url = client_path(id) unless id.nil?
+    iq = (id_qualdoc && id_qualdoc.qualification_vector) || {}
+    iq.merge({:head_of_household => headOfHousehold?, :url => url, :name_age => name_age, :errors => missing_data_errors})
   end
 
   def has_id_doc_in_db?

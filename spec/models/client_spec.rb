@@ -106,3 +106,13 @@ describe "age_group" do
     client.age_group.should == "unknown"
   end
 end
+
+describe "id_qualification_vector" do
+  it "should have keys client_url, client_name" do
+    client = FactoryGirl.build(:client_with_current_id)
+    keys = client.id_qualification_vector.keys
+    ['client_url', 'client_name'].each do |k|
+      keys.should include(k)
+    end
+  end
+end

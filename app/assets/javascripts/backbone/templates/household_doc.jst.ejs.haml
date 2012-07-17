@@ -1,0 +1,11 @@
+%td <%= household_doc.get('description') %>
+%td.date <%= household_doc.get('date') %>
+%td
+  %span.status <%= household_doc.get('status') %>
+  %span{:class => "status_icon <%= household_doc.doc_error() %>"}
+%td.count{:align => :center} <%= household_doc.get('warnings') %>
+%td{:style => "width:43px; text-align:right"}
+  %a.warn{:href => '#'} Warn
+%td
+  %a.confirm{:href => '#'} Confirm
+%td <%= household_doc.get('doc_link') %>

@@ -1,0 +1,29 @@
+.head {
+  background-image: url("head_icon.png");
+  width: 15px;
+  height: 12px;
+  display: inline-block;
+  background-repeat: no-repeat;
+  background-size: 12px;
+  position: relative;
+}
+
+.errors {
+  background-image: url("error_m.gif");
+  width: 15px;
+  height: 12px;
+  display: inline-block;
+  background-repeat: no-repeat;
+  background-size: 12px;
+  position: relative;
+}
+
+.warn_icon {
+  background-image: url("warn_m.gif");
+  width: 15px;
+  height: 12px;
+  display: inline-block;
+  background-repeat: no-repeat;
+  background-size: 12px;
+  position: relative;
+}

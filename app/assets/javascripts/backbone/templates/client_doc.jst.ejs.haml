@@ -1,0 +1,14 @@
+%td
+  %a{:href => "<%= client.get('url') %>"} <%= client.get('name_age') %>
+  %span{:class => "<%= client.head() %>"}
+  %span{:class => "<%= client.errors() %>"}
+%td.date <%= client.get('date') %>
+%td
+  %span.status <%= client.get('status') %>
+  %span{:class => "status_icon <%= client.doc_error() %>"}
+%td.count{:align => :center} <%= client.get('warnings') %>
+%td{:style => "width:43px; text-align:right"}
+  %a.warn{:href => '#'} Warn
+%td
+  %a.confirm{:href => '#'} Confirm
+%td <%= client.get('doc_link') %>

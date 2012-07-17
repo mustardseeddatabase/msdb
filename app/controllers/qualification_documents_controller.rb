@@ -12,7 +12,8 @@ class QualificationDocumentsController < ApplicationController
       # when there are no errors, the checkin will not be created during update, so create it now, with no warnings
       @client.checkins.create unless @client.household_with_errors
       @household = @client.household
-      @clients = @household && !@household.clients.empty? && @household.clients.sort_by{|c| c.age.nil? ? 1 : c.age }.reverse
+      @household_client_docs = @household.client_docs.to_json
+      @household_docs = @household.qualification.to_json
     end
 
     respond_to do |format|

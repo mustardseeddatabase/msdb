@@ -46,6 +46,7 @@ module Msdb
     # the following lines seem to be required after upgrade to Rails 3.2.5 (bug?) It's a workaround for assets not being found
     config.assets.paths << Rails.root.join("app", "assets", "stylesheets")
     config.assets.paths << Rails.root.join("app", "assets", "javascripts")
+    config.assets.paths << Rails.root.join("app", "assets", "images")
     config.assets.paths << Rails.root.join("vendor", "assets", "stylesheets")
     config.assets.paths << Rails.root.join("vendor", "assets", "javascripts")
     config.assets.paths << Rails.root.join("lib", "assets", "javascripts")

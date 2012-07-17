@@ -1,0 +1,18 @@
+#quickcheck
+  %table#quickcheck_table
+    %tr#client_headings
+      %th Household residents (3)
+      %th ID date
+      %th ID status
+      %th Number of warnings
+      %th
+    %tr#household_headings
+      %th Qualification information
+      %th Date of record
+      %th Status
+      %th Number of warnings
+
+:javascript
+  var client_docs = #{FactoryGirl.build(:household, :with_docs, :with_errored_clients ).client_docs.to_json}
+  var household_docs = #{FactoryGirl.build(:household, :with_docs).qualification.to_json}
+  var qualdoc = new Quickcheck.QualdocView(client_docs)

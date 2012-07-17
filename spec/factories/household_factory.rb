@@ -34,6 +34,20 @@ FactoryGirl.define do
         end
       end # /factory
 
+      trait :with_docs do
+        res_qualdoc
+        inc_qualdoc
+        gov_qualdoc
+      end
+
+      trait :with_errored_clients do
+        after(:build) do |hh|
+          hh.clients << FactoryGirl.create_without_validation(:client, :birthdate => nil)
+          hh.clients << FactoryGirl.create(:client, :race => nil)
+          hh.clients << FactoryGirl.create(:client, :gender => nil)
+        end
+      end
+
       trait :homeless do
         homeless true
       end

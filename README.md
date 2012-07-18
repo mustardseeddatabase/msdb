@@ -106,3 +106,6 @@ Roles, with user-defined names, are configured, and access privileges are assign
 
 Since a food pantry operation may be staffed by a transient cast of volunteers, an account may be temporarily downgraded (for the duration of the session) so that the computer may be used for, for instance, client checkout, without exposing the full database to the temporary staffer.
 
+## Set up the constants for the mailer
+
+Emails are sent by the application during the registration of new users. Parameters used in emails are configured in lib/constants.rb. The smtp agent is configured in config/initializers/action_mailer.rb (an example of such a configuration is included: config/initializers/action_mailer_example.rb. Edit this file and rename it to action_mailer.rb)

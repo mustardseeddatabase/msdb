@@ -54,6 +54,11 @@ Prepare the test database:
 
     rake db:schema:load RAILS_ENV=test
 
+If you're running Apache/Passenger, you need to add a file public/.htaccess with contents:
+
+    RackBaseURI /
+    PassengerAppRoot /path/from/root/to/msdb
+
 Run the tests:
 
     cucumber features

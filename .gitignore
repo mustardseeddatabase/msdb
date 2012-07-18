@@ -12,6 +12,7 @@ db/ccstb_test.sqlite3-journal
 .sass-cache/
 public/assets
 public/assets/**/*
+public/.htaccess
 bin/
 config/deploy
 config/initializers/action_mailer.rb

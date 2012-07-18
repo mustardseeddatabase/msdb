@@ -56,36 +56,11 @@ Feature: Client check in
     And I should see that the govt income information is valid
 
 @selenium
-  Scenario: Follow the document check sequence
-    Given there is a household with residency, income and govtincome expired in the database
-    And there is a client with last name "Arbogast", first name "Fanny", age "20", with id date "Date.new(2009,1,1)" in the database belonging to the household
-    And I am quickchecking Fanny Arbogast
-    Then I should see "Date expired: Identification verification information expired on 1 Jan 2010 for Fanny Arbogast"
-    And I should see "Upload new identification verification document"
-    And I should see "Warn and waive requirement, this visit"
-    And I should see "0" warnings for "Arbogast, Fanny"
-    Then I follow "Warn and waive requirement, this visit"
-    Then I should see "1" warnings for "Arbogast, Fanny"
-    And I should see "Residency verification information expired"
-    And I should see "Upload new residency verification document"
-    And I should see "0" warnings for "Residency verification information"
-    And I should see "0" warnings for "Income verification information"
-    And I should see "0" warnings for "Residency verification information"
-    Then I follow "Warn and waive requirement, this visit"
-    And I should see "1" warnings for "Residency verification information"
-    And I should see "Upload new income verification document"
-    Then I follow "Warn and waive requirement, this visit"
-    And I should see "1" warnings for "Income verification information"
-    And I should see "Upload new government income verification document"
-    Then I follow "Warn and waive requirement, this visit"
-    And I should see "1" warnings for "Government income verification information"
-
-@selenium
   Scenario: Follow the document check sequence, and complete it
     Given there is a household with residency, income and govtincome current in the database
     And there is a client with last name "Arbogast", first name "Fanny", age "20", with id date "Date.new(2009,1,1)" in the database belonging to the household
     And I am quickchecking Fanny Arbogast
-    And I follow "Warn and waive requirement, this visit"
+    And I follow "Warn"
     Then I press "Quickcheck completed"
     Then I should see "Color code is red"
     And Fanny Arbogast should have 1 id warning
@@ -115,7 +90,7 @@ Feature: Client check in
     And I am quickchecking Fanny Arbogast
     And I follow "Upload new identification verification document..."
     Then I should see a file selector
-    Then I follow "Warn and waive requirement, this visit"
+    Then I follow "Warn"
     Then I should not see a file selector
 
 @selenium
@@ -152,25 +127,3 @@ Feature: Client check in
     Then I should see "Documents for household and clients are current"
     And The uploaded file should be present in the uploaded file storage location
     And I should see "Color code is red"
-
-@selenium
-  Scenario: Follow the document check sequence, test that checkins are recorded
-    Given there is a household with residency, income and govtincome expired in the database
-    And there is a client with last name "Arbogast", first name "Fanny", age "20", with id date "Date.new(2009,1,1)" in the database belonging to the household
-    And there is a client with last name "Gaston", first name "Gary", age "88", with id date "Date.new(2009,1,1)" in the database belonging to the household
-    And I am quickchecking Fanny Arbogast
-    Then I should see "Identification verification information expired"
-    When I follow "Warn and waive requirement, this visit"
-    Then I should see "Identification verification information expired"
-    When I follow "Warn and waive requirement, this visit"
-    Then I should see "Residency verification information expired"
-    And I should see "0" warnings for "Residency verification information"
-    When I follow "Warn and waive requirement, this visit"
-    Then I should see "1" warnings for "Residency verification information"
-    When I follow "Warn and waive requirement, this visit"
-    Then I should see "1" warnings for "Income verification information"
-    When I follow "Warn and waive requirement, this visit"
-    Then I should see "1" warnings for "Government income verification information"
-    When I press "Quickcheck completed"
-		Then I should see "Quickcheck complete"
-    And there should be "2" "checkins" in the database

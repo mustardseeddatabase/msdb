@@ -1,3 +1,4 @@
+alert("anyone home?")
 class Application.Barcode extends Backbone.Model
   initialize : ->
     @bind("change:barcode_value", -> @do_validate @)

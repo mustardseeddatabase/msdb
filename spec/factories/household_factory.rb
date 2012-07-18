@@ -7,8 +7,8 @@ FactoryGirl.define do
     income  {rand(40)*1000}
     otherConcerns  {Faker::Lorem.paragraph}
 
-    perm_address
-    temp_address
+    association :perm_address, strategy: :build
+    association :temp_address, strategy: :build
 
       factory :household_with_docs do
         after(:create) do |hh|

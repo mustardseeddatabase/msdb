@@ -59,6 +59,20 @@ describe "Warn and waive the requirements for clients and qualification document
     expect($('tr.household_doc:nth-child(6) .status_icon').hasClass('errors')).toBeFalsy()
     expect($('tr.household_doc:nth-child(6) .status_icon').hasClass('warn_icon')).toBeTruthy()
 
+describe "Complete the quickcheck process", ->
+  beforeEach ->
+    loadFixtures 'client_quickcheck'
+    $('.warn')[0].click()
+    $('.warn')[1].click()
+    $('.warn')[2].click()
+    $('.warn')[3].click()
+    $('.warn')[4].click()
+    $('.warn')[5].click()
+
+  it "all clients and qualdocs should either be warned, confirmed, or have status= current", ->
+
+  it "should show the quickcheck completed button", ->
+    debugger
 
 describe "Reversible warning", ->
   beforeEach ->

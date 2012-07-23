@@ -1,9 +1,14 @@
--if @client.household_with_errors
+-if !@household
+  = render :partial => 'quickcheck_fail',
+           :locals => {:client => client}
+
+-elsif @client.household_with_errors
   = render :partial => 'quickcheck_with_errors',
            :locals => {:client => client,
                        :household => household,
                        :household_client_docs => @household_client_docs,
                        :household_docs => @household_docs}
+
 -else
   = render :partial => 'quickcheck_without_errors',
            :locals => {:client => client,

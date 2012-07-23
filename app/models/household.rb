@@ -55,9 +55,9 @@ class Household < ActiveRecord::Base
   end
 
   [:upload_link_text, :qualification_error_message, :qualification_vector, :current?, :confirm, :warnings, :vi, :confirm=, :warnings=, :vi=].each do |attr|
-    delegate attr, :to => :res_qualdoc, :prefix => :res
-    delegate attr, :to => :inc_qualdoc, :prefix => :inc
-    delegate attr, :to => :gov_qualdoc, :prefix => :gov
+    delegate attr, :to => :res_qualdoc, :prefix => :res, :allow_nil => true
+    delegate attr, :to => :inc_qualdoc, :prefix => :inc, :allow_nil => true
+    delegate attr, :to => :gov_qualdoc, :prefix => :gov, :allow_nil => true
   end
 
   delegate_multiparameter :date, :to => :res_qualdoc, :prefix => :res

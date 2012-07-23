@@ -35,8 +35,8 @@ class Client < ActiveRecord::Base
   default_scope order('case when birthdate IS NULL then 1 else 0 end, birthdate')
 
   belongs_to :household
-  delegate :with_errors, :to => :household, :prefix => true
-  delegate :upload_link_text, :qualification_error_message, :current?, :confirm, :warnings, :vi, :confirm=, :warnings=, :vi=, :to => :id_qualdoc, :prefix => :id
+  delegate :with_errors, :to => :household, :prefix => true, :allow_nil => true
+  delegate :upload_link_text, :qualification_error_message, :current?, :confirm, :warnings, :vi, :confirm=, :warnings=, :vi=, :to => :id_qualdoc, :prefix => :id, :allow_nil => true
   delegate_multiparameter :date, :to => :id_qualdoc, :prefix => :id
 
   has_one :id_qualdoc, :foreign_key => :association_id, :dependent => :destroy, :autosave => true
@@ -171,7 +171,7 @@ class Client < ActiveRecord::Base
 
   def id_qualification_vector
     url = client_path(id) unless id.nil?
-    iq = (id_qualdoc && id_qualdoc.qualification_vector) || {}
+    iq = (id_qualdoc && id_qualdoc.qualification_vector) || IdQualdoc.new.qualification_vector
     iq.merge({:head_of_household => headOfHousehold?, :url => url, :name_age => name_age, :errors => missing_data_errors})
   end
 

@@ -25,30 +25,13 @@
     %th
     %th
 
-  %tr{:valign => 'bottom', :style => 'height:50px'}
-    %td{:colspan => 4}
-      #action_links
-        =link_to "Upload new ID document...", '#', :id => 'upload'
-        #upload_form{:style => 'display:none'}
-          =form_tag qualification_documents_path(:client_id => @client.id), :method => :put, :multipart => true, :id => :docform do
-            = file_field_tag "qualification_document[][docfile]", :id => :docfile_input
-            = submit_tag 'Upload file'
-            %span#file_message{:style => 'display:none; color:#c44; font-weight:bold'} You must first select a file to upload
-        =form_tag qualification_documents_path(:client_id => @client.id), :method => :put, :remote => true, :id => 'quickcheck_complete' do
-          =submit_tag "Quickcheck completed", :style => 'display: none'
+=button_tag  "Quickcheck completed", :id => :quickcheck_completed, :type => 'submit', :style => 'display:none'
 
 
 :javascript
   var client_docs = #{household_client_docs}
   var household_docs = #{household_docs}
   var qualdoc = new Quickcheck.QualdocView(client_docs)
-  $('#upload').click(function(){$('#upload_form').show(); return false});
-  $("input[value = 'Upload file']").click(function(){ 
-    if($('#docfile_input').val().length == 0){
-                $('#file_message').show();
-                return false;
-              }else{
-                return true;
-              }});
+
   $('#docfile_input').click(function(){$('#file_message').hide()});
   #{(render :partial => 'quickcheck_client_script', :handlers => [:erb], :formats => [:js]).html_safe}

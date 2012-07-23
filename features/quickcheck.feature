@@ -88,9 +88,9 @@ Feature: Client check in
     Given there is a household with residency, income and govtincome current in the database
     And there is a client with last name "Arbogast", first name "Fanny", age "20", with id date "Date.new(2009,1,1)" in the database belonging to the household
     And I am quickchecking Fanny Arbogast
-    And I follow "Upload new identification verification document..."
+    And I follow "Upload" for "Fanny Arbogast"
     Then I should see a file selector
-    Then I follow "Warn"
+    Then I press "Cancel"
     Then I should not see a file selector
 
 @selenium
@@ -98,7 +98,7 @@ Feature: Client check in
     Given there is a household with residency, income and govtincome expired in the database
     And there is a client with last name "Arbogast", first name "Fanny", age "20", with id date "Date.new(2009,1,1)", and 1 warning, in the database belonging to the household
     And I am quickchecking Fanny Arbogast
-    And I follow "Upload new identification verification document..."
+    And I follow "Upload" for "Fanny Arbogast"
     Then I should see a file selector
     When I upload a file
     Then I should see "Document saved"
@@ -110,7 +110,7 @@ Feature: Client check in
     Given there is a household with residency, income and govtincome current in the database
     And there is a client with last name "Arbogast", first name "Fanny", age "20", with id date "Date.new(2009,1,1)" in the database belonging to the household
     And I am quickchecking Fanny Arbogast
-    And I follow "Upload new identification verification document..."
+    And I follow "Upload" for "Fanny Arbogast"
     Then I should see a file selector
     When I press "Upload file"
     Then I should see "You must first select a file to upload"
@@ -120,10 +120,16 @@ Feature: Client check in
     Given there is a household with residency, income and govtincome current in the database
     And there is a client with last name "Normal", first name "Norman", age "20", with id date "Date.new(2009,1,1)" in the database belonging to the household
     And I am quickchecking Norman Normal
-    And I follow "Upload new identification verification document..."
+    And I follow "Upload" for "Norman Normal"
     Then I should see a file selector
     When I upload a file
     Then I should see "Document saved"
     Then I should see "Documents for household and clients are current"
     And The uploaded file should be present in the uploaded file storage location
     And I should see "Color code is red"
+
+  Scenario: Navigate away during quickcheck to fix client errors and then return to quickcheck
+
+  Scenario: Navigate away during quickcheck to fix household errors and then return to quickcheck
+
+  Scenario: Download a client id document that has been saved

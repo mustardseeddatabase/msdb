@@ -70,9 +70,13 @@ describe "Complete the quickcheck process", ->
     $('.warn')[5].click()
 
   it "all clients and qualdocs should either be warned, confirmed, or have status= current", ->
+    qualdoc.clients.each (client) ->
+      expect(client.warned() || client.current()).toBeTruthy()
+    qualdoc.household_docs.each (household_doc) ->
+      expect(household_doc.warned() || household_doc.current()).toBeTruthy()
 
   it "should show the quickcheck completed button", ->
-    debugger
+    expect($('button#quickcheck_completed')).toBeVisible()
 
 describe "Reversible warning", ->
   beforeEach ->
@@ -100,19 +104,10 @@ describe "confirm hard copy document for each client and each household doc", ->
     $('.confirm')[0].click()
     expect(qualdoc.clients.models[2].get('confirm')).toBeTruthy()
 
-  it "should set the confirm attribute to true for household qualification documents", ->
-    $('.confirm')[3].click()
-    expect(qualdoc.household_docs.models[2].get('confirm')).toBeTruthy()
-
   it "should set the date to today's date for clients", ->
     $('.confirm')[0].click()
     expect(qualdoc.clients.models[2].get('date')).toEqual(@date_string)
     expect($('tr.client:nth-child(2) .date').text()).toEqual(@date_string)
-
-  it "should set the date to today's date for household qualification documents", ->
-    $('.confirm')[3].click()
-    expect(qualdoc.household_docs.models[2].get('confirm')).toBeTruthy()
-    expect(qualdoc.household_docs.models[2].get('date')).toEqual(@date_string)
 
   it "should remove the error flag for client", ->
     expect($('tr.client:nth-child(2) .status_icon').hasClass('errors')).toBeTruthy()
@@ -124,28 +119,47 @@ describe "confirm hard copy document for each client and each household doc", ->
     $('.confirm')[0].click()
     expect($('tr.client:nth-child(2) .status_icon').hasClass('warn_icon')).toBeFalsy()
 
-  it "should remove the error flag for household qualification document", ->
-    expect($('tr.household_doc:nth-child(6) .status_icon').hasClass('errors')).toBeTruthy()
-    $('.confirm')[3].click()
-    expect($('tr.household_doc:nth-child(6) .status_icon').hasClass('errors')).toBeFalsy()
-
-  it "should remove the warning flag for household qualification document", ->
-    $('.warn')[3].click()
-    $('.confirm')[3].click()
-    expect($('tr.household_doc:nth-child(6) .status_icon').hasClass('warn_icon')).toBeFalsy()
-
   it "should set the status to current for clients", ->
     $('.confirm')[0].click()
     expect($('tr.client:nth-child(2) .status').text()).toEqual("current")
 
-  it "should set the status to current for household qualification documents", ->
-    $('.confirm')[3].click()
-    expect($('tr.household_doc:nth-child(6) .status').text()).toEqual("current")
+  it "should decrement the warning count for a warning that was issued in this quickcheck session", ->
+    $('.warn')[0].click()
+    expect(qualdoc.clients.models[2].get('warnings')).toEqual(1)
+    $('.confirm')[0].click()
+    expect(qualdoc.clients.models[2].get('warnings')).toEqual(0)
 
 describe "Upload document for the first client", ->
   beforeEach ->
     loadFixtures 'client_quickcheck'
 
-  xit "should make the upload form visible when 'upload...' is clicked", ->
-    $('#upload').click()
-    expect($('#upload_form')).toBeVisible()
+  it "should make the scree visible when 'upload...' is clicked", ->
+    $('.upload')[0].click()
+    expect($('#scree')).toBeVisible()
+    # cleanup
+    $('#scree').remove()
+    $('#upload_form_contents').remove()
+
+  it "should make the upload_form visible when 'upload...' is clicked", ->
+    $('.upload')[0].click()
+    expect($('#upload_form_container')).toBeVisible()
+    expect($('#upload_form_contents')).toBeVisible()
+    # cleanup
+    $('#scree').remove()
+    $('#upload_form_contents').remove()
+
+  it "should remove the upload form when 'cancel' is clicked", ->
+    $('.upload')[0].click()
+    $('#cancel_upload').click()
+    expect($('#scree')).not.toBeVisible()
+    # cleanup
+    $('#scree').remove()
+    $('#upload_form_contents').remove()
+
+  it "should show an error if upload is clicked before a file has been selected", ->
+    $('.upload')[0].click()
+    $('#upload_file').click()
+    expect($('#file_message')).toBeVisible()
+    # cleanup
+    $('#scree').remove()
+    $('#upload_form_contents').remove()

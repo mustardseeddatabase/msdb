@@ -101,3 +101,8 @@ Then /^The input field should have focus$/ do
   page.find('#lastName').should be_true
   page.evaluate_script("document.activeElement.id").should == 'lastName'
 end
+
+#Given /^I follow "(.*?)" for "(.*?)"/ do |link_name, person_name|
+  #page.find(:xpath, ".//table[@id='quickcheck_table']/tbody/tr[contains(.,'#{person_name}')]/td/a[contains(.,'#{link_name}')]").click()
+#end
+

@@ -1,7 +1,11 @@
 class Quickcheck.DocView extends Backbone.View
   events:
-    "click .warn" : "warn"
-    "click .confirm" : "confirm"
+    "click .warn"          : "warn"
+    "click .confirm"       : "confirm"
+    "click .upload"        : "upload"
+
+  upload: (event)->
+    new Quickcheck.UploadView()
 
   confirm: (event)->
     event.preventDefault()

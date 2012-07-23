@@ -12,6 +12,8 @@
       %th Status
       %th Number of warnings
 
+  =button_tag "Quickcheck completed", :id => :quickcheck_completed, :type => 'submit', :style => 'display:none'
+
 :javascript
   var client_docs = [{"head_of_household":false,"doctype":"id","expired?":false,"expiry_date":"2013-07-10","status":"current","warnings":0,"date":"2012-07-10","doc_link":null,"url":"/clients/13451","name_age":"Cantrell, Charlene. 48"},
                      {"head_of_household":true,"doctype":"id","expired?":true,"expiry_date":null,"status":"date not available","warnings":0,"date":null,"doc_link":null,"url":"/clients/13440","name_age":"Farragut, Stanley. 43"},
@@ -22,3 +24,12 @@
   var household_docs = [{"description":"Residency verification information","doctype":"res","expired?":true,"expiry_date":"2011-07-13","status":"expired on 13 Jul 2011","warnings":0,"date":"2011-01-13","doc_link":null},
                         {"description":"Income verification information","doctype":"inc","expired?":true,"expiry_date":"2011-07-13","status":"expired on 13 Jul 2011","warnings":0,"date":"2011-01-13","doc_link":null},
                         {"description":"Government income verification information","doctype":"gov","expired?":true,"expiry_date":null,"status":"date not available","warnings":0,"date":null,"doc_link":null}]
+
+%script#upload_form_template{:type => 'html/template'}
+  #upload_form_container{:style => 'position:absolute; top:0; width:100%; height:100%'}
+    #upload_form_contents{:style => 'position:relative; top:50%; width:400px; height:130px; background-color:white; display:none; border-radius:10px; border-color:black; border-style:solid; border-width:3px; margin: 0 auto'}
+      =form_tag '/any/old/url/here', :method => :put, :multipart => true, :id => :docform do
+        %p= file_field_tag "qualification_document[][docfile]", :id => :docfile_input
+        %p= submit_tag 'Upload file'
+        %p= button_tag 'Cancel', :id => :cancel_upload, :type => :button
+        %span#file_message{:style => 'display:none; color:#c44; font-weight:bold'} You must first select a file to upload

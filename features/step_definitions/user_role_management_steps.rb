@@ -15,7 +15,7 @@ end
 
 When /^I follow "([^"]*)" for "([^"]*)"$/ do |link, full_name|
   first_name, last_name = full_name.split(' ')
-  within(:xpath, "//tr[td = '#{last_name}']") do
+  within(:xpath, "//tr[contains( ., '#{last_name}')]") do
     click_link(link)
   end
 end

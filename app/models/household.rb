@@ -192,6 +192,10 @@ class Household < ActiveRecord::Base
     clients.sort_by(&:age_or_zero).map(&:id_qualification_vector).compact
   end
 
+  def qualification_docs
+    qualification + client_docs
+  end
+
   def with_errors
     has_client_errors? || has_household_errors?
   end

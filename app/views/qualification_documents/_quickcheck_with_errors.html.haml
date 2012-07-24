@@ -25,13 +25,9 @@
     %th
     %th
 
-=button_tag  "Quickcheck completed", :id => :quickcheck_completed, :type => 'submit', :style => 'display:none'
+=button_tag  "Quickcheck completed", :id => :quickcheck_completed, :style => 'display:none'
 
 
 :javascript
-  var client_docs = #{household_client_docs}
-  var household_docs = #{household_docs}
-  var qualdoc = new Quickcheck.QualdocView(client_docs)
-
-  $('#docfile_input').click(function(){$('#file_message').hide()});
-  #{(render :partial => 'quickcheck_client_script', :handlers => [:erb], :formats => [:js]).html_safe}
+  var docs = #{household_qualification_docs}
+  var qualdoc = new Quickcheck.QualdocView(docs)

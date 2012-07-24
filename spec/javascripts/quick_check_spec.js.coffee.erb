@@ -31,14 +31,15 @@ describe "Warn and waive the requirements for clients and qualification document
 
   it "should increment the warning count for clients if not current", ->
     expect($($('.count')[0])).toHaveText("0")
+    #$('tr.client:nth-child(2) .count')
     $('.warn')[0].click()
-    expect(qualdoc.clients.models[2].get('warnings')).toEqual(1) # models are indexed in reverse order as they're rendered bottom first
+    expect(qualdoc.docs.models[2].get('warnings')).toEqual(1) # models are indexed in reverse order as they're rendered bottom first
     expect($($('.count')[0])).toHaveText("1")
 
   it "should not increment the warning count for clients if current", ->
     expect($($('.count')[2])).toHaveText("0")
     $('.warn')[2].click()
-    expect(qualdoc.clients.models[0].get('warnings')).toEqual(0)
+    expect(qualdoc.docs.models[0].get('warnings')).toEqual(0)
     expect($($('.count')[2])).toHaveText("0")
 
   it "should change the icon from error to warning for clients if not current", ->
@@ -50,7 +51,7 @@ describe "Warn and waive the requirements for clients and qualification document
   it "should increment the warning count for household qualification documents if not current", ->
     expect($($('.count')[3])).toHaveText("0")
     $('.warn')[3].click()
-    expect(qualdoc.household_docs.models[2].get('warnings')).toEqual(1)
+    expect(qualdoc.docs.household_docs()[2].get('warnings')).toEqual(1)
     expect($($('.count')[3])).toHaveText("1")
 
   it "should change the icon from error to warning for household qualification documents if not current", ->
@@ -70,10 +71,8 @@ describe "Complete the quickcheck process", ->
     $('.warn')[5].click()
 
   it "all clients and qualdocs should either be warned, confirmed, or have status= current", ->
-    qualdoc.clients.each (client) ->
-      expect(client.warned() || client.current()).toBeTruthy()
-    qualdoc.household_docs.each (household_doc) ->
-      expect(household_doc.warned() || household_doc.current()).toBeTruthy()
+    qualdoc.docs.each (doc) ->
+      expect(doc.warned() || doc.current()).toBeTruthy()
 
   it "should show the quickcheck completed button", ->
     expect($('button#quickcheck_completed')).toBeVisible()
@@ -89,9 +88,9 @@ describe "Reversible warning", ->
     expect($('.warn:first').text()).toEqual("Warn")
 
   it "if not current, should increment the warnings count and then decrement it again", ->
-    expect(qualdoc.clients.models[2].get('warnings')).toEqual(1)
+    expect(qualdoc.docs.models[2].get('warnings')).toEqual(1)
     $('.warn')[0].click()
-    expect(qualdoc.clients.models[2].get('warnings')).toEqual(0)
+    expect(qualdoc.docs.models[2].get('warnings')).toEqual(0)
 
 
 describe "confirm hard copy document for each client and each household doc", ->
@@ -102,11 +101,11 @@ describe "confirm hard copy document for each client and each household doc", ->
 
   it "should set the confirm attribute to true for clients", ->
     $('.confirm')[0].click()
-    expect(qualdoc.clients.models[2].get('confirm')).toBeTruthy()
+    expect(qualdoc.docs.models[2].get('confirm')).toBeTruthy()
 
   it "should set the date to today's date for clients", ->
     $('.confirm')[0].click()
-    expect(qualdoc.clients.models[2].get('date')).toEqual(@date_string)
+    expect(qualdoc.docs.models[2].get('date')).toEqual(@date_string)
     expect($('tr.client:nth-child(2) .date').text()).toEqual(@date_string)
 
   it "should remove the error flag for client", ->
@@ -125,9 +124,9 @@ describe "confirm hard copy document for each client and each household doc", ->
 
   it "should decrement the warning count for a warning that was issued in this quickcheck session", ->
     $('.warn')[0].click()
-    expect(qualdoc.clients.models[2].get('warnings')).toEqual(1)
+    expect(qualdoc.docs.models[2].get('warnings')).toEqual(1)
     $('.confirm')[0].click()
-    expect(qualdoc.clients.models[2].get('warnings')).toEqual(0)
+    expect(qualdoc.docs.models[2].get('warnings')).toEqual(0)
 
 describe "Upload document for the first client", ->
   beforeEach ->

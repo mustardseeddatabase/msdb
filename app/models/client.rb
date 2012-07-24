@@ -35,7 +35,7 @@ class Client < ActiveRecord::Base
   default_scope order('case when birthdate IS NULL then 1 else 0 end, birthdate')
 
   belongs_to :household
-  delegate :with_errors, :to => :household, :prefix => true, :allow_nil => true
+  delegate :qualification_docs, :with_errors, :to => :household, :prefix => true, :allow_nil => true
   delegate :upload_link_text, :qualification_error_message, :current?, :confirm, :warnings, :vi, :confirm=, :warnings=, :vi=, :to => :id_qualdoc, :prefix => :id, :allow_nil => true
   delegate_multiparameter :date, :to => :id_qualdoc, :prefix => :id
 

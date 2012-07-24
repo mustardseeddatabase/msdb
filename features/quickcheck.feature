@@ -106,16 +106,6 @@ Feature: Client check in
     And I should see a link to "View ID document"
 
 @selenium
-  Scenario: Follow the document check sequence, and upload a document, forgetting to select a file
-    Given there is a household with residency, income and govtincome current in the database
-    And there is a client with last name "Arbogast", first name "Fanny", age "20", with id date "Date.new(2009,1,1)" in the database belonging to the household
-    And I am quickchecking Fanny Arbogast
-    And I follow "Upload" for "Fanny Arbogast"
-    Then I should see a file selector
-    When I press "Upload file"
-    Then I should see "You must first select a file to upload"
-
-@selenium
   Scenario: Follow the document check sequence, upload the final document to complete checkout
     Given there is a household with residency, income and govtincome current in the database
     And there is a client with last name "Normal", first name "Norman", age "20", with id date "Date.new(2009,1,1)" in the database belonging to the household

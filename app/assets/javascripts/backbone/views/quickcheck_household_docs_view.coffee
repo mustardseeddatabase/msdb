@@ -5,5 +5,5 @@ class Quickcheck.HouseholdDocsView extends Backbone.View
     _.bindAll(@, 'render')
 
   render: ->
-    @collection.each (model) =>
+    _(@collection).each (model) =>
       $(@el).after model.view.render()

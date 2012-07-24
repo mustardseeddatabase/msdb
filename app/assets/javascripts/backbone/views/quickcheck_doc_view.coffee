@@ -13,27 +13,19 @@ class Quickcheck.DocView extends Backbone.View
 
   warn: (event)->
     event.preventDefault()
-    if @model.get('status') != 'current'
-      @model.set('warned':!@model.get('warned'))
-      if @model.get('warned')
-        @model.increment_warnings()
-        $('.warn', @el).text('Unwarn')
-      else
-        @model.decrement_warnings()
-        $('.warn', @el).text('Warn')
+    @model.warn()
 
   update: ->
     $('.count',@el).text(@model.get('warnings'))
     if @model.get('date') != null
       $('.date',@el).text(@model.get('date'))
     $('.status',@el).text(@model.get('status'))
-    if @model.get('status') == 'current'
-      $('.status_icon',@el).removeClass('errors')
-      $('.status_icon',@el).removeClass('warn_icon')
-    else if @model.get('warned')
-      $('.status_icon',@el).removeClass('errors')
+    $('.status_icon',@el).removeClass('errors')
+    $('.status_icon',@el).removeClass('warn_icon')
+    if @model.warned()
       $('.status_icon',@el).addClass('warn_icon')
-    else
+      $('.warn', @el).text('Unwarn')
+    else if !@model.current()
       $('.status_icon',@el).addClass('errors')
-      $('.status_icon',@el).removeClass('warn_icon')
+      $('.warn', @el).text('Warn')
 

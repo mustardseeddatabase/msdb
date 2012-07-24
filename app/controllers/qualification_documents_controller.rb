@@ -11,10 +11,8 @@ class QualificationDocumentsController < ApplicationController
       @client = Client.includes(:id_qualdoc, :household => [{:clients => :id_qualdoc}, :res_qualdoc, :gov_qualdoc, :inc_qualdoc]).find(params[:client_id])
       # when there are no errors, the checkin will not be created during update, so create it now, with no warnings
       @client.checkins.create unless @client.household_with_errors
-      if @household = @client.household
-        @household_client_docs = @household.client_docs.to_json
-        @household_docs = @household.qualification.to_json
-      end
+      @household_qualification_docs = @client.household_qualification_docs.to_json
+      @household = @client.household
     end
 
     respond_to do |format|

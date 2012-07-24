@@ -6,8 +6,7 @@
   = render :partial => 'quickcheck_with_errors',
            :locals => {:client => client,
                        :household => household,
-                       :household_client_docs => @household_client_docs,
-                       :household_docs => @household_docs}
+                       :household_qualification_docs => @household_qualification_docs}
 
 -else
   = render :partial => 'quickcheck_without_errors',

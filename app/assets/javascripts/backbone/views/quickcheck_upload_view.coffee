@@ -1,5 +1,5 @@
 class Quickcheck.UploadView extends Backbone.View
-  initialize: ->
+  initialize: (@doc_id)->
     @template = JST["backbone/templates/upload_form"]
     @render()
 
@@ -23,6 +23,8 @@ class Quickcheck.UploadView extends Backbone.View
       false
     else
       true
+    $('#docform').attr('action',@model.url)
+    $('#docform').submit()
 
   document: ->
     $('#docfile_input').val().length != 0
@@ -30,6 +32,12 @@ class Quickcheck.UploadView extends Backbone.View
   render: ->
     $('body').append("<div id='scree'/>")
     $('#scree').fadeIn()
-    $(@el).html(@template)
+    $(@el).html(@template())
     $('body').append(@el)
     $('#upload_form_contents').fadeIn()
+
+  doc_id_or_new: ->
+    if @doc_id != null
+      @doc_id
+    else
+      'new'

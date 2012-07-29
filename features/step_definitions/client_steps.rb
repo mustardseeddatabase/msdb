@@ -169,17 +169,25 @@ Then /^"([^"]*)" should not be in the database$/ do |name|
   Client.find_by_firstName_and_lastName(firstName, lastName).should be_nil
 end
 
-Then /^"([^"]*)" should have (\d+) checkin$/ do |name, count|
+Then /^"([^"]*)" should have (\d+) (\D+) checkin$/ do |name, count, checkin_type|
   firstName, lastName = name.split(' ')
   client = Client.find_by_firstName_and_lastName(firstName, lastName)
-  client.checkins.length.should == count.to_i
+  if checkin_type == 'client'
+    client.client_checkins.length.should == count.to_i
+  else
+    client.household.household_checkins.length.should == count.to_i
+  end
 end
 
-Then /^"([^"]*)" last checkin should have "([^"]*)" "([^"]*)"$/ do |name, field, true_or_false|
+Then /^"([^"]*)" last (\w+) checkin should have "([^"]*)" "([^"]*)"$/ do |name, checkin_type, field, true_or_false|
   firstName, lastName = name.split(' ')
   client = Client.find_by_firstName_and_lastName(firstName, lastName)
   expectation = true_or_false == "true" ? true : false
-  client.checkins.last.send(field).should == expectation
+  if checkin_type == 'client'
+    client.client_checkins.last.send(field).should == expectation
+  else
+    client.household.household_checkins.last.send(field).should == expectation
+  end
 end
 
 Then /^there should be "([^"]*)" "([^"]*)" in the database$/ do |count, model|

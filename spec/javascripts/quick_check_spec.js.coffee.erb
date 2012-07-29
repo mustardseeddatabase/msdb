@@ -77,6 +77,10 @@ describe "Complete the quickcheck process", ->
   it "should show the quickcheck completed button", ->
     expect($('button#quickcheck_completed')).toBeVisible()
 
+  it "should hide the quickcheck completed button if a warning is reversed", ->
+    $('.warn')[5].click()
+    expect($('button#quickcheck_completed')).not.toBeVisible()
+
 describe "Reversible warning", ->
   beforeEach ->
     loadFixtures 'client_quickcheck'

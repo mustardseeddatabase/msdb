@@ -50,21 +50,21 @@
       -if @client.has_id_doc_in_db?
         = link_to 'View ID document', qualification_document_path(@client.id_qualdoc)
 %h2 Recent checkins
-- if @checkins.blank?
+- if @client_checkins.blank?
   none
 - else
   %table
     %tr
       %th Date
       %th Warnings
-    -for checkin in @checkins
+    -for checkin in @client_checkins
       %tr{:valign => :top}
         %td{:width => '160px'}
           = checkin.created_at.to_formatted_s(:app_default)
           - if !checkin.primary?
             %br
               (by:
-              = link_to checkin.parent_checkin.client.first_last_name, client_path(checkin.parent_checkin.client)
+              = link_to checkin.household_checkin.primary_client.first_last_name, client_path(checkin.household_checkin.primary_client)
               )
         %td= warnings(checkin)
 

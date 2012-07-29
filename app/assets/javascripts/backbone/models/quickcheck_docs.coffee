@@ -1,5 +1,4 @@
 class Quickcheck.Docs extends Backbone.Collection
-  url: '/qualification_documents'
 
   model: Quickcheck.Doc
 
@@ -13,3 +12,5 @@ class Quickcheck.Docs extends Backbone.Collection
     @all (model) ->
       model.quickcheck_completed()
 
+  server_attributes: ->
+    $.param( {qualification_documents : @models.map (model)->model.server_attributes()} )

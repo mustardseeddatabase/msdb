@@ -37,7 +37,8 @@ class Household < ActiveRecord::Base
   end
 
   has_many :clients
-  has_many :distributions
+  has_many :distributions, :dependent => :destroy, :autosave => true
+  has_many :household_checkins, :dependent => :destroy, :autosave => true
 
   with_options :dependent => :destroy, :autosave => true do |h|
     [:perm_address, :temp_address].each{|pt| h.belongs_to pt}

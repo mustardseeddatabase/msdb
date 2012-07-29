@@ -6,9 +6,12 @@ class Quickcheck.QualdocView extends Backbone.View
     "click #quickcheck_completed" : "quickcheck_completed"
 
   quickcheck_completed: ->
-    Backbone.sync("update", @docs)
+    Backbone.sync("update", null, {dataType: 'text', data:@docs.server_attributes(), url: '/clients/' + client_id + '/qualification_documents', complete: @show_color_code})
 
-  initialize: (docs)->
+  show_color_code: (jqXHR, textStatus)->
+    new Quickcheck.CompleteView(@color_code, textStatus)
+
+  initialize: (docs, @color_code)->
     @docs = new Quickcheck.Docs(docs)
     @docs.bind('change', @check_errors)
     @clients_view = new Quickcheck.ClientsView({collection:@docs.clients()})

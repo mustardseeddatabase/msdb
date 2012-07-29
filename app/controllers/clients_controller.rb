@@ -38,7 +38,7 @@ class ClientsController < ApplicationController
 
   def show
     @client = Client.find(params[:id])
-    @checkins = @client.checkins.sort_by(&:created_at).reverse
+    @client_checkins = @client.client_checkins.sort_by(&:created_at).reverse
     @household = Household.find(params[:household_id]) unless params[:household_id].nil?
     @return_to = params[:return_to]
     respond_to do |format|

@@ -5,7 +5,7 @@ class Quickcheck.DocView extends Backbone.View
     "click .upload"        : "upload"
 
   upload: (event)->
-    new Quickcheck.UploadView()
+    new Quickcheck.UploadView(model:@model)
 
   confirm: (event)->
     event.preventDefault()

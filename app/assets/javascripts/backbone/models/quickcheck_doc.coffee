@@ -5,6 +5,7 @@ class Quickcheck.Doc extends Backbone.Model
       @view = new Quickcheck.ClientView({model:@})
     else
       @view = new Quickcheck.HouseholdDocView({model:@})
+    @url = "/clients/" + client_id + "/qualification_documents/" + @id
 
   increment_warnings: ->
     current = @get('warnings') || 0
@@ -57,3 +58,6 @@ class Quickcheck.Doc extends Backbone.Model
       'errors'
     else
       ''
+
+  server_attributes: ->
+    _(@.attributes).pick('id','date', 'warnings', 'warned', 'confirm', 'doctype', 'association_id')

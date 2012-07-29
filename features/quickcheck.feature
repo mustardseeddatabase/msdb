@@ -64,11 +64,12 @@ Feature: Client check in
     Then I press "Quickcheck completed"
     Then I should see "Color code is red"
     And Fanny Arbogast should have 1 id warning
-    And "Fanny Arbogast" should have 1 checkin
-    And "Fanny Arbogast" last checkin should have "id_warn" "true"
-    And "Fanny Arbogast" last checkin should have "res_warn" "false"
-    And "Fanny Arbogast" last checkin should have "inc_warn" "false"
-    And "Fanny Arbogast" last checkin should have "gov_warn" "false"
+    And "Fanny Arbogast" should have 1 client checkin
+    And "Fanny Arbogast" should have 1 household checkin
+    And "Fanny Arbogast" last client checkin should have "id_warn" "true"
+    And "Fanny Arbogast" last household checkin should have "res_warn" "false"
+    And "Fanny Arbogast" last household checkin should have "inc_warn" "false"
+    And "Fanny Arbogast" last household checkin should have "gov_warn" "false"
 
 @selenium
   Scenario: Follow the document check sequence, for a client with no errors
@@ -77,11 +78,12 @@ Feature: Client check in
     And I am quickchecking a client without errors, Fanny Arbogast
     Then I should see "Documents for household and clients are current"
     And I should see "Color code is red"
-    And "Fanny Arbogast" should have 1 checkin
-    And "Fanny Arbogast" last checkin should have "id_warn" "false"
-    And "Fanny Arbogast" last checkin should have "res_warn" "false"
-    And "Fanny Arbogast" last checkin should have "inc_warn" "false"
-    And "Fanny Arbogast" last checkin should have "gov_warn" "false"
+    And "Fanny Arbogast" should have 1 client checkin
+    And "Fanny Arbogast" should have 1 household checkin
+    And "Fanny Arbogast" last client checkin should have "id_warn" "false"
+    And "Fanny Arbogast" last household checkin should have "res_warn" "false"
+    And "Fanny Arbogast" last household checkin should have "inc_warn" "false"
+    And "Fanny Arbogast" last household checkin should have "gov_warn" "false"
 
 @selenium
   Scenario: Follow the document check sequence, start to upload a document, but then waive the requirement

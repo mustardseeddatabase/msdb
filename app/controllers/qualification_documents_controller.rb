@@ -1,5 +1,4 @@
 class QualificationDocumentsController < ApplicationController
-  helper :checkin, :clients, :households # SHOULD NOT BE NECESSARY! but required for testing (not dev) after upgrade to Rails 3.2.5
   # the index method with no parameters presents the page into which ajax
   # results may be inserted. The index method responding to an ajax
   # request requires a client id.
@@ -27,6 +26,7 @@ class QualificationDocumentsController < ApplicationController
     end
   end
 
+  # at the conclusion of the quickcheck procedure:
   def update
     docs = params[:qualification_documents].values
     grouped_docs = docs.group_by{|doc| doc['id'] != "null" }
@@ -66,33 +66,28 @@ class QualificationDocumentsController < ApplicationController
 
 
 
-    #checkin = @client.checkins.build # for the head of household, takes the warnings for household qualdocs (inc, res, gov)
-
     #params[:qualification_documents].each do |qualdoc_id,val|
       #upload = (val.keys.include? 'docfile')
       #val.merge!(:date => Date.today, :warnings => 0) if upload
       #qd = QualificationDocument.find(qualdoc_id)
       #qd.assign_attributes(val, :without_protection => true)
-      #warn = qd.changed_attributes.keys.include?("warnings")
-      #if qd.belongs_to?(@client)
-        #checkin[qd.document_type + "_warn"] = warn
-      #else
-        #checkin.proxy_checkins.build(:client => qd.client, (qd.document_type + "_warn") => warn)
-      #end
       #if qd.save && upload
         #flash[:info] = "Document saved"
       #end
     #end
 
-    #checkin.save if checkin
     @color_code = @household.distribution_color_code
 
     respond_to do |format|
       format.js { render :nothing => true, :status => :ok } # the "quickcheck complete" scenario
-      format.html do # after a document has been uploaded
-        redirect_to qualification_documents_url(:client_id => params[:client_id]) # documents are being uploaded during quickcheck
-      end
+      #format.html do # after a document has been uploaded
+        #redirect_to qualification_documents_url(:client_id => params[:client_id]) # documents are being uploaded during quickcheck
+      #end
     end
+  end
+
+  def upload
+    redirect_to qualification_documents_url(:client_id => params[:client_id]) # documents are being uploaded during quickcheck
   end
 
   def show

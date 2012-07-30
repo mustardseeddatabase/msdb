@@ -23,9 +23,12 @@ Msdb::Application.routes.draw do
     resources :distributions
     resources :qualification_documents do
       put 'update', :on => :collection
+      put 'upload'
     end
   end
-  resources :qualification_documents
+  resources :qualification_documents do
+    get 'index'
+  end
 
   resources :items # for actions for which it's not known if the item has a sku or upc
   match '/upc_items/:upc', :to => 'upc_items#show', :via => :get, :as => :upc_item # for the upc_items controller, we use the upc as a reference

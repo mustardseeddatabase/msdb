@@ -5,7 +5,7 @@ class Quickcheck.Doc extends Backbone.Model
       @view = new Quickcheck.ClientView({model:@})
     else
       @view = new Quickcheck.HouseholdDocView({model:@})
-    @url = "/clients/" + client_id + "/qualification_documents/" + @id
+    @upload_url = "/clients/" + client_id + "/qualification_documents/" + @id + "/upload"
 
   increment_warnings: ->
     current = @get('warnings') || 0
@@ -15,6 +15,7 @@ class Quickcheck.Doc extends Backbone.Model
     if current = @get('warnings') > 0
       @set('warnings':@get('warnings')-1, 'silent':true)
 
+  # the user is confirming that they have received hard copy of the doc
   confirm: ->
     dd = new Date()
     if @warned()
@@ -60,4 +61,4 @@ class Quickcheck.Doc extends Backbone.Model
       ''
 
   server_attributes: ->
-    _(@.attributes).pick('id','date', 'warnings', 'warned', 'confirm', 'doctype', 'association_id')
+    _(@.attributes).pick('id', 'date', 'warnings', 'warned', 'confirm', 'doctype', 'association_id')

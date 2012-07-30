@@ -22,9 +22,10 @@ class Quickcheck.UploadView extends Backbone.View
       $('#file_message').show()
       false
     else
+      $('#docform').attr('action',@model.upload_url)
+      $('#authenticity_token').attr('value', authenticity_token)
+      $('#docform').submit()
       true
-    $('#docform').attr('action',@model.url)
-    $('#docform').submit()
 
   document: ->
     $('#docfile_input').val().length != 0

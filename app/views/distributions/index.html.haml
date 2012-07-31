@@ -1,29 +1,21 @@
 = message_block :on => [:distribution, :client, :distribution_item, :item]
 %h1 Find client for checkout
-:javascript
-  $(function(){
-    $('.text_input').autocomplete({ 
-      url:'/clients/autocomplete', 
-      minChars:3, 
-      paramName:'client_full_name', 
-      onItemSelect:function(client){getDetails(client)}
-    });
-
-    ftb = new FancyTextBox(clear_client)
-  });
-
-  var getDetails = function(client){
-    var form = $('#client_form')
-    form.attr('action',"/clients/"+client.data[0]+"/distributions/new")
-    form.submit()
-  };
-
-  var clear_client = function(){ $('#client').html('') };
 
 - focus('client_lastName_input')
-= form_tag clients_path, :id =>'client_form', :method => :get do
+= form_for @client, :url => clients_path, :id =>'client_form', :method => :get do |f|
   %table
     %tr
       %td{:width => '180px'}
-        %label Last name
-      %td= render :partial => 'shared/fancy_text_box', :locals => {:name => "client[lastName]", :param => :last_name, :title => 'Clear client name'}
+        %label Scan id card barcode:
+      %td= f.text_field :barcode
+
+:javascript
+  $(function(){
+    $('#client_barcode').on('keyup',detect_barcode)
+  })
+
+  detect_barcode = function(event){
+    if(event.which == 13){
+      window.location = "/pantries/" + #{@current_user.pantry_id} + "/clients/" + $('#client_barcode').val() +"/distributions/new"
+    }
+  }

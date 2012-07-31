@@ -1,0 +1,24 @@
+%h2>Edit Profile
+- if @user.errors.any?
+  %ul
+    - @user.errors.full_messages.each do |msg|
+      %li=msg 
+
+= form_for @user, :url => requested_user_or_self, :html => { :method => :put } do |f|
+  %p 
+    First Name:
+    %br/
+    = f.text_field :firstName, :size => 60
+  %p 
+    Last Name:
+    %br/ 
+    = f.text_field :lastName, :size => 60
+  %p 
+    Email:
+    %br/
+    = f.text_field :email, :size => 60
+
+  - submit_or_return_to authengine_users_path
+
+%script{:type=>'text/javascript'}
+  document.getElementById('user_email').focus()

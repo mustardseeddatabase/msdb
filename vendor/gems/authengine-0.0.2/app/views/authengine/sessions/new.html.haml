@@ -1,0 +1,18 @@
+- focus('login')
+= message_block
+- unless logged_in?
+  %h1 Please log in
+  =form_tag authengine_sessions_path do
+    %table
+      %tr
+        %td User name:
+        %td
+          =text_field_tag "login"
+      %tr
+        %td Password
+        %td
+          =password_field_tag "password"
+      %tr
+        %td
+          = submit_tag 'Log in...'
+        %td

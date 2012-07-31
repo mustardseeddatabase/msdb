@@ -1,0 +1,11 @@
+%h1 Pantries
+- if @pantries.empty?
+  %p none
+- else
+  %table
+    - for pantry in @pantries
+      %tr
+        %td= pantry.name
+        %td= link_to "delete", pantry_path(pantry), :method => :delete
+%br/
+= link_to 'Add pantry', new_pantry_path

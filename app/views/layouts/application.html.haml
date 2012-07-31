@@ -12,6 +12,9 @@
       #banner_text= t :banner_text
     #role{:style => "position :absolute; left : '0px'"}
       = session[:role] && session[:role].current_role_ids.map{|id| Role.find(id).name}.join(', ')
+      \/
+      = @current_user && @current_user.pantry && @current_user.pantry.name
+
     #content
       = content_for?(:authengine) ?  yield(:authengine) :  yield
   #nav

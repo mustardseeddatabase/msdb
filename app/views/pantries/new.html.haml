@@ -1,0 +1,7 @@
+%h1 New pantry
+= form_for @pantry, :url => pantries_path do |p|
+  %table
+    %tr
+      %td Name:
+      %td= p.text_field :name
+  = p.button "Save"

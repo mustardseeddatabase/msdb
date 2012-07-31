@@ -1,0 +1,12 @@
+= message_block :on => :role
+%h1 Edit roles
+%table{:cellspacing =>'0', :cellpadding => '4'}
+  %tr
+    %th Role
+  - for role in @all_roles
+    %tr
+      %td= role.name
+      %td= (link_to "Remove", authengine_role_path(role), :method => :delete) unless role.is_developer?
+
+%p= link_to 'Add new role', :controller=>:roles, :action=>:new
+%p= link_to "Cancel", admin_index_path

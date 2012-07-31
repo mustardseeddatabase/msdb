@@ -64,6 +64,24 @@ GIT
       activesupport (>= 3.0.0)
 
 PATH
+  remote: vendor/gems/authengine-0.0.2
+  specs:
+    authengine (0.0.2)
+      capybara
+      database_cleaner
+      factory_girl_rails
+      faker
+      flexmock
+      haml
+      jasmine
+      jasminerice
+      message_block
+      rails (~> 3.2.5)
+      rspec (>= 2.0.0)
+      rspec-rails (>= 2.0.0)
+      sqlite3-ruby
+
+PATH
   remote: vendor/gems/db_check
   specs:
     db_check (0.0.1)
@@ -113,20 +131,6 @@ GEM
     addressable (2.2.8)
     archive-tar-minitar (0.5.2)
     arel (3.0.2)
-    authengine (0.0.2)
-      capybara
-      database_cleaner
-      factory_girl_rails
-      faker
-      flexmock
-      haml
-      jasmine
-      jasminerice
-      message_block
-      rails (~> 3.2.5)
-      rspec (>= 2.0.0)
-      rspec-rails (>= 2.0.0)
-      sqlite3-ruby
     builder (3.0.0)
     capistrano (2.12.0)
       highline
@@ -313,7 +317,7 @@ PLATFORMS
 
 DEPENDENCIES
   active_reload
-  authengine
+  authengine!
   capistrano
   capybara-webkit!
   carrierwave

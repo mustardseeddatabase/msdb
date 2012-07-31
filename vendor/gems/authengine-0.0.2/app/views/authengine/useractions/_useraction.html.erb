@@ -1,0 +1,6 @@
+<tr>
+  <td><%= useraction.created_at.to_formatted_s(:log_format) %></td>
+	<td><%= useraction.user.first_last_name %></td>
+	<td><%= (useraction.action.controller_name+"/"+useraction.action.action_name) unless !useraction.action %></td>
+	<td><%= useraction.params_truncated  %></td>
+</tr>

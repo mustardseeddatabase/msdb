@@ -1,0 +1,11 @@
+<h1>Update Actions</h1>
+<% params[:permission].each do |role, permissions| %>
+<%= "role name: #{role}):" %><br/>
+<% permissions.each do |controller, actions|%>
+<%= "controller: #{controller}," %><br/>
+<% actions.each do |action_name, val|%>
+<%= "action #{action_name}" %><br/>
+<% end %>
+<% end %>
+<br/>
+<% end %>

@@ -4,7 +4,7 @@
   %span.nav_text clients
 %a.nav_button#checkin{    :href => '/qualification_documents', :class => "#{nav_enable(:controller => 'qualification_documents', :action => 'index')}"}
   %span.nav_text check in
-%a.nav_button#checkout{   :href => '/distributions',           :class => "#{nav_enable(:controller => 'distributions', :action => 'index')}"}
+%a.nav_button#checkout{   :href => pantry_distributions_url((@current_user.pantry && @current_user.pantry.id) || 'all'),           :class => "#{nav_enable(:controller => 'distributions', :action => 'index')}"}
   %span.nav_text checkout
 %a.nav_button#donations{  :href => '/donations',               :class => "#{nav_enable(:controller => 'donations', :action => 'index')}"}
   %span.nav_text donations

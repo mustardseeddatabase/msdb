@@ -1,0 +1,10 @@
+= message_block
+
+%h1 Select new temporary access role for this session
+
+= form_for @user_role, :url => authengine_user_user_roles_path(current_user), :method => :put do |f|
+  %table
+    %tr
+      %td= f.label :role_id, "New role"
+      %td= f.select :role_id, @roles.collect{|r| [r.name, r.id]}
+  - submit_or_return_to admin_index_path

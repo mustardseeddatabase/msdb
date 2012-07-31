@@ -1,9 +1,11 @@
 class Distribution < ActiveRecord::Base
+  attr_accessible :pantry_id, :household_id, :cid, :distribution_items_attributes
 
   belongs_to :household
   has_many :distribution_items, :foreign_key => :transaction_id, :dependent => :destroy, :autosave => true
   has_many :items, :through => :distribution_items, :dependent => :destroy
   accepts_nested_attributes_for :distribution_items
+  belongs_to :pantry
   attr_accessor :cid
 
   scope :in_month, lambda{|year,month| where('(YEAR(created_at) = ?) & (MONTH(created_at) = ?)', year, month)}

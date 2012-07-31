@@ -68,6 +68,21 @@
               )
         %td= warnings(checkin)
 
+%h2 Recent food distributions
+- if @distributions.blank?
+  none
+- else
+  %table
+    %tr
+      %th Date
+      %th Pantry
+    - for distribution in @distributions
+      %tr{:valign => :top}
+        %td{:width => '160px'}
+          = distribution.created_at.to_formatted_s(:app_default)
+        %td{:width => '240px'}
+          = distribution.pantry && distribution.pantry.name
+
 %table{:style => "padding-top : 30px"}
   %tr
     %td= link_to 'Edit this client', edit_client_path(@client)

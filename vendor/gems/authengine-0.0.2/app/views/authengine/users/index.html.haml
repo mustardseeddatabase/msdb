@@ -1,0 +1,10 @@
+%h1 Database Users
+%table
+  %tr
+    %th First Name
+    %th Last Name
+    %th Role(s)
+    %th{:colspan=>"2"}Enabled?
+    %th{:colspan=>"4"}Manage
+  = render :partial => 'user', :collection => @users
+%p= link_to "New User", new_authengine_user_path

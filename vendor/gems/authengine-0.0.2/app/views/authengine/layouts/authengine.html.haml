@@ -1,0 +1,9 @@
+- content_for :authengine do
+  = yield
+
+- content_for :head do
+  - if Rails.env.test?
+    %script
+      confirm = function(){ return true; }; alert = function() { return true; };
+
+= render :file => 'layouts/application'

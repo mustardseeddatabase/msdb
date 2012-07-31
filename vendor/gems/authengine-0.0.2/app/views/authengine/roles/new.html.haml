@@ -1,0 +1,15 @@
+= message_block :on => :role
+%h1 Add role
+
+= form_for @role, :url => authengine_roles_path  do |f|
+  %table
+    %tr
+      %td
+        %label{:for => :name} Name:
+      %td{:colspan=>"3"}= f.text_field :name, :autocomplete => 'off'
+    %tr
+      %td= f.label(:parent_id, "Parent:")
+      %td{:colspan=>"3"}= f.select :parent_id, @roles.collect{|r| [r.name, r.id]}
+  - submit_or_return_to authengine_roles_path
+
+-focus('role_name')

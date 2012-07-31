@@ -7,7 +7,7 @@
 
     %table#limit_categories.box_shadow
 
-    = render :partial => 'shared/transaction_list', :locals => { :return_path => distributions_path}
+    = render :partial => 'shared/transaction_list', :locals => { :return_path => pantry_distributions_path(params[:pantry_id])}
 
 :javascript
   var authenticity_token  = '#{ escape_javascript form_authenticity_token }'
@@ -16,4 +16,7 @@
   var limit_categories    = new Application.LimitCategories(#{ LimitCategory.to_json})
   var error_messages      = #{ Item.attribute_error_messages };
 
-  $(function(){ distribution_app = new Application.DistributionAppView({transaction_items: []}, "#{client_distributions_path(@client)}"); });
+  $(function(){
+    distribution_app = new Application.DistributionAppView({transaction_items: []},
+                                                            "/pantries/#{@current_user.pantry_id}/clients/#{@client.barcode}/distributions");
+    });

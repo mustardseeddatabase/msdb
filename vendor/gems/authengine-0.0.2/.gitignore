@@ -1,0 +1,10 @@
+*.gem
+.bundle
+Gemfile.lock
+spec/dummy/Gemfile.lock
+pkg/*
+.DS_Store
+spec/dummy/db/test.sqlite3
+spec/dummy/log/test.log
+
+.rvmrc

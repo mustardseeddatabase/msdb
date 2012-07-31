@@ -1,0 +1,52 @@
+:javascript
+  function check_policy(){
+    cb_count = 0
+    for(var i = 1; i<10; i++){
+      cb = document.getElementById("user_cb_cb"+i)
+      if(cb.checked){cb_count++}
+    }
+    if (cb_count == 9){return true}
+    else{alert("Please check all the checkboxes to signify your agreement to comply with the #{ORGANIZATION_NAME} Privacy Policy"); return false}
+  }
+  
+  function check_user_info(){
+    if(document.getElementById('user_login').value.length < 5){alert('Please enter a login name longer than 5 letters')}
+    else if(document.getElementById('user_email').value.length < 9 ){alert('Please enter a legitimate email address')}
+    else if(document.getElementById('user_password').value.length < 6){alert('Please select a password longer than 6 characters')}
+    else if(document.getElementById('user_password_confirmation').value != document.getElementById('user_password').value){alert('The two password fields don\'t match')}
+    else{
+      $(".user_info").css("display", "none")
+      $("#privacy_policy").css("display", "block")
+      }
+  }
+
+= message_block :on => :user
+= form_for :user, :url => {:action=>:activate, :activation_code=>session[:activation_code], :method=>:post}, :html=>{:onsubmit=>"return check_policy()"} do |f| 
+  .user_info
+    %h1 
+      Welcome #{@user.firstName} #{@user.lastName} to the #{APPLICATION_NAME || "database"}
+    %table
+      %tr
+        %td
+          %label{:for => "login" } Select a login name:
+        %td= f.text_field :login
+      %tr
+        %td
+          %label{:for => "email" } Your email address:
+        %td= f.text_field :email
+      %tr
+        %td
+          %label{:for => "password" } Select a login password:
+        %td= f.password_field :password
+      %tr
+        %td
+          %label{:for => "password_confirmation" } Re-enter your password to confirm:
+        %td= f.password_field :password_confirmation
+
+    %p
+  - begin
+    = render 'privacy_policy'
+  - rescue ActionView::MissingTemplate
+    = render 'no_privacy_policy'
+%script{:type=>'text/javascript'}
+  document.getElementById('user_login').focus()

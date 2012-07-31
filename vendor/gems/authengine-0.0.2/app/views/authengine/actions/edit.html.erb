@@ -1,0 +1,80 @@
+<h1>Edit role</h1>
+
+<%= error_messages_for :role %>
+
+<% form_for(@role) do |f| %>
+<table>
+		<tr><td>Name:</td><td colspan="3"><%= f.text_field :name %></td></tr>
+	<tr><td>Manage DB Users:</td>
+	<td>	<%= f.label :read %>
+			<%= radio_button('role', 'manageDbUsers', 'read') %>
+	</td>
+	<td>	<%= f.label :write %>
+			<%= radio_button('role', 'manageDbUsers', 'write') %>
+	</td>
+	<td>	<%= f.label :none %>
+			<%= radio_button('role', 'manageDbUsers', 'none') %>
+	</td>
+	</tr>
+	<tr><td>Manage Students:</td>
+	<td>	<%= f.label :read %>
+			<%= radio_button('role', 'manageStudents', 'read') %>
+	</td>
+	<td>	<%= f.label :write %>
+			<%= radio_button('role', 'manageStudents', 'write') %>
+	</td>
+	<td>	<%= f.label :none %>
+			<%= radio_button('role', 'manageStudents', 'none') %>
+	</td>
+	</tr>
+	<tr><td>Manage Self:</td>
+	<td>	<%= f.label :read %>
+			<%= radio_button('role', 'manageSelf', 'read') %>
+	</td>
+	<td>	<%= f.label :write %>
+			<%= radio_button('role', 'manageSelf', 'write') %>
+	</td>
+	<td>	<%= f.label :none %>
+			<%= radio_button('role', 'manageSelf', 'none') %>
+	</td>
+	</tr>
+	<tr><td>Manage Queries:</td>
+	<td>	<%= f.label :read %>
+			<%= radio_button('role', 'manageQueries', 'read') %>
+	</td>
+	<td>	<%= f.label :write %>
+			<%= radio_button('role', 'manageQueries', 'write') %>
+	</td>
+	<td>	<%= f.label :none %>
+			<%= radio_button('role', 'manageQueries', 'none') %>
+	</td>
+	</tr>
+	<tr><td>Manage Roles:</td>
+	<td>	<%= f.label :read %>
+			<%= radio_button('role', 'manageRoles', 'read') %>
+	</td>
+	<td>	<%= f.label :write %>
+			<%= radio_button('role', 'manageRoles', 'write') %>
+	</td>
+	<td>	<%= f.label :none %>
+			<%= radio_button('role', 'manageRoles', 'none') %>
+	</td>
+	</tr>
+	<tr><td>Manage Translations:</td>
+	<td>	<%= f.label :read %>
+			<%= radio_button('role', 'manageTranslations', 'read') %>
+	</td>
+	<td>	<%= f.label :write %>
+			<%= radio_button('role', 'manageTranslations', 'write') %>
+	</td>
+	<td>	<%= f.label :none %>
+			<%= radio_button('role', 'manageTranslations', 'none') %>
+	</td>
+	</tr>
+</table>  
+  <p>
+    <%= f.submit "Update" %>
+  </p>
+<% end %>
+<%= link_to 'Show', @role %> |
+<%= link_to 'Back', roles_path %>

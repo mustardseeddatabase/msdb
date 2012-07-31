@@ -1,0 +1,19 @@
+%tr{:class => "#{cycle('odd', 'even')}"}
+  %td= user.firstName
+  %td= user.lastName
+  %td= user.roles.map(&:name).join(', ')
+  %td= user.enabled ? 'yes' : 'no'
+  %td
+    - unless user == current_user
+      - if user.enabled
+        = link_to('disable', disable_authengine_user_path(user.id), :method => :put)
+      - else
+        = link_to('enable', enable_authengine_user_path(user.id), :method => :put)
+  %td= link_to "show", authengine_user_path(user)
+  %td
+    - unless user == current_user
+      = link_to "delete", [:authengine, user], :data => {:confirm => "are you sure you want to delete #{user.first_last_name} ?"}, :method => :delete
+  %td
+    - unless user == current_user
+      = link_to 'edit roles', authengine_user_user_roles_path(user)
+  %td= link_to 'edit profile', edit_authengine_user_path(user)

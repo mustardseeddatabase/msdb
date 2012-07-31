@@ -21,6 +21,9 @@
     %tr{:style => "vertical-align:top"}
       %td= label :client, :headOfHousehold
       %td= f.check_box :headOfHousehold, {}, true
+    %tr
+      %td= label :client, :barcode
+      %td= f.text_field :barcode
 
   %table{:style => 'padding-top:30px'}
     %tr

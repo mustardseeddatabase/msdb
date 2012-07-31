@@ -1,13 +1,14 @@
 class ClientsController < ApplicationController
   def new
     @client = Client.new
+    @household = Household.new
   end
 
   def create
     @client = Client.new(params[:client])
     if @client.save
       flash[:info] = "New client created"
-      redirect_to client_path(@client)
+      redirect_to client_path(@client.barcode)
     else
       flash[:error] = @client.errors.full_messages
       redirect_to new_client_path
@@ -20,7 +21,7 @@ class ClientsController < ApplicationController
   end
 
   def update
-    @client = Client.find(params[:id])
+    @client = Client.find(params[:barcode])
     if @client.update_attributes(params[:client])
       if @client.headOfHousehold?
         household = @client.household
@@ -29,7 +30,7 @@ class ClientsController < ApplicationController
         }
       end
       flash[:info] = "Client updated"
-      redirect_to client_path(@client)
+      redirect_to client_path(@client.barcode)
     else
       flash[:error] = @client.errors.full_messages
       redirect_to edit_client_path(@client)
@@ -37,9 +38,12 @@ class ClientsController < ApplicationController
   end
 
   def show
-    @client = Client.find(params[:id])
-    @checkins = @client.checkins.sort_by(&:created_at).reverse
-    @household = Household.find(params[:household_id]) unless params[:household_id].nil?
+    @client = Client.find_by_barcode(params[:barcode])
+    if @client
+      @checkins = @client.checkins.sort_by(&:created_at).reverse
+      @household = @client.household
+      @distributions = @household.distributions
+    end
     @return_to = params[:return_to]
     respond_to do |format|
       format.html
@@ -50,6 +54,7 @@ class ClientsController < ApplicationController
   end
 
   def index
+    @client = Client.new
     @return_to = 'clients_path'
   end
 

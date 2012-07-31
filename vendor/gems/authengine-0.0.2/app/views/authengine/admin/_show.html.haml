@@ -1,0 +1,5 @@
+%ul
+  %li= link_to "Manage users", authengine_users_path
+  %li= link_to "Manage access roles", authengine_roles_path
+  %li= link_to "Manage access", authengine_actions_path
+  %li= link_to "Restrict access for the current session", edit_authengine_user_user_roles_path(current_user)

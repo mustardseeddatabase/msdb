@@ -1,4 +1,5 @@
 Msdb::Application.routes.draw do
+  resources :pantries
   resources :limit_categories do
     put 'update', :on => :collection
   end
@@ -7,7 +8,9 @@ Msdb::Application.routes.draw do
   #end
   resources :reports, :only => :index
   resources :inventories
-  resources :distributions
+  resources :pantries do
+    resources :distributions
+  end
   resource :sku_list
   resources :sku_list_items
   resources :donors do
@@ -21,8 +24,12 @@ Msdb::Application.routes.draw do
     put 'update', :on => :collection
   end
 
+  match '/clients/new', :to => 'clients#new', :via => :get
+  match '/clients/:barcode', :to => 'clients#show', :via => :get
+  match '/clients/:barcode', :to => 'clients#update', :via => :put
+  match '/pantries/:pantry_id/clients/:barcode/distributions/new', :to => 'distributions#new', :via => :get
+  match '/pantries/:pantry_id/clients/:barcode/distributions', :to => 'distributions#create', :via => :post
   resources :clients do
-    get 'autocomplete', :on => :collection
     resources :distributions
   end
 

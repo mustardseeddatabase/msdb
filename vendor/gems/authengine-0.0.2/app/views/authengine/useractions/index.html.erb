@@ -1,0 +1,13 @@
+<h1>User activity logs</h1>
+<table>
+	<tr><th>Date</th></tr>
+  <% @dates.keys.sort.each do |date| %>
+		<tr><td><%= link_to date, :controller=>"useractions", :action=>:show, :actionlog_id=>@dates[date] %></td></tr>
+	<% end %>
+</table>
+<h1>Rails logs</h1>
+<table>
+	<tr><td><%= if RAILS_ENV == 'production' then link_to 'Production log', '/rails_logs/show' else link_to 'Development log', '/rails_logs/show' end %></td></tr>
+	<tr><td><%= link_to 'Cron log', "/cron_logs/show" %></td></tr>
+	<tr><td><%= link_to 'Failed login log', "/failedlogin_logs/show" %></td></tr>
+</table>

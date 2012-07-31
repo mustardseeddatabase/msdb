@@ -1,0 +1,26 @@
+%h1 Configure Permissions for Roles
+= form_tag update_all_authengine_action_roles_path,:method => :put do
+  %table{:style=>"width:780px"}
+    %tr
+      %th{:style=>"width:200px"}
+        Controller
+      %th{:style=>"width:125px"}
+        Action
+      - for role in @roles do
+        %th{:style=>"width:70px"}
+          = role
+
+  %div{:style=>"height:400px; width:1000px; margin-r:0px; overflow:auto"}
+    %table{:style=>"width:780px"}
+      - for action in @actions do
+        %tr{:class=>"#{cycle('odd', 'even')}"}
+          %td{:style=>"width:200px"}
+            = action.controller_name
+          %td{:style=>"width:125px"}
+            = action.action_name
+          - for role in @roles do
+            %td{:style=>"width:70px"}
+              %input{:name=>"permission[#{role.id}][#{action.id}]" , :type=>"hidden", :value=>'0'}
+              = check_box_tag("permission[#{role.id}][#{action.id}]", "1", @allowed[role.id].include?(action.id) )
+
+  = submit_tag 'Save'

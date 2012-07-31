@@ -1,0 +1,14 @@
+%h1 User activity log for #{ @date }
+%script
+  var rank = #{ sort_map(@useractions, @sort_criteria) }
+  var rows = #{ table_rows(@useractions, 'useraction') }
+  var last_sort = "#{ @sort_criteria.first.to_s }"
+%script{:src => '/javascripts/column_sort.js' }
+%table#sortable
+  %tr
+    %th
+      - js_sort("Time(GMT)",'created_at')
+    %th
+      - js_sort("User",'user_lastName')
+    %th Controller/Action
+    %th Parameters

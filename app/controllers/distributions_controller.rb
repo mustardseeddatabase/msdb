@@ -1,17 +1,19 @@
 class DistributionsController < ApplicationController
   def index
+    @client = Client.new
   end
 
   def new
-    @client            = Client.find(params[:client_id])
+    @client            = Client.find_by_barcode(params[:barcode])
     @distribution      = Distribution.new
     @distribution_item = DistributionItem.new
   end
 
   def create
-    client       = Client.find(params[:client_id])
+    client       = Client.find_by_barcode(params[:barcode])
     household    = client.household
     distribution = Distribution.new(:household_id => household.id,
+                                    :pantry_id => params[:pantry_id],
                                     :cid => params[:cid],
                                     :distribution_items_attributes => params[:transaction_items_attributes])
 
@@ -22,7 +24,7 @@ class DistributionsController < ApplicationController
                        #:items => distribution.item_cid_map
                        #}, :status => :ok
       flash[:confirm]= "Checkout completed for #{client.first_last_name}"
-      redirect_to distributions_path
+      redirect_to pantry_distributions_path(params[:pantry_id])
     else
       messages = ['A problem prevented the distribution from being saved.']
       messages += distribution.errors.full_messages

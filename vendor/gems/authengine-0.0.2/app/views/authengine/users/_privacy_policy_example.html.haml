@@ -1,0 +1,36 @@
+#privacy_policy{:style=>"display:none; width:600px"}
+  %h2 Please read the #{APPLICATION_NAME || "database"} Privacy Policy and indicate your committment to comply by checking all the checkboxes
+  %p  #{ORGANIZATION_NAME} Privacy Policy
+  %table
+    %tr
+      %td{:colspan=>"2"} As a condition of my being granted access to the #{APPLICATION_NAME || "database"}:
+    %tr{:valign => 'top'}
+      %td= check_box "user[cb]", :cb1 
+      %td I agree to treat all client and donor data responsibly and to keep all information secure.
+    %tr{:valign => 'top'}
+      %td= check_box "user[cb]", :cb2 
+      %td I understand that client data are private and confidential and that data should be accessed only in the course of my official duties for #{APPLICATION_NAME || "database"}.
+    %tr
+      %td{:colspan=>"2"} When working with the #{APPLICATION_NAME || "database"} and files, I will observe the following guidelines for handling confidential client data:
+    %tr{:valign => 'top'}
+      %td= check_box "user[cb]", :cb3 
+      %td I will not discuss any client information or display it in an environment where it may be viewed or overheard by unauthorized individuals.
+    %tr{:valign => 'top'}
+      %td= check_box "user[cb]", :cb4 
+      %td When using the #{APPLICATION_NAME || "database"}, I will log out of my session if I ever leave my computer for any length of time.
+    %tr{:valign => 'top'}
+      %td= check_box "user[cb]", :cb5 
+      %td When printing, photocopying or faxing anything including client information, I will ensure that only authorized personnel will be able to see the output.
+    %tr{:valign => 'top'}
+      %td= check_box "user[cb]", :cb6 
+      %td I will store all paper documents in the file cabinet in the #{APPLICATION_NAME || "database"} office and will ensure that the cabinet is only accessed by #{APPLICATION_NAME} personnel.
+    %tr{:valign => 'top'}
+      %td= check_box "user[cb]", :cb7 
+      %td I will not, without the permission of the Executive Director, remove any client information from the #{APPLICATION_NAME || "database"} office, save it on removable media or my personal computer, or send this information via instant message or unsecured file transfer.
+    %tr{:valign => 'top'}
+      %td= check_box "user[cb]", :cb8 
+      %td I recognize that violations of this policy are a serious matter that can result in the suspension of my access to the database and other disciplinary measures. 
+    %tr{:valign => 'top'}
+      %td= check_box "user[cb]", :cb9 
+      %td I understand that client information is private and confidential, and I will work to the best of my ability to preserve this privacy and confidentiality – and our clients’ trust – throughout my time with #{APPLICATION_NAME || "database"}.
+  %p= submit_tag 'Sign up'

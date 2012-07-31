@@ -15,7 +15,7 @@ namespace :msdb do
     i = 0
     80.times do
       type = (i%2).zero? ? :client_with_expired_id : :client_with_current_id
-      FactoryGirl.create(type)
+      client = FactoryGirl.create(type)
       print "\rclient #{i += 1}/80"
     end
     print "\n\r"
@@ -98,16 +98,16 @@ namespace :msdb do
     unassigned_client_ids = Client.select(:id).map(&:id)
     Household.all.each do |household|
       while (unassigned_client_ids.size - (count_to_assign = (rand(8)+1))) > unpopulated_households
+        break
+      end
         if unpopulated_households == 1
           count_to_assign = unassigned_client_ids.size
         end
         to_be_assigned = unassigned_client_ids.sample(count_to_assign)
-        unassigned_client_ids.delete_if{|i| to_be_assigned.include?(i)}
+        unassigned_client_ids -= to_be_assigned
         to_be_assigned.each do |client_id|
           Client.find(client_id).update_attribute(:household_id, household.id)
         end
-        break
-      end
 
       unpopulated_households -= 1
     end

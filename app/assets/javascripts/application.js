@@ -6,6 +6,7 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require jquery.remotipart
 //= require json2
 //= require jquery.autocomplete
 //= require rails.validations

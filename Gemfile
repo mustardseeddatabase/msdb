@@ -24,6 +24,7 @@ gem 'sprockets'
 gem 'rbarcode', :git => 'git://github.com/mustardseeddatabase/rbarcode.git'
 gem 'doccex', :git => 'git://github.com/mustardseeddatabase/doccex.git'
 gem 'summary_report', :path => 'vendor/gems/summary_report'
+gem 'remotipart', '~> 1.0'
 
 # Gems only required for assets and not required
 # in production environments by default.

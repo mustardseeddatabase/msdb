@@ -1,7 +1,7 @@
 #upload_form_template
   #upload_form_container
     #upload_form_contents
-      =form_tag "", :method => :put, :multipart => true, :id => :docform do
+      =form_tag "",:remote => true, :method => :put, :multipart => true, :id => :docform do
         %input{:type => :hidden, :name => :authenticity_token, :id => :authenticity_token}
         %p= file_field_tag "qualification_document[][docfile]", :id => :docfile_input
         %p= button_tag 'Upload file', :id => 'upload_file', :type => :button

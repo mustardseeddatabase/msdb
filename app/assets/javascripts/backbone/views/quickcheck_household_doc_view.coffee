@@ -6,7 +6,7 @@ class Quickcheck.HouseholdDocView extends Quickcheck.DocView
 
   initialize: ->
     @template = JST["backbone/templates/household_doc"]
-    @model.bind('change',@update,@)
+    @model.bind('change',@render,@)
 
   render: ->
-    $(@el).append @template(household_doc : @model)
+    $(@el).html @template(household_doc : @model)

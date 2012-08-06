@@ -23,7 +23,7 @@ Msdb::Application.routes.draw do
     resources :distributions
     resources :qualification_documents do
       put 'update', :on => :collection
-      put 'upload'
+      put 'upload' # would normally be 'put' but we use ajax, not form submission
     end
   end
   resources :qualification_documents do

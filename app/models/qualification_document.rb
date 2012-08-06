@@ -51,7 +51,7 @@ class QualificationDocument < ActiveRecord::Base
   end
 
   def doc_link
-    #TODO
+    docfile && docfile.url
   end
 
   def in_db?

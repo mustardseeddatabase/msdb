@@ -56,6 +56,7 @@ module Msdb
     config.assets.paths << Rails.root.join("app", "themes", "default", "assets")
     config.assets.paths << Rails.root.join("app", "themes", "default", "assets", "images")
     config.assets.paths << Rails.root.join("spec", "javascripts")
+    config.assets.paths << Remotipart::Rails::Engine.root.join("vendor", "assets", "javascripts")
 
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'

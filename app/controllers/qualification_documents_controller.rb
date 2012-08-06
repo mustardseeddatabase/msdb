@@ -1,4 +1,6 @@
 class QualificationDocumentsController < ApplicationController
+  # so that we can navigate away, fix an issue and navigate back with page refresh to reflect the fixed issue
+  before_filter :set_cache_buster, :only => :index
   # the index method with no parameters presents the page into which ajax
   # results may be inserted. The index method responding to an ajax
   # request requires a client id.
@@ -80,14 +82,22 @@ class QualificationDocumentsController < ApplicationController
 
     respond_to do |format|
       format.js { render :nothing => true, :status => :ok } # the "quickcheck complete" scenario
-      #format.html do # after a document has been uploaded
-        #redirect_to qualification_documents_url(:client_id => params[:client_id]) # documents are being uploaded during quickcheck
-      #end
     end
   end
 
   def upload
-    redirect_to qualification_documents_url(:client_id => params[:client_id]) # documents are being uploaded during quickcheck
+    qualification_document = QualificationDocument.find(params[:qualification_document_id])
+    qualification_document.update_attributes({:date => Date.today, :warnings => 0, :docfile => params[:qualification_document][0]['docfile']})
+    # TODO code smell here. The client_id_qualdocs should be split into client objects and qualdoc objects in the backbone models
+    # it should only be necessary to respond with document information, not client attrs as they're unaffected by upload
+    if qualification_document.type == "IdQualdoc"
+      qualdoc = qualification_document.client.id_qualification_vector
+    else
+      qualdoc = qualification_document.qualification_vector
+    end
+
+    wrapped_response = "<textarea data-type='application/json'>#{qualdoc.to_json}</textarea>"
+    render :text => wrapped_response, :status => 'ok'
   end
 
   def show
@@ -95,4 +105,10 @@ class QualificationDocumentsController < ApplicationController
     send_file(qualdoc.docfile.current_path)
   end
 
+private
+  def set_cache_buster
+    response.headers["Cache-Control"] = "no-cache, no-store, max-age=0, must-revalidate"
+    response.headers["Pragma"] = "no-cache"
+    response.headers["Expires"] = "Fri, 01 Jan 1990 00:00:00 GMT"
+  end
 end

@@ -1,5 +1,5 @@
 = message_block :on => [:client, :household, :res_qualdoc, :inc_qualdoc, :gov_qualdoc, :id_qualdoc]
-%h1 Client quick check
+%h1 Client quick check #{ @client && (": " + @client.first_last_name) }
 :javascript
   $(function(){
     $('#lastName').autocomplete({

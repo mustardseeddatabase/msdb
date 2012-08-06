@@ -25,9 +25,11 @@ class Quickcheck.Doc extends Backbone.Model
       'date':[dd.getFullYear(),dd.getMonth(),dd.getDate()].join('-'),
       'status':'current'
 
-  doc_error: ->
+  status_class: ->
     if @current()
       ''
+    else if @warned()
+      'warn_icon'
     else
       'errors'
 
@@ -62,3 +64,9 @@ class Quickcheck.Doc extends Backbone.Model
 
   server_attributes: ->
     _(@.attributes).pick('id', 'date', 'warnings', 'warned', 'confirm', 'doctype', 'association_id')
+
+  has_doc: ->
+    if @get('doc_link')
+      "document_exists"
+    else
+      "document_missing"

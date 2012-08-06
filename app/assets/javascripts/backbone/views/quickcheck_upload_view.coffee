@@ -24,7 +24,18 @@ class Quickcheck.UploadView extends Backbone.View
     else
       $('#docform').attr('action',@model.upload_url)
       $('#authenticity_token').attr('value', authenticity_token)
-      $('#docform').submit()
+      # TODO move this to the model
+      $.ajax(@model.upload_url, {
+           data: $("input",$(@el)).serializeArray(),
+           files: $("#docfile_input"),
+           iframe: true,
+           processData: false,
+           type: "POST"}).
+           complete (data,statusText)=>
+             @cancel()
+             @model.set(JSON.parse(data.responseText))
+             flash = new Application.FlashMessageView
+             flash.render notice: ["Document saved"]
       true
 
   document: ->

@@ -28,4 +28,24 @@
   position: relative;
 }
 
+.document_exists {
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+  background-image: url("document_icon.png")
+}
 
+.document_missing {
+  display: none
+}
+
+.delete_document_exists {
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+  background-image: url("delete_document_icon.png")
+}
+
+.delete_document_missing {
+  display: none
+}

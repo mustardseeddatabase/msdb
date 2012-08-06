@@ -5,12 +5,19 @@
 %td.date <%= client.get('date') %>
 %td
   %span.status <%= client.get('status') %>
-  %span{:class => "status_icon <%= client.doc_error() %>"}
+  %span{:class => "status_icon <%= client.status_class() %>"}
 %td.count{:align => :center} <%= client.get('warnings') %>
 %td{:style => "width:43px; text-align:right"}
+  <% if(client.get('warned')){%>
+  %a.warn{:href => '#'} Unwarn
+  <% } else { %>
   %a.warn{:href => '#'} Warn
+  <% } %>
 %td
   %a.confirm{:href => '#'} Confirm
 %td
   %a.upload{:href => '#'} Upload
-%td <%= client.get('doc_link') %>
+%td
+  %div{:onclick => "window.location = \"<%= client.get('doc_link') %>\"", :class => "<%= client.has_doc() %>"}
+%td
+  %div{:onclick => "window.location = \"<%= client.get('doc_link') %>\"", :class => "delete_<%= client.has_doc() %>"}

@@ -62,3 +62,27 @@ Then /^Fanny Arbogast should have (\d+) id warning$/ do |count|
   client.id_warnings.should == count.to_i
 end
 
+Then /^I should see a view document link for "(.*?)"$/ do |first_last_name|
+  last_first_name = first_last_name.split(" ").reverse.join(", ")
+  find(:xpath,".//table/*/tr[contains(.,'#{last_first_name}')]").find(:xpath, "//div[@class = 'document_exists']")
+end
+
+Then /^I should see a delete document link for "(.*?)"$/ do |first_last_name|
+  last_first_name = first_last_name.split(" ").reverse.join(", ")
+  find(:xpath,".//table/*/tr[contains(.,'#{last_first_name}')]").find(:xpath, "//div[@class = 'delete_document_exists']")
+end
+
+Given /^I click "(.*?)" for "(.*?)"$/ do |link_name, first_last_name|
+  in_the_row_for(first_last_name).find(:xpath, "//a[contains(.,'#{link_name}')]").click
+end
+
+def in_the_row_for(first_last_name)
+  last_first_name = first_last_name.split(" ").reverse.join(", ")
+  find(:xpath, ".//table/*/tr[contains(.,'#{last_first_name}')]")
+end
+
+Then /^The status for "(.*?)" should be "(.*?)"$/ do |first_last_name, status|
+  debugger #this test is passing and it shouldn't!
+  in_the_row_for(first_last_name).find(:xpath, ".//td[3]").text().should == status
+end
+

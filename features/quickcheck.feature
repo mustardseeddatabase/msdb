@@ -5,18 +5,19 @@ Feature: Client check in
   Background: Logged in, with all requisite permissions
     Given I am logged in and on the "home" page
     And permissions are granted for "admin" to visit the following pages:
-      | page |
-      | households#index |
-      | households#show |
-      | households#edit |
-      | households#update |
-      | household_clients#new |
-      | clients#autocomplete |
-      | clients#show |
-      | clients#index |
-      | clients#update |
-      | qualification_documents#index |
-      | qualification_documents#update |
+       | page                           |
+       | households#index               |
+       | households#show                |
+       | households#edit                |
+       | households#update              |
+       | household_clients#new          |
+       | clients#autocomplete           |
+       | clients#show                   |
+       | clients#index                  |
+       | clients#update                 |
+       | qualification_documents#index  |
+       | qualification_documents#update |
+       | qualification_documents#upload |
 
 @selenium
   Scenario: Visit the quickcheck page
@@ -105,7 +106,8 @@ Feature: Client check in
     When I upload a file
     Then I should see "Document saved"
     And Fanny Arbogast should have 0 id warning
-    And I should see a link to "View ID document"
+    And I should see a view document link for "Fanny Arbogast"
+    And I should see a delete document link for "Fanny Arbogast"
 
 @selenium
   Scenario: Follow the document check sequence, upload the final document to complete checkout
@@ -116,12 +118,23 @@ Feature: Client check in
     Then I should see a file selector
     When I upload a file
     Then I should see "Document saved"
-    Then I should see "Documents for household and clients are current"
-    And The uploaded file should be present in the uploaded file storage location
-    And I should see "Color code is red"
+    And I should see "Quickcheck completed"
 
+@selenium
   Scenario: Navigate away during quickcheck to fix client errors and then return to quickcheck
+    Given there is a household with residency, income and govtincome current in the database
+    And there is a client with last name "Arbogast", first name "Fanny", age "20", with id date "Date.new(2009,1,1)" in the database belonging to the household
+    And I am quickchecking Fanny Arbogast
+    And I click "Confirm" for "Fanny Arbogast"
+    Then The status for "Fanny Arbogast" should be "current"
+    When I follow "Arbogast, Fanny. 20"
+    Then I should see "Fanny Arbogast" within: "h1"
+    When I click the browser back button
+    Then I should see "Client quick check" within: "h1"
+    And The status for "Fanny Arbogast" should be "current"
 
   Scenario: Navigate away during quickcheck to fix household errors and then return to quickcheck
 
   Scenario: Download a client id document that has been saved
+
+  Scenario: Delete a qualification document

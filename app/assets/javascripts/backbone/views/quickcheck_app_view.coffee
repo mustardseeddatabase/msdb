@@ -6,7 +6,14 @@ class Quickcheck.QualdocView extends Backbone.View
     "click #quickcheck_completed" : "quickcheck_completed"
 
   quickcheck_completed: ->
-    Backbone.sync("update", null, {dataType: 'text', data:@docs.server_attributes(), url: '/clients/' + client_id + '/qualification_documents', complete: @show_color_code})
+  #TODO move this to the collection
+    ajax_parameters = 
+      dataType: 'text',
+      data:@docs.server_attributes(),
+      url: '/clients/' + client_id + '/qualification_documents',
+      complete: @show_color_code,
+
+    Backbone.sync("update", null, ajax_parameters)
 
   show_color_code: (jqXHR, textStatus)->
     new Quickcheck.CompleteView(@color_code, textStatus)

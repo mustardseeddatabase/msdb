@@ -6,7 +6,7 @@ class Quickcheck.ClientView extends Quickcheck.DocView
 
   initialize: ->
     @template = JST["backbone/templates/client_doc"]
-    @model.bind('change',@update,@)
+    @model.bind('change',@render,@)
 
   render: ->
-    $(@el).append @template(client : @model)
+    $(@el).html @template(client : @model)

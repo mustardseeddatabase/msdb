@@ -44,7 +44,7 @@ group :development, :test do
   gem 'launchy'
   gem 'cucumber-rails', '>=0.5.1', :require => false
   gem 'capybara-webkit', :git => "git://github.com/thoughtbot/capybara-webkit.git" #, :branch => '1.0'
-  gem 'selenium-webdriver', '2.0.1'
+  gem 'selenium-webdriver', '>=2.5.0'
   gem 'factory_girl_rails'
   gem 'factory_girl', :git => "https://github.com/thoughtbot/factory_girl.git" #in order to pick up commit 4e2b7e0b, when there's a new release incorporating this commit, pull from rubygems instead.
 

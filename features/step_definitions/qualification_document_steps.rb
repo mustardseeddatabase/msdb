@@ -82,7 +82,6 @@ def in_the_row_for(first_last_name)
 end
 
 Then /^The status for "(.*?)" should be "(.*?)"$/ do |first_last_name, status|
-  debugger #this test is passing and it shouldn't!
   in_the_row_for(first_last_name).find(:xpath, ".//td[3]").text().should == status
 end
 

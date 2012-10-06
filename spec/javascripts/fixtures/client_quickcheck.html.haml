@@ -22,4 +22,5 @@
               {"description":"Income verification information","doctype":"inc","expired?":true,"expiry_date":"2011-07-13","status":"expired on 13 Jul 2011","warnings":0,"date":"2011-01-13","doc_link":null},
               {"description":"Government income verification information","doctype":"gov","expired?":true,"expiry_date":null,"status":"date not available","warnings":0,"date":null,"doc_link":null}];
 
+  var client_id = #{rand(50) + 1}
   var qualdoc = new Quickcheck.QualdocView(docs)

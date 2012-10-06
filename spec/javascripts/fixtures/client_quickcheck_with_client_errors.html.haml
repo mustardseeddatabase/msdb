@@ -16,4 +16,5 @@
 
 :javascript
   var docs = #{(FactoryGirl.build(:household, :with_docs, :with_errored_clients ).client_docs + FactoryGirl.build(:household, :with_docs).qualification).to_json}
+  var client_id = #{rand(50) + 1}
   var qualdoc = new Quickcheck.QualdocView(docs)

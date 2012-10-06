@@ -29,4 +29,6 @@ class Quickcheck.QualdocView extends Backbone.View
   check_errors: =>
     if @docs.quickcheck_completed()
       $('#quickcheck_completed').show()
+    else
+      $('#quickcheck_completed').hide()
 

@@ -51,21 +51,21 @@ describe "#qualification_vector" do
     end
 
     it "keys should be hashes with keys 'expired' and 'expiry_date'" do
-      ['doctype', 'expired?', 'expiry_date'].each do |kk|
+      [:doctype, :expired?, :expiry_date].each do |kk|
         @vector.keys.should include(kk)
       end
     end
 
     it "values of expired? should be 'true'" do
-      @vector['expired?'].should  == true
+      @vector[:expired?].should  == true
     end
 
     it "value of expiry_date should be a Date object" do
-      @vector['expiry_date'].should be_kind_of(Date)
+      @vector[:expiry_date].should be_kind_of(Date)
     end
 
     it "value of type should be res" do
-      @vector['doctype'].should == 'res'
+      @vector[:doctype].should == 'res'
     end
   end
 
@@ -77,21 +77,21 @@ describe "#qualification_vector" do
     end
 
     it "keys should be hashes with keys 'expired' and 'expiry_date'" do
-      ['doctype', 'expired?', 'expiry_date'].each do |kk|
+      [:doctype, :expired?, :expiry_date].each do |kk|
         @vector.keys.should include(kk)
       end
     end
 
     it "values of expired? should be 'false'" do
-      @vector['expired?'].should  == false
+      @vector[:expired?].should  == false
     end
 
     it "value of expiry_date should be a Date object" do
-      @vector['expiry_date'].should be_kind_of(Date)
+      @vector[:expiry_date].should be_kind_of(Date)
     end
 
     it "value of doctype should be res" do
-      @vector['doctype'].should == 'res'
+      @vector[:doctype].should == 'res'
     end
   end
 
@@ -102,21 +102,21 @@ describe "#qualification_vector" do
     end
 
     it "keys should be hashes with keys 'expired' and 'expiry_date'" do
-      ['expired?', 'expiry_date'].each do |kk|
+      [:expired?, :expiry_date].each do |kk|
         @vector.keys.should include(kk)
       end
     end
 
     it "values of expired? should be 'true'" do
-      @vector['expired?'].should  == true
+      @vector[:expired?].should  == true
     end
 
     it "value of expiry_date should be nil" do
-      @vector['expiry_date'].should be_nil
+      @vector[:expiry_date].should be_nil
     end
 
     it "value of doctype should be res" do
-      @vector['doctype'].should == 'res'
+      @vector[:doctype].should == 'res'
     end
   end
 end

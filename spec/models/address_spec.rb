@@ -1,47 +1,40 @@
 require 'spec_helper'
 
 describe "#complete? method" do
-  before(:each) do
-    @address = FactoryGirl.create :address
+  subject { FactoryGirl.create :address }
+
+  context "when address, city and zip are not nil" do
+    its(:complete?) { should be_true }
   end
 
-  it "should be true if address, city and zip are not nil" do
-    @address.complete?.should be_true
+  context "if address is nil" do
+    before { subject.address = nil }
+    its(:complete?) { should be_false }
   end
 
-  it "should be false if address is nil" do
-    @address.address = nil
-    @address.complete?.should be_false
+  context "if city is nil" do
+    before { subject.city = nil }
+    its(:complete?) { should be_false }
   end
 
-  it "should be false if city is nil" do
-    @address.city = nil
-    @address.complete?.should be_false
-  end
-
-  it "should be false if zip is nil" do
-    @address.zip = nil
-    @address.complete?.should be_false
+  context "if zip is nil" do
+    before { subject.zip = nil }
+    its(:complete?) { should be_false }
   end
 end
 
-describe "zip_codes_matching() method" do
+describe ".zip_codes_matching()" do
   before(:each) do
-    2.times {(1..5).each {|i| 
-      FactoryGirl.create(:address, :zip => "7000#{i}")
-    }}
-    (6..9).each {|i| 
-      FactoryGirl.create(:address, :zip => "8000#{i}")
-    }
+    FactoryGirl.create(:address, :zip => "70001")
+    FactoryGirl.create(:address, :zip => "80002")
   end
 
-  it "should return zipcodes from 70001 to 70005, when the argument is 700" do
-    Address.zip_codes_matching(700).should == (70001..70005).to_a.map(&:to_s)
-    Address.zip_codes_matching(700).size.should == 5
+  it "should return zipcode 70001 when the argument is 700" do
+    Address.zip_codes_matching(700).should == ["70001"]
   end
 
-  it "should return zipcodes from 80006 to 80009, when the argument is 800" do
-    Address.zip_codes_matching(800).should == (80006..80009).to_a.map(&:to_s)
+  it "should return zipcode 80002 when the argument is 800" do
+    Address.zip_codes_matching(800).should == ["80002"]
   end
 end
 
@@ -148,27 +141,26 @@ describe "has_po_box methd" do
   end
 end
 
-describe "the po box number method" do
-  it "should return the po box number" do
-    @perm_address = FactoryGirl.build(:perm_address, :address => 'PO box 137')
-    @perm_address.po_box_number.should =='137'
+describe "#po_box_number" do
+  context "when po box field is properly formatted" do
+    subject(:address) { FactoryGirl.build(:perm_address, :address => 'PO box 137') }
+    its(:po_box_number) { should == '137' }
   end
 
-  it "should return the po box number with alternative format" do
-    @perm_address = FactoryGirl.build(:perm_address, :address => 'P. O. box 137')
-    @perm_address.po_box_number.should =='137'
+  context "when po box field has periods in format" do
+    subject(:address) { FactoryGirl.build(:perm_address, :address => 'P. O. box 137') }
+    its(:po_box_number) { should == '137' }
   end
 
-  it "should return the po box number with another alternative format" do
-    @perm_address = FactoryGirl.build(:perm_address, :address => 'P. O.  137')
-    @perm_address.po_box_number.should =='137'
+  context "when 'box' is missing from address field" do
+    subject(:address) { FactoryGirl.build(:perm_address, :address => 'P. O.  137') }
+    its(:po_box_number) { should == '137' }
   end
 
-  it "should return an empty string when there's no po box number" do
-    @perm_address = FactoryGirl.build(:perm_address, :address => '88 Sunset Strip')
-    @perm_address.po_box_number.should ==''
+  context "when the address is not a po box" do
+    subject(:address) { FactoryGirl.build(:perm_address, :address => '88 Sunset Strip') }
+    its(:po_box_number) { should be_blank }
   end
-
 end
 
 describe "street_name method" do

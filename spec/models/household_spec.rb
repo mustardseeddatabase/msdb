@@ -26,42 +26,40 @@ end
 
 describe "scope: with_address_matching" do
   describe "when the target household has clients" do
-    it "should return records where the clients match the client_name" do
-      perm_address = FactoryGirl.create(:perm_address, :address => '112 The Highway', :city => 'London', :zip => '83835')
-      household = FactoryGirl.create(:household_with_docs)
-      household.perm_address = perm_address
-      household.save
-      client = FactoryGirl.create(:client, :lastName => 'Cameron')
-      household.clients << client
-      search_obj = HouseholdSearch.new(:city => 'lon', :zip => '8', :address => 'high', :client_name => 'cam')
-      result = Household.with_address_matching(:perm, search_obj)
-      result.size.should == 1
-      result.first.id.should ==household.id
+    let(:perm_address) { FactoryGirl.create(:perm_address, :address => '112 The Highway', :city => 'London', :zip => '83835') }
+    let(:household) { FactoryGirl.create(:household_with_docs, :perm_address => perm_address) }
+    subject { Household.with_address_matching(:perm, @search_obj) }
+
+    context "when the clients match the client_name" do
+      before do
+        household.clients << FactoryGirl.create(:client, :lastName => 'Cameron')
+        @search_obj = HouseholdSearch.new(:city => 'lon', :zip => '8', :address => 'high', :client_name => 'cam')
+      end
+      it { should == [household] }
     end
 
-    it "should not return records where the clients do not match the client_name" do
-      perm_address = FactoryGirl.create(:perm_address, :address => '112 The Highway', :city => 'London', :zip => '83835')
-      household = FactoryGirl.create(:household_with_docs, :perm_address_id => perm_address.id)
-      client = FactoryGirl.create(:client, :lastName => 'Clegg', :household_id => household.id)
-      search_obj = HouseholdSearch.new(:city => 'lon', :zip => '8', :address => 'high', :client_name => 'cam')
-      Household.with_address_matching(:perm, search_obj).should be_empty
+    context "when the clients do not match the client_name" do
+      before do
+        household.clients << FactoryGirl.create(:client, :lastName => 'Clegg')
+        @search_obj = HouseholdSearch.new(:city => 'lon', :zip => '8', :address => 'high', :client_name => 'cam')
+      end
+      it { should be_empty }
     end
 
-    it "should not return any records when the household matches except for matching the client_name" do
-      perm_address = FactoryGirl.create(:perm_address, :address => '112 The Highway', :city => 'London', :zip => '83835')
-      household = FactoryGirl.create(:household_with_docs, :perm_address_id => perm_address.id)
-      client = FactoryGirl.create(:client, :lastName => 'Cameron', :household_id => household.id)
-      search_obj = HouseholdSearch.new(:city => 'lon', :zip => '8', :address => 'high', :client_name => 'foo')
-      Household.with_address_matching(:perm, search_obj).should be_empty
+    context "when the household matches except for matching the client_name" do
+      before do
+        household.clients << FactoryGirl.create(:client, :lastName => 'Cameron')
+        @search_obj = HouseholdSearch.new(:city => 'lon', :zip => '8', :address => 'high', :client_name => 'foo')
+      end
+      it { should be_empty }
     end
 
-    it "should not return any records when the household matches but it has NULL for client last names, and a client_name is present" do
-      perm_address = FactoryGirl.create(:perm_address, :address => '112 The Highway', :city => 'London', :zip => '83835')
-      household = FactoryGirl.create(:household_with_docs, :perm_address_id => perm_address.id)
-      client = FactoryGirl.build(:client, :lastName => nil, :household_id => household.id)
-      client.save # avoids validation failure due to blank lastName
-      search_obj = HouseholdSearch.new(:city => 'lon', :zip => '8', :address => 'high', :client_name => 'foo')
-      Household.with_address_matching(:perm, search_obj).should be_empty
+    context "when the household matches but it has NULL for client last names, and a client_name is present" do
+      before do
+        household.clients << FactoryGirl.create(:client_with_blank_lastName)
+        @search_obj = HouseholdSearch.new(:city => 'lon', :zip => '8', :address => 'high', :client_name => 'foo')
+      end
+      it { should be_empty }
     end
   end
 
@@ -72,8 +70,7 @@ describe "scope: with_address_matching" do
       household.perm_address = perm_address
       household.save
       search_obj = HouseholdSearch.new(:city => 'lon', :zip => '8', :address => 'high', :client_name => '')
-      Household.with_address_matching(:perm, search_obj).should_not be_empty
-      Household.with_address_matching(:perm, search_obj).first.id.should == household.id
+      Household.with_address_matching(:perm, search_obj).should == [household]
     end
 
     it "should not return any records when the household has no clients, and client names are passed in" do
@@ -181,142 +178,151 @@ describe "#map_address_from method" do
   end
 end
 
-describe "color method" do
-  it "should return a blank string if there are zero clients" do
-    household = FactoryGirl.build(:household_with_docs)
-    household.distribution_color_code.should ==''
+describe "#distribution_color_code" do
+  let(:household) { FactoryGirl.build(:household_with_docs) }
+  let(:client) { FactoryGirl.build(:client) }
+  subject { household.distribution_color_code }
+
+  context "when there are zero clients" do
+    it { should =='' }
   end
 
-  it "should return a color string if the number of clients is 1 to 6" do
-    household = FactoryGirl.create(:household_with_docs)
-    household.clients << FactoryGirl.create(:client)
-    household.distribution_color_code.should =='red'
+  context "when the number of clients is 1" do
+    before { household.clients << client }
+    it { should =='red' }
   end
 
-  it "should return the 6-client code if the number of clients is > 6" do
-    household = FactoryGirl.create(:household_with_docs)
-    10.times{household.clients << FactoryGirl.create(:client)}
-    household.distribution_color_code.should =='gray'
+  context "when the number of clients is > 6" do
+    before { 10.times{household.clients << client } }
+    it { should =='gray' }
   end
 
 end
 
-describe "qualification" do
-  it "should return a hash of household document qualification vectors" do
-    household = FactoryGirl.create(:household_with_docs)
-    household.qualification.should be_kind_of(Hash)
-    household.qualification.size.should ==3 # :household and :clients
-    [:res, :gov, :inc].each do |type|
-      household.qualification.keys.should include(type)
+describe "#qualification" do
+  let(:household) { FactoryGirl.create(:household_with_docs) }
+
+  it "should return an array of household document qualification vectors" do
+    household.qualification.should be_kind_of(Array)
+    ["res", "gov", "inc"].each do |type|
+      household.qualification.map{|q| q[:doctype] }.should include(type)
     end
   end
 end
 
 describe "#with_errors method" do
-  it "should return true if any of the associated clients has errors" do
-    household = FactoryGirl.create(:household_with_docs)
-    client = FactoryGirl.build(:client_with_expired_id,
-                           :household_id => household.id)
-    household.with_errors.should == true
+  subject { household.with_errors }
+
+  context "should return true if any of the associated clients has errors" do
+    let(:household) { FactoryGirl.build(:household_with_docs) }
+    let(:client) { FactoryGirl.build(:client_with_expired_id) }
+    before { household.clients << client }
+    it { should == true }
   end
 
-  it "should return true if the household is not current for res, gov or inc attributes" do
-    household = FactoryGirl.create(:household_with_expired_docs)
-    household.with_errors.should == true
+  context "should return true if the household is not current for res, gov or inc attributes" do
+    let(:household) { FactoryGirl.build(:household_with_expired_docs) }
+    it { should == true }
   end
 
-  it "should return false if all clients are current and res, gov and inc are current" do
-    household = FactoryGirl.create(:household_with_current_docs)
-    client = FactoryGirl.build(:client_with_current_id,
-                           :household_id => household.id)
-    household.with_errors.should == false
+  context "should return false if all clients are current and res, gov and inc are current" do
+    let(:household) { FactoryGirl.build(:household_with_current_docs) }
+    let(:client) { FactoryGirl.build(:client_with_current_id) }
+    before { household.clients << client }
+    it { should == false }
   end
 end
 
 describe "#has_head? method" do
-  before(:all) do
-    @household = FactoryGirl.build(:household_with_docs)
-    @client = FactoryGirl.build(:client, :headOfHousehold => true)
-    @household.clients << @client
+  let(:head){ FactoryGirl.build(:client, :headOfHousehold => true) }
+  let(:not_head){ FactoryGirl.build(:client, :headOfHousehold => false) }
+  let(:household){ FactoryGirl.build(:household) }
+  subject{ household.has_head? }
+
+  context "when one of the residents is designated as head of household" do
+    before { household.clients << head << not_head }
+    it { should == true }
   end
 
-  it "should be true when one of the residents is designated as head of household" do
-    @household.has_head?.should == true
-  end
-
-  it "should be false when none of the residents is designated as head of household" do
-    @client.headOfHousehold = false
-    @household.has_head?.should == false
+  context "when none of the residents is designated as head of household" do
+    before { household.clients << not_head << not_head }
+    it { should == false }
   end
 end
 
-describe "#has_no_head? method" do
-  before(:all) do
-    @household = FactoryGirl.build(:household_with_docs)
-    @client = FactoryGirl.build(:client, :headOfHousehold => false)
-    @household.clients << @client
+describe "#has_no_head?" do
+  let(:head){ FactoryGirl.build(:client, :headOfHousehold => true) }
+  let(:not_head){ FactoryGirl.build(:client, :headOfHousehold => false) }
+  let(:household){ FactoryGirl.build(:household) }
+  subject{ household.has_no_head? }
+
+  context "when one of the residents is designated as head of household" do
+    before { household.clients << head << not_head }
+    it { should == false }
   end
 
-  it "should be true when one of the residents is designated as head of household" do
-    @household.has_no_head?.should == true
-  end
-
-  it "should be false when none of the residents is designated as head of household" do
-    @client.headOfHousehold = true
-    @household.has_no_head?.should == false
+  context "when none of the residents is designated as head of household" do
+    before { household.clients << not_head << not_head }
+    it { should == true }
   end
 end
 
 describe "#has_single_head? method" do
-  before(:all) do
-    @household = FactoryGirl.build(:household_with_docs)
-    @client1 = FactoryGirl.build(:client, :headOfHousehold => true)
-    @client2 = FactoryGirl.build(:client, :headOfHousehold => false)
-    @household.clients << @client1
-    @household.clients << @client2
+  let(:head){ FactoryGirl.build(:client, :headOfHousehold => true) }
+  let(:not_head){ FactoryGirl.build(:client, :headOfHousehold => false) }
+  let(:household){ FactoryGirl.build(:household) }
+  subject{ household.has_single_head? }
+
+  context "when one of the residents is designated as head of household" do
+    before { household.clients << head << not_head }
+    it { should == true }
   end
 
-  it "should be true when one of the residents is designated as head of household" do
-    @household.has_single_head?.should == true
-  end
-
-  it "should be false when none of the residents is designated as head of household" do
-    @client1.headOfHousehold = false
-    @household.has_single_head?.should == false
+  context "when none of the residents is designated as head of household" do
+    before { household.clients << not_head << not_head }
+    it { should == false }
   end
 end
 
-describe "#has_multiple_heads? method" do
-  before(:each) do
-    @household = FactoryGirl.create(:household_with_docs)
-    @household.res_qualdoc.date = 1.month.ago
-    @household.inc_qualdoc.date = 1.month.ago
-    @household.gov_qualdoc.date = 1.month.ago
-    @client1 = FactoryGirl.build(:client, 
-                     :headOfHousehold => true)
-    @client2 = FactoryGirl.build(:client, 
-                     :headOfHousehold => true)
-    @household.clients << @client1
-    @household.clients << @client2
+describe "#has_multiple_heads?" do
+  let(:head){ FactoryGirl.build(:client, :headOfHousehold => true) }
+  let(:not_head){ FactoryGirl.build(:client, :headOfHousehold => false) }
+  let(:household){ FactoryGirl.build(:household) }
+  subject{ household.has_multiple_heads? }
+
+  context "when all of the residents are designated as head of household" do
+    before { household.clients << head << head }
+    it { should == true }
   end
 
-  it "should be true when all of the residents are designated as head of household" do
-    @household.has_multiple_heads?.should == true
+  context "when one of the residents is designated as head of household" do
+    before { household.clients << head << not_head }
+    it { should == false }
   end
 
-  it "should be false when one of the residents is designated as head of household" do
-    @client2.headOfHousehold = false
-    @household.has_head?.should == true
-    @household.has_multiple_heads?.should == false
-  end
-
-  it "should be false when none of the residents is designated as head of household" do
-    @client1.headOfHousehold = false
-    @client2.headOfHousehold = false
-    @household.has_head?.should == false
-    @household.has_multiple_heads?.should == false
+  context "when none of the residents is designated as head of household" do
+    before { household.clients << not_head << not_head }
+    it { should == false }
   end
 end
+
+describe "#has_head" do
+  let(:head){ FactoryGirl.build(:client, :headOfHousehold => true) }
+  let(:not_head){ FactoryGirl.build(:client, :headOfHousehold => false) }
+  let(:household){ FactoryGirl.build(:household) }
+  subject{ household.has_head? }
+
+  context "when one of the residents is designated as head of household" do
+    before { household.clients << head << not_head }
+    it { should == true }
+  end
+
+  context "when none of the residents is designated as head of household" do
+    before { household.clients << not_head << not_head }
+    it { should == false }
+  end
+end
+
 
 
 describe "new_or_continued_in_month method" do
@@ -344,39 +350,51 @@ describe "ssi? method" do
   end
 end
 
-describe "family_structure method" do
-  it "should return 'one person household' if there is exactly 1 client" do
-    client1 = FactoryGirl.build(:client)
-    household = FactoryGirl.build(:household, :clients => [client1])
-    household.family_structure.should == 'one person household'
+describe "#family_structure" do
+  subject { @household.family_structure }
+  let(:resident){ FactoryGirl.build(:client) }
+  let(:adult){ FactoryGirl.build(:client, :adult) }
+  let(:adult_male){ FactoryGirl.build(:client, :adult, :male) }
+  let(:adult_female){ FactoryGirl.build(:client, :adult, :female) }
+  let(:youth){ FactoryGirl.build(:client, :youth) }
+
+  context "if there is exactly 1 client" do
+    before do
+      @household = FactoryGirl.build(:household, :clients => [resident])
+    end
+
+    it { should == 'one person household' }
   end
 
-  it "should return 'single male parent' if # adults = 1, the adult is male, and # children >= 1" do
-    client1 = FactoryGirl.build(:client, :adult, :male)
-    client2 = FactoryGirl.build(:client, :youth)
-    household = FactoryGirl.build(:household, :clients => [client1, client2])
-    household.family_structure.should == 'single male parent'
+  context "when  number of adults = 1, the adult is male, and number of children >= 1" do
+    before do
+      @household = FactoryGirl.build(:household, :clients => [adult_male, youth])
+    end
+
+    it { should == 'single male parent' }
   end
 
-  it "should return 'single female parent' if # adults = 1, the adult is female, and # children >= 1" do
-    client1 = FactoryGirl.build(:client, :adult, :female)
-    client2 = FactoryGirl.build(:client, :youth)
-    household = FactoryGirl.build(:household, :clients => [client1, client2])
-    household.family_structure.should == 'single female parent'
+  context "when number of adults = 1, the adult is female, and number of children >= 1" do
+    before do
+      @household = FactoryGirl.build(:household, :clients => [adult_female, youth])
+    end
+
+    it { should == 'single female parent' }
   end
 
-  it "should return 'couple w/ children' if # adults = 2, and # children >= 1" do
-    client1 = FactoryGirl.build(:client, :adult)
-    client2 = FactoryGirl.build(:client, :adult)
-    client3 = FactoryGirl.build(:client, :youth)
-    household = FactoryGirl.build(:household, :clients => [client1, client2, client3])
-    household.family_structure.should == 'couple w/ children'
+  context "when number of adults = 2, and number of children >= 1" do
+    before do
+      @household = FactoryGirl.build(:household, :clients => [adult, adult, youth])
+    end
+
+    it { should == 'couple w/ children' }
   end
 
-  it "should return 'couple w/o children' if # adults = 2, and # children = 0" do
-    client1 = FactoryGirl.build(:client, :adult)
-    client2 = FactoryGirl.build(:client, :adult)
-    household = FactoryGirl.build(:household, :clients => [client1, client2])
-    household.family_structure.should == 'couple w/o children'
+  context "when number of adults = 2, and number of children = 0" do
+    before do
+      @household = FactoryGirl.build(:household, :clients => [adult, adult])
+    end
+
+    it { should == 'couple w/o children' }
   end
 end

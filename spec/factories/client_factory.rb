@@ -24,6 +24,12 @@ FactoryGirl.define do
       end
     end
 
+    factory :client_with_blank_lastName do
+      after(:create) do |c|
+        c.update_attribute(:lastName, nil)
+      end
+    end
+
     trait :infant do
 			birthdate 3.years.ago
 		end

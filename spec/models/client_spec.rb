@@ -108,10 +108,10 @@ describe "age_group" do
 end
 
 describe "id_qualification_vector" do
-  it "should have keys client_url, client_name" do
+  it "should have keys url, name_age" do
     client = FactoryGirl.build(:client_with_current_id)
     keys = client.id_qualification_vector.keys
-    ['client_url', 'client_name'].each do |k|
+    [:url, :name_age].each do |k|
       keys.should include(k)
     end
   end

@@ -47,7 +47,16 @@ class QualificationDocument < ActiveRecord::Base
   end
 
   def qualification_vector
-    {:association_id => association_id, :id => id, :description => self.class::Description.capitalize, :doctype => document_type, :expired? => expired?, :expiry_date => expiry_date, :status => information_status, :warnings => warnings || 0, :date => date, :doc_link => doc_link}
+     {:association_id => association_id,
+     :date => date,
+     :description => self.class::Description.capitalize,
+     :doc_link => doc_link,
+     :doctype => document_type,
+     :expired? => expired?,
+     :expiry_date => expiry_date,
+     :id => id,
+     :status => information_status,
+     :warnings => warnings || 0}
   end
 
   def doc_link
@@ -60,12 +69,6 @@ class QualificationDocument < ActiveRecord::Base
 
   def document_type
     type.tableize.split("_")[0]
-  end
-
-  def belongs_to?(client)
-    belongs_to_client = (document_type == "id") && (self.client == client)
-    belongs_to_household = (["inc", "res", "gov"].include?(document_type)) && (household.clients.include? client)
-    belongs_to_client || belongs_to_household
   end
 
 end

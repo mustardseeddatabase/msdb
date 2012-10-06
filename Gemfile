@@ -11,6 +11,7 @@ gem "mysql2"
 gem 'jquery-rails'
 
 gem 'haml', :git => 'git://github.com/infbio/haml.git', :branch => 'form_for_fix' # fixes a form_for issue in haml
+gem 'sass'
 gem 'haml-rails'
 gem 'message_block', :git => 'git://github.com/lazylester/message_block.git'
 gem 'authengine'

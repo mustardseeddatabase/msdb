@@ -11,7 +11,6 @@ gem "mysql2"
 gem 'jquery-rails'
 
 gem 'haml', :git => 'git://github.com/infbio/haml.git', :branch => 'form_for_fix' # fixes a form_for issue in haml
-gem 'sass'
 gem 'haml-rails'
 gem 'message_block', :git => 'git://github.com/lazylester/message_block.git'
 gem 'authengine'
@@ -44,10 +43,10 @@ group :development, :test do
   gem 'database_cleaner'
   gem 'launchy'
   gem 'cucumber-rails', '>=0.5.1', :require => false
-  gem 'capybara-webkit', :git => "git://github.com/thoughtbot/capybara-webkit.git" #, :branch => '1.0'
-  gem 'selenium-webdriver', '>=2.5.0'
+  gem 'capybara-webkit', :git => "git://github.com/thoughtbot/capybara-webkit.git"
+  gem 'selenium-webdriver', '2.0.1'
   gem 'factory_girl_rails'
-  gem 'factory_girl', :git => "https://github.com/thoughtbot/factory_girl.git" #in order to pick up commit 4e2b7e0b, when there's a new release incorporating this commit, pull from rubygems instead.
+  gem 'factory_girl'
 
 
   # official unofficial ruby-debug19 fix

@@ -21,13 +21,18 @@ Msdb::Application.routes.draw do
   resources :clients do
     get 'autocomplete', :on => :collection
     resources :distributions
-    resources :qualification_documents do
+    resources :checkins do
       put 'update', :on => :collection
+    end
+    resources :qualification_documents do
       put 'upload' # would normally be 'put' but we use ajax, not form submission
     end
   end
-  resources :qualification_documents do
-    get 'index'
+
+  resources :qualification_documents
+
+  resource :checkins do
+    get 'new'
   end
 
   resources :items # for actions for which it's not known if the item has a sku or upc

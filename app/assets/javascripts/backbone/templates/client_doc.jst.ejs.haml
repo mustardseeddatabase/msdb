@@ -1,5 +1,5 @@
 %td
-  %a{:href => "<%= client.get('url') %>"} <%= client.get('name_age') %>
+  %a.edit_client{:href => "<%= client.get('edit_url') %>"} <%= client.get('name_age') %>
   %span{:class => "<%= client.head() %>"}
   %span{:class => "<%= client.errors() %>"}
 %td.date <%= client.get('date') %>

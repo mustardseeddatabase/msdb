@@ -31,7 +31,6 @@ describe "Warn and waive the requirements for clients and qualification document
 
   it "should increment the warning count for clients if not current", ->
     expect($($('.count')[0])).toHaveText("0")
-    #$('tr.client:nth-child(2) .count')
     $('.warn')[0].click()
     expect(qualdoc.docs.models[2].get('warnings')).toEqual(1) # models are indexed in reverse order as they're rendered bottom first
     expect($($('.count')[0])).toHaveText("1")

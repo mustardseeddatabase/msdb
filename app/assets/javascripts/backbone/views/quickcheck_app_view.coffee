@@ -10,7 +10,7 @@ class Quickcheck.QualdocView extends Backbone.View
     ajax_parameters = 
       dataType: 'text',
       data:@docs.server_attributes(),
-      url: '/clients/' + client_id + '/qualification_documents',
+      url: '/clients/' + client_id + '/checkins',
       complete: @show_color_code,
 
     Backbone.sync("update", null, ajax_parameters)

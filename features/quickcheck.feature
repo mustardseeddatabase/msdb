@@ -15,8 +15,9 @@ Feature: Client check in
        | clients#show                   |
        | clients#index                  |
        | clients#update                 |
-       | qualification_documents#index  |
-       | qualification_documents#update |
+       | clients#edit                   |
+       | checkins#new  |
+       | checkins#update |
        | qualification_documents#upload |
 
 @selenium
@@ -125,16 +126,23 @@ Feature: Client check in
     Given there is a household with residency, income and govtincome current in the database
     And there is a client with last name "Arbogast", first name "Fanny", age "20", with id date "Date.new(2009,1,1)" in the database belonging to the household
     And I am quickchecking Fanny Arbogast
+    Then The status for "Fanny Arbogast" should be "expired on 1 Jan 2010"
     And I click "Confirm" for "Fanny Arbogast"
     Then The status for "Fanny Arbogast" should be "current"
     When I follow "Arbogast, Fanny. 20"
-    Then I should see "Fanny Arbogast" within: "h1"
+    Then I should see "Edit Fanny Arbogast" within: "h1"
     When I click the browser back button
     Then I should see "Client quick check" within: "h1"
-    And The status for "Fanny Arbogast" should be "current"
+    And The status for "Fanny Arbogast" should be "expired on 1 Jan 2010"
 
   Scenario: Navigate away during quickcheck to fix household errors and then return to quickcheck
+    Given pending: Navigate away during quickcheck to fix household errors and then return to quickcheck
+
+  Scenario: Navigate away during quickcheck to edit client and then return to quickcheck
+    Given pending: Navigate away during quickcheck to edit client and then return to quickcheck
 
   Scenario: Download a client id document that has been saved
+    Given pending: Download a client id document that has been saved
 
   Scenario: Delete a qualification document
+    Given pending: Delete a qualification document

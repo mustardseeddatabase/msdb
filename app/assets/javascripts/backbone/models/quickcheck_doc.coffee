@@ -6,6 +6,7 @@ class Quickcheck.Doc extends Backbone.Model
     else
       @view = new Quickcheck.HouseholdDocView({model:@})
     @upload_url = "/clients/" + client_id + "/qualification_documents/" + @id + "/upload"
+    @set('edit_url', "/clients/" + client_id + "/edit")
 
   increment_warnings: ->
     current = @get('warnings') || 0

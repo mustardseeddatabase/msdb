@@ -128,7 +128,6 @@ Then /^I should (not )?see a link to "([^"]*)"$/ do |yes_no, link_name|
 end
 
 When /^I click the browser back button$/ do
-  #puts page.evaluate_script('window.history')
   page.evaluate_script('window.history.go(-1)')
 end
 

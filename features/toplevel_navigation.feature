@@ -8,7 +8,7 @@ Feature: Top level navigation
     And permissions are granted for "admin" to visit the following pages:
       | page |
       | clients#index |
-      | qualification_documents#index |
+      | checkins#new |
       | distributions#index |
       | donations#index |
       | admin#index |

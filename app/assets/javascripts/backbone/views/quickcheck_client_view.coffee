@@ -9,4 +9,4 @@ class Quickcheck.ClientView extends Quickcheck.DocView
     @model.bind('change',@render,@)
 
   render: ->
-    $(@el).html @template(client : @model)
+    $(@el).html @template(client : @model, permissions : permissions)

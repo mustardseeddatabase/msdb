@@ -16,8 +16,15 @@
 %td
   %a.confirm{:href => '#'} Confirm
 %td
+  <% if(permissions.upload_permitted){ %>
   %a.upload{:href => '#'} Upload
+  <% } %>
 %td
+  <% if(permissions.download_permitted){ %>
   %div{:onclick => "window.location = \"<%= client.get('doc_link') %>\"", :class => "<%= client.has_doc() %>"}
+  <% } %>
 %td
+  <% if(permissions.delete_permitted){ %>
   %div{:onclick => "window.location = \"<%= client.get('doc_link') %>\"", :class => "delete_<%= client.has_doc() %>"}
+  <% } %>
+%td

@@ -206,4 +206,8 @@ class Client < ActiveRecord::Base
   def missing_birthdate_flag
     "x" unless birthdate
   end
+
+  def has_no_checkin_errors
+    household && !household_with_errors
+  end
 end

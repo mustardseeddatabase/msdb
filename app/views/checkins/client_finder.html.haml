@@ -13,7 +13,7 @@
   });
 
   var done = function(response) {
-    $('#quickcheck').html(response)
+    $('#content').html(response)
     }
 
   var getDetails = function(client){
@@ -28,13 +28,10 @@
   var clear_quickcheck = function(){ $('#quickcheck').html('') };
 
 #quickcheck
-  -if @client
-    = render :partial => 'client_quickcheck', :locals => {:client => @client, :household => @household, :clients => @clients}
-  -else
-    - focus('lastName')
-    = form_tag clients_path, :id =>'client_form', :remote => true, :method => :get do
-      %table
-        %tr
-          %td{:width => '180px'}
-            %label Last name
-          %td= render :partial => 'shared/fancy_text_box', :locals => {:name => "client[lastName]", :param => :lastName, :title => 'Clear client name'}
+  - focus('lastName')
+  = form_tag clients_path, :id =>'client_form', :remote => true, :method => :get do
+    %table
+      %tr
+        %td{:width => '180px'}
+          %label Last name
+        %td= render :partial => 'shared/fancy_text_box', :locals => {:name => "client[lastName]", :param => :lastName, :title => 'Clear client name'}

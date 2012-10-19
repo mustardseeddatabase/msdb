@@ -1,0 +1,9 @@
+= message_block :on => [:client, :household, :res_qualdoc, :inc_qualdoc, :gov_qualdoc, :id_qualdoc]
+%h1 Client quick check: #{ @client.first_last_name }
+
+#quickcheck
+  %table
+    %tr
+      %td Documents for household and clients are current
+    %tr
+      %td{:class => "#{household_color_code}"} Color code is #{household_color_code}

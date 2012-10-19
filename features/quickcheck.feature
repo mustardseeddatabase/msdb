@@ -18,7 +18,6 @@ Feature: Client check in
        | clients#edit                   |
        | checkins#new  |
        | checkins#update |
-       | qualification_documents#upload |
 
 @selenium
   Scenario: Visit the quickcheck page
@@ -90,6 +89,7 @@ Feature: Client check in
 @selenium
   Scenario: Follow the document check sequence, start to upload a document, but then waive the requirement
     Given there is a household with residency, income and govtincome current in the database
+    And permission is granted for "admin" to go to the "qualification_documents#upload" page
     And there is a client with last name "Arbogast", first name "Fanny", age "20", with id date "Date.new(2009,1,1)" in the database belonging to the household
     And I am quickchecking Fanny Arbogast
     And I follow "Upload" for "Fanny Arbogast"
@@ -98,8 +98,32 @@ Feature: Client check in
     Then I should not see a file selector
 
 @selenium
+  Scenario: When permission is not granted for document upload
+    Given there is a household with residency, income and govtincome expired in the database
+    And there is a client with last name "Arbogast", first name "Fanny", age "20", with id date "Date.new(2009,1,1)", and 1 warning, in the database belonging to the household
+    And I am quickchecking Fanny Arbogast
+    Then There should be no upload links on the page
+
+@selenium
+  Scenario: When permission is not granted for document download
+    Given there is a household with residency, income and govtincome expired in the database
+    And there is a client with last name "Arbogast", first name "Fanny", age "20", with id date "Date.new(2009,1,1)", and 1 warning, in the database belonging to the household
+    And I am quickchecking Fanny Arbogast
+    Then There should be no document download links on the page
+
+@selenium
+  Scenario: When permission is not granted for document delete
+    Given there is a household with residency, income and govtincome expired in the database
+    And there is a client with last name "Arbogast", first name "Fanny", age "20", with id date "Date.new(2009,1,1)", and 1 warning, in the database belonging to the household
+    And I am quickchecking Fanny Arbogast
+    Then There should be no document delete links on the page
+
+@selenium
   Scenario: Follow the document check sequence, and upload a document
     Given there is a household with residency, income and govtincome expired in the database
+    And permission is granted for "admin" to go to the "qualification_documents#upload" page
+    And permission is granted for "admin" to go to the "qualification_documents#show" page
+    And permission is granted for "admin" to go to the "qualification_documents#delete" page
     And there is a client with last name "Arbogast", first name "Fanny", age "20", with id date "Date.new(2009,1,1)", and 1 warning, in the database belonging to the household
     And I am quickchecking Fanny Arbogast
     And I follow "Upload" for "Fanny Arbogast"
@@ -112,7 +136,8 @@ Feature: Client check in
 
 @selenium
   Scenario: Follow the document check sequence, upload the final document to complete checkout
-    Given there is a household with residency, income and govtincome current in the database
+    And permission is granted for "admin" to go to the "qualification_documents#upload" page
+    And there is a household with residency, income and govtincome current in the database
     And there is a client with last name "Normal", first name "Norman", age "20", with id date "Date.new(2009,1,1)" in the database belonging to the household
     And I am quickchecking Norman Normal
     And I follow "Upload" for "Norman Normal"
@@ -146,3 +171,6 @@ Feature: Client check in
 
   Scenario: Delete a qualification document
     Given pending: Delete a qualification document
+
+  Scenario: View a qualification document
+    Given pending: View a qualification document

@@ -18,4 +18,8 @@ class QualificationDocumentsController < ApplicationController
     qualdoc = QualificationDocument.find(params[:id])
     send_file(qualdoc.docfile.current_path)
   end
+
+  def delete
+    
+  end
 end

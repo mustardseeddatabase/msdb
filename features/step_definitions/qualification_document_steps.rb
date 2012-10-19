@@ -85,3 +85,15 @@ Then /^The status for "(.*?)" should be "(.*?)"$/ do |first_last_name, status|
   in_the_row_for(first_last_name).find(:xpath, ".//td[3]").text().should == status
 end
 
+Then /^There should be no upload links on the page$/ do
+  all(:css, '.upload').length.should == 0
+end
+
+Then /^There should be no document download links on the page$/ do
+  all(:css, '.document_exists').length.should == 0
+end
+
+Then /^There should be no document delete links on the page$/ do
+  all(:css, '.delete_document_exists').length.should == 0
+end
+

@@ -22,12 +22,7 @@ class ClientsController < ApplicationController
   def update
     @client = Client.find(params[:id])
     if @client.update_attributes(params[:client])
-      if @client.headOfHousehold?
-        household = @client.household
-        household.clients.each{|client|
-          client.update_attribute(:headOfHousehold, false) unless client == @client
-        }
-      end
+      @client.assign_as_sole_head_of_household if @client.headOfHousehold?
       flash[:info] = "Client updated"
       redirect_to client_path(@client)
     else

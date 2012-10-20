@@ -1,4 +1,3 @@
-require 'ruby-debug'
 require 'spec_helper'
 
 describe CheckinsController do
@@ -165,16 +164,6 @@ describe CheckinsController do
         id_qualdocs.length.should == 1
         id_qualdocs.first.warnings.should == 1
         id_qualdocs.first.confirm.should == true
-      end
-
-      it 'should create a new client checkin' do
-        client_checkin = ClientCheckin.find_all_by_client_id(client.id)
-        client_checkin.length.should == 1
-        client_checkin.first.id_warn.should == true
-      end
-
-      it 'should create a new household checkin' do
-        HouseholdCheckin.find_all_by_household_id(household.id).length.should == 1
       end
     end
 

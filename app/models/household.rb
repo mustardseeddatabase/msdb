@@ -178,5 +178,10 @@ class Household < ActiveRecord::Base
       File.exists?(gov_qualdoc.docfile.current_path)
   end
 
+  def assign_as_sole_head(head_client)
+    clients.each{|client|
+      client.assign_as_head(client == head_client)
+    }
+  end
 
 end

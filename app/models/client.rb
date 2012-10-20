@@ -210,4 +210,12 @@ class Client < ActiveRecord::Base
   def has_no_checkin_errors
     household && !household_with_errors
   end
+
+  def assign_as_sole_head_of_household
+    household.assign_as_sole_head(self)
+  end
+
+  def assign_as_head(true_false)
+    update_attribute(:headOfHousehold, true_false)
+  end
 end

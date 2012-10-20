@@ -1,5 +1,5 @@
 Then /^There should be "([^"]*)" "([^"]*)" in the database$/ do |count, model|
-  sleep(0.1)
+  sleep(0.2) # typically we're checking after a 'save' user action, so give it some time to happen!
   model.classify.constantize.send('count').should == count.to_i
 end
 

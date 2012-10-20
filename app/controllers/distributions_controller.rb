@@ -16,11 +16,6 @@ class DistributionsController < ApplicationController
                                     :distribution_items_attributes => params[:transaction_items_attributes])
 
     if distribution.save
-      #render :json => {:flash => {:confirm => ['Checkout completed']},
-                       #:transaction => distribution.cid_map,
-                       #:transaction_items => distribution.distribution_items_cid_map,
-                       #:items => distribution.item_cid_map
-                       #}, :status => :ok
       flash[:confirm]= "Checkout completed for #{client.first_last_name}"
       redirect_to distributions_path
     else

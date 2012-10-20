@@ -17,6 +17,7 @@ And /^I hit enter in the item_barcode field$/ do
   id = 'item_barcode'
   eventName = 'keyup'
 
+  # this works for Firefox
   script =<<-EOS
     event = document.createEvent("KeyboardEvent");
     if (typeof(event.initKeyboardEvent) != 'undefined') {
@@ -25,6 +26,10 @@ And /^I hit enter in the item_barcode field$/ do
         event.initKeyEvent("#{eventName}", true, false, window, false, false, false, false, #{key_code}, 0);
       }
     document.getElementById('#{id}').dispatchEvent(event)
+  EOS
+  # this works for Chrome (webkit)
+  script =<<-EOS
+    $('#item_barcode').trigger({type:'keyup',which:13})
   EOS
   page.execute_script(script)
 end

@@ -10,6 +10,22 @@ class QualificationDocument < ActiveRecord::Base
 
   mount_uploader :docfile, DocfileUploader
 
+  def self.update_collection(docs)
+    grouped_docs = docs.group_by{|doc| !doc['id'].nil? && doc['id'] != "null"}
+    docs_for_update = grouped_docs[true] || []
+    new_docs = grouped_docs[false] || []
+
+    docs_for_update.each do |doc|
+      qualdoc = find(doc['id'])
+      qualdoc.update_attributes(doc.slice('date', 'warnings', 'confirm'))
+    end
+
+    new_docs.each do |doc|
+      doctype = Types[doc['doctype']]
+      qualdoc = doctype.constantize.send('create',doc.slice('date','warnings','association_id', 'confirm'))
+    end
+  end
+
   def threshold
     self.class::ExpiryThreshold
   end

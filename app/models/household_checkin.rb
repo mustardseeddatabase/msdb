@@ -11,6 +11,23 @@ class HouseholdCheckin < ActiveRecord::Base
     end
   end
 
+  def self.update_for(client,docs)
+    grouped_by_association_docs = docs.group_by{|doc| doc['doctype'] == 'id' ? 'client' : 'household' }
+    client_docs = grouped_by_association_docs['client']
+    household_docs = grouped_by_association_docs['household']
+
+    household_checkin_attributes = household_docs.inject({}) do |hash, doc|
+      hash[doc['doctype'] + '_warn'] = doc['warned']
+      hash['household_id'] ||= doc['association_id']
+      hash
+    end
+
+    household_checkin = create(household_checkin_attributes)
+
+    ClientCheckin.update_collection(client,client_docs,household_checkin.id)
+
+  end
+
   def primary_client_checkin
     client_checkins.where('client_checkins.primary IS TRUE').first
   end

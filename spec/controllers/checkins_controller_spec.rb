@@ -103,7 +103,7 @@ describe CheckinsController do
     let(:existing_client_doc){ FactoryGirl.create(:id_qualdoc, :client => client, :confirm => false, :warnings => 0) }
     let(:existing_res_doc){ FactoryGirl.create(:res_qualdoc, :household => household, :confirm => false, :warnings => 0) }
 
-    context 'when client documents params are do not have id attributes' do
+    context 'when client documents params have null-string id attributes' do
       before do
         params = {:client_id => client.id,
                   :qualification_documents => {0 => {:id => 'null',
@@ -112,15 +112,51 @@ describe CheckinsController do
                                                      :confirm => '1',
                                                      :warnings => 1,
                                                      :warned => '1'},
-                                                     1 => {:id => 'null',
-                                                           :doctype => 'id',
-                                                           :association_id => another_client.id,
-                                                           :confirm => '1',
-                                                           :warnings => 1,
-                                                           :warned => '1'},
-                                                           2 => {:id => 'null',
-                                                                 :doctype => 'res',
-                                                                 :association_id => household.id}}}
+                                               1 => {:id => 'null',
+                                                     :doctype => 'id',
+                                                     :association_id => another_client.id,
+                                                     :confirm => '1',
+                                                     :warnings => 1,
+                                                     :warned => '1'},
+                                               2 => {:id => 'null',
+                                                     :doctype => 'res',
+                                                     :association_id => household.id}}}
+        put :update, params
+      end
+
+      it 'should create new client documents' do
+        id_qualdocs = IdQualdoc.find_all_by_association_id(client.id)
+        id_qualdocs.length.should == 1
+        id_qualdocs.first.warnings.should == 1
+        id_qualdocs.first.confirm.should == true
+      end
+
+      it 'should create a new client checkin' do
+        client_checkin = ClientCheckin.find_all_by_client_id(client.id)
+        client_checkin.length.should == 1
+        client_checkin.first.id_warn.should == true
+      end
+
+      it 'should create a new household checkin' do
+        HouseholdCheckin.find_all_by_household_id(household.id).length.should == 1
+      end
+    end
+
+    context 'when client documents params have no id attributes' do
+      before do
+        params = {:client_id => client.id,
+                  :qualification_documents => {0 => {:doctype => 'id',
+                                                     :association_id => client.id,
+                                                     :confirm => '1',
+                                                     :warnings => 1,
+                                                     :warned => '1'},
+                                               1 => {:doctype => 'id',
+                                                     :association_id => another_client.id,
+                                                     :confirm => '1',
+                                                     :warnings => 1,
+                                                     :warned => '1'},
+                                               2 => {:doctype => 'res',
+                                                     :association_id => household.id}}}
         put :update, params
       end
 

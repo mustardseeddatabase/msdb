@@ -45,7 +45,9 @@ end
 
 Then /^The "([^"]*)" button should be (dis|en)abled$/ do |button_text, enable_disable|
   if enable_disable == 'en'
-    page.find('#add_to_list')[:disabled].should == 'false'
+    correct_result_for_chrome = page.find('#add_to_list')[:disabled].nil?
+    correct_result_for_firefox = page.find('#add_to_list')[:disabled] == 'false'
+    (correct_result_for_chrome || correct_result_for_firefox).should == true
   else
     page.find('#add_to_list')[:disabled].should == 'true'
   end

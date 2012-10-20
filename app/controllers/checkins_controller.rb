@@ -9,57 +9,25 @@ class CheckinsController < ApplicationController
     if @client
       # when there are no errors, the checkin will not be created during update, so create it now, with no warnings
       HouseholdCheckin.create_for(@client) if @client.has_no_checkin_errors
-      @household_qualification_docs = @client.household_qualification_docs.to_json
       @household = @client.household
+      @household_qualification_docs = @client.household_qualification_docs.to_json unless !@household
     end
 
-    render :template => 'checkins/'+file,
+    render :template => template,
            :layout => !request.xhr?,
            :locals => {:client => @client,
                        :household => @household,
-                       :household_qualification_docs => @household && @household_qualification_docs,
+                       :household_qualification_docs => @household_qualification_docs,
                        :household_color_code => @household && @household.distribution_color_code}
   end
 
   # at the conclusion of the quickcheck procedure:
   def update
+    client = Client.find(params[:client_id])
     docs = params[:qualification_documents].values
-    grouped_docs = docs.group_by{|doc| doc['id'] != "null" }
-    docs_for_update = grouped_docs[true] || []
-    new_docs = grouped_docs[false] || []
-    grouped_by_association_docs = docs.group_by{|doc| doc['doctype'] == 'id' ? 'client' : 'household' }
-    client_docs = grouped_by_association_docs['client']
-    household_docs = grouped_by_association_docs['household']
 
-    @client = Client.find(params[:client_id])
-    @household = @client.household
-
-    docs_for_update.each do |doc|
-      qualdoc = QualificationDocument.find(doc['id'])
-      qualdoc.update_attributes(doc.slice('date', 'warnings', 'confirm'))
-    end
-
-    new_docs.each do |doc|
-      doctype = QualificationDocument::Types[doc['doctype']]
-      qualdoc = doctype.constantize.send('create',doc.slice('date','warnings','association_id', 'confirm'))
-    end
-
-    household_checkin_attributes = household_docs.inject({}) do |hash, doc|
-      hash[doc['doctype'] + '_warn'] = doc['warned']
-      hash['household_id'] ||= doc['association_id']
-      hash
-    end
-
-    household_checkin = HouseholdCheckin.create(household_checkin_attributes)
-
-    client_docs.each do |doc|
-      ClientCheckin.create(:client_id => doc['association_id'],
-                           :id_warn => doc['warned'],
-                           :household_checkin_id => household_checkin.id,
-                           :primary => @client.id == doc['association_id'].to_i)
-    end
-
-    @color_code = @household.distribution_color_code
+    QualificationDocument.update_collection(docs)
+    HouseholdCheckin.update_for(client,docs)
 
     respond_to do |format|
       format.js { render :nothing => true, :status => :ok } # the "quickcheck complete" scenario
@@ -67,21 +35,22 @@ class CheckinsController < ApplicationController
   end
 
   private
+
   def set_cache_buster
     response.headers["Cache-Control"] = "no-cache, no-store, max-age=0, must-revalidate"
     response.headers["Pragma"] = "no-cache"
     response.headers["Expires"] = "Fri, 01 Jan 1990 00:00:00 GMT"
   end
 
-  def file
+  def template
     if !@client
-      'client_finder'
+      'checkins/client_finder'
     elsif !@household
-      'quickcheck_fail'
+      'checkins/quickcheck_fail'
     elsif @client.household_with_errors
-      'quickcheck_with_errors'
+      'checkins/quickcheck_with_errors'
     else
-      'quickcheck_without_errors'
+      'checkins/quickcheck_without_errors'
     end
   end
 end

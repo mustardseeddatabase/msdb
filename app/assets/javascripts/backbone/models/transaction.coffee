@@ -14,7 +14,6 @@ class Application.Transaction extends Backbone.Model
       @clear_immediate_errors()
 
       if save_method == "no-ajax"
-        console.log "save without ajax"
         @post()
       else
         method = if @isNew() then "create" else "update"
@@ -47,10 +46,11 @@ class Application.Transaction extends Backbone.Model
       @create_element("transaction_items_attributes[][item_attributes][weight_oz]",tia.item_attributes.weight_oz, form)
 
   create_element: (name,value,form) ->
-    tmpInput = document.createElement("input")
-    tmpInput.setAttribute("name", name)
-    tmpInput.setAttribute("value", value)
-    form.appendChild(tmpInput)
+    if _.isNumber(value) || !_.isEmpty(value) # because Chrome sends the value "null" for null values
+      tmpInput = document.createElement("input")
+      tmpInput.setAttribute("name", name)
+      tmpInput.setAttribute("value", value)
+      form.appendChild(tmpInput)
 
   uncorrected_errors: ->
     !errorlist.is_empty()

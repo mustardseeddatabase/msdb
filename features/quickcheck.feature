@@ -158,7 +158,7 @@ Feature: Client check in
     Then I should see "Edit Fanny Arbogast" within: "h1"
     When I click the browser back button
     Then I should see "Client quick check" within: "h1"
-    And The status for "Fanny Arbogast" should be "expired on 1 Jan 2010"
+    And The status for "Fanny Arbogast" should be "current"
 
   Scenario: Navigate away during quickcheck to fix household errors and then return to quickcheck
     Given pending: Navigate away during quickcheck to fix household errors and then return to quickcheck

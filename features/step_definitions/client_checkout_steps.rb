@@ -22,7 +22,7 @@ end
 Then /^The size of the limit bar for category "([^"]*)" should be "([^"]*)"$/ do |category, bar_size|
   sleep(0.2)
   element = find("#limit_categories  ##{category}")
-  attributes = element[:style].split(";").inject({}){ |hash,str| ar = str.lstrip.split(":"); hash[ar[0]]=ar[1].lstrip; hash }
+  attributes = element[:style].strip.split(";").inject({}){ |hash,str| ar = str.lstrip.split(":"); hash[ar[0]]=ar[1].lstrip; hash }
   attributes["width"].should == "#{bar_size}px"
 end
 

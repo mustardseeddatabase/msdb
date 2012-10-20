@@ -212,7 +212,11 @@ class Client < ActiveRecord::Base
   end
 
   def assign_as_sole_head_of_household
-    household.assign_as_sole_head(self)
+    if household
+      household.assign_as_sole_head(self)
+    else
+      assign_as_head(true)
+    end
   end
 
   def assign_as_head(true_false)

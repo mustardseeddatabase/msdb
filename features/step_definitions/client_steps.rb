@@ -135,8 +135,11 @@ Then /^I select (faker )?options for the following select boxes:$/ do |faker,tab
   table.hashes.each do |hash|
     if faker == "faker "
       page.select hash[:value], :from => hash[:field]
+      #page.find("#"+hash[:field]).all(:css, 'option').detect{|e| e.value == hash[:value]}.select_option
     else
       page.select eval(hash[:value]), :from => hash[:field]
+      #val = eval(hash[:value])
+      #page.find("#"+hash[:field]).all(:css, 'option').detect{|e| e.value == val }.select_option
     end
   end
 end

@@ -95,7 +95,7 @@ describe CheckinsController do
     end
   end
 
-  describe '#update' do
+  describe '#create' do
     let(:household){ FactoryGirl.create(:household) }
     let(:client){ FactoryGirl.create(:client, :household => household) }
     let(:another_client){ FactoryGirl.create(:client, :household => household) }
@@ -120,7 +120,7 @@ describe CheckinsController do
                                                2 => {:id => 'null',
                                                      :doctype => 'res',
                                                      :association_id => household.id}}}
-        put :update, params
+        post :create, params
       end
 
       it 'should create new client documents' do
@@ -156,7 +156,7 @@ describe CheckinsController do
                                                      :warned => '1'},
                                                2 => {:doctype => 'res',
                                                      :association_id => household.id}}}
-        put :update, params
+        post :create, params
       end
 
       it 'should create new client documents' do
@@ -179,7 +179,7 @@ describe CheckinsController do
                                                1 => {:id => 'null',
                                                      :doctype => 'res',
                                                      :association_id => household.id}}}
-        put :update, params
+        post :create, params
       end
 
       it 'should update existing client documents' do
@@ -209,7 +209,7 @@ describe CheckinsController do
                                                      :doctype => 'res',
                                                      :association_id => household.id,
                                                      :warned => '1'}}}
-        put :update, params
+        post :create, params
       end
 
       it 'should create new household documents' do
@@ -240,7 +240,7 @@ describe CheckinsController do
                                                      :doctype => 'res',
                                                      :association_id => household.id,
                                                      :warned => '0'}}}
-        put :update, params
+        post :create, params
       end
 
       it 'should update existing household documents' do

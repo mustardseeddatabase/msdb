@@ -1,4 +1,6 @@
 class ClientsController < ApplicationController
+  helper :checkin, :options
+
   def new
     @client = Client.new
   end
@@ -36,6 +38,7 @@ class ClientsController < ApplicationController
     @client_checkins = @client.client_checkins.sort_by(&:created_at).reverse
     @household = Household.find(params[:household_id]) unless params[:household_id].nil?
     @return_to = params[:return_to]
+    @checkin = true if params[:context] == 'checkin'
     respond_to do |format|
       format.html
       format.js do

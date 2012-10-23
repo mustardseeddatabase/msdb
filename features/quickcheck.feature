@@ -5,19 +5,20 @@ Feature: Client check in
   Background: Logged in, with all requisite permissions
     Given I am logged in and on the "home" page
     And permissions are granted for "admin" to visit the following pages:
-       | page                           |
-       | households#index               |
-       | households#show                |
-       | households#edit                |
-       | households#update              |
-       | household_clients#new          |
-       | clients#autocomplete           |
-       | clients#show                   |
-       | clients#index                  |
-       | clients#update                 |
-       | clients#edit                   |
-       | checkins#new  |
-       | checkins#update |
+          | page                            |
+          | households#index                |
+          | households#show                 |
+          | households#edit                 |
+          | households#update               |
+          | household_clients#new           |
+          | clients#autocomplete            |
+          | clients#show                    |
+          | clients#index                   |
+          | clients#update                  |
+          | clients#edit                    |
+          | checkins#new                    |
+          | checkins#create                 |
+          | checkins#create_and_show_client |
 
 @selenium
   Scenario: Visit the quickcheck page
@@ -150,12 +151,18 @@ Feature: Client check in
   Scenario: Navigate away during quickcheck to fix client errors and then return to quickcheck
     Given there is a household with residency, income and govtincome current in the database
     And there is a client with last name "Arbogast", first name "Fanny", age "20", with id date "Date.new(2009,1,1)" in the database belonging to the household
+    And there is a client with last name "Normal", first name "Norman", age "20", with id date "Date.new(2009,1,1)" in the database belonging to the household
     And I am quickchecking Fanny Arbogast
     Then The status for "Fanny Arbogast" should be "expired on 1 Jan 2010"
     And I click "Confirm" for "Fanny Arbogast"
     Then The status for "Fanny Arbogast" should be "current"
     When I follow "Arbogast, Fanny. 20"
-    Then I should see "Edit Fanny Arbogast" within: "h1"
+    Then I should see "Fanny Arbogast" within: "h1"
+    And the Id document in the database for Fanny Arbogast should have "confirmed status"
+    And the Id document in the database for Fanny Arbogast should have "today's date"
+    And there should be 1 client checkin in the database for "Fanny Arbogast"
+    And there should be 1 client checkin in the database for "Norman Normal"
+    And there should be 1 household checkin in the database for the household
     When I click the browser back button
     Then I should see "Client quick check" within: "h1"
     And The status for "Fanny Arbogast" should be "current"

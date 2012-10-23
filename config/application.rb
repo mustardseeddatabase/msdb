@@ -11,9 +11,9 @@ require File.expand_path('../../lib/constants', __FILE__)
 
 if defined?(Bundler)
   # if you precompile assets before deploying to production, use this line:
-  Bundler.require *Rails.groups(:assets => %w(development test))
+  # Bundler.require *Rails.groups(:assets => %w(development test))
   # if you want your assets lazily compiled in production, use this line:
-  # Bundler.require(:default, :assets, Rails.env)
+  Bundler.require(:default, :assets, Rails.env)
 end
 
 module Msdb
@@ -57,6 +57,9 @@ module Msdb
     config.assets.paths << Rails.root.join("app", "themes", "default", "assets", "images")
     config.assets.paths << Rails.root.join("spec", "javascripts")
     config.assets.paths << Remotipart::Rails::Engine.root.join("vendor", "assets", "javascripts")
+    #it causes precompile errors to include this for production environment, so just include it for development
+    #this relates to a particular fixture (client_quickcheck.html.haml), that renders a script as a partial.
+    #config.assets.paths << Rails.root.join("spec", "javascripts")
 
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'

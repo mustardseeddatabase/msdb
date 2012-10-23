@@ -73,7 +73,7 @@ Then /^I should see a delete document link for "(.*?)"$/ do |first_last_name|
 end
 
 Given /^I click "(.*?)" for "(.*?)"$/ do |link_name, first_last_name|
-  in_the_row_for(first_last_name).find(:xpath, "//a[contains(.,'#{link_name}')]").click
+  in_the_row_for(first_last_name).find(:xpath, ".//a[contains(.,'#{link_name}')]").click
 end
 
 def in_the_row_for(first_last_name)
@@ -97,3 +97,23 @@ Then /^There should be no document delete links on the page$/ do
   all(:css, '.delete_document_exists').length.should == 0
 end
 
+Then /^the Id document in the database for Fanny Arbogast should have "(.*?)"$/ do |attribute_value|
+  client_id = Client.find_by_lastName("Arbogast").id
+  doc = IdQualdoc.find_by_association_id(client_id)
+  if attribute_value == 'confirmed status'
+    doc.confirm.should == true
+  elsif attribute_value == "today's date"
+    doc.date.should == Date.today
+  end
+end
+
+Then /^there should be (\d+) client checkin in the database for "(.*?)"$/ do |count, first_last_name|
+  first_name, last_name = first_last_name.split(" ")
+  client_id = Client.find_by_lastName(last_name).id
+  ClientCheckin.find_all_by_client_id(client_id).count.should == count.to_i
+end
+
+Then /^there should be (\d+) household checkin in the database for the household$/ do |count|
+  household = Household.first
+  HouseholdCheckin.find_all_by_household_id(household.id).count.should == count.to_i
+end

@@ -23,4 +23,5 @@
               {"description":"Government income verification information","doctype":"gov","expired?":true,"expiry_date":null,"status":"date not available","warnings":0,"date":null,"doc_link":null}];
 
   var client_id = #{rand(50) + 1}
+  var permissions = #{{:upload_permitted => true, :download_permitted => true, :delete_permitted => true}.to_json}
   var qualdoc = new Quickcheck.QualdocView(docs)

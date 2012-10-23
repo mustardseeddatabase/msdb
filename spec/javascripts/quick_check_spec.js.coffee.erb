@@ -100,7 +100,7 @@ describe "confirm hard copy document for each client and each household doc", ->
   beforeEach ->
     loadFixtures 'client_quickcheck'
     dd = new Date()
-    @date_string = [dd.getFullYear(),dd.getMonth(),dd.getDate()].join('-')
+    @date_string = [dd.getFullYear(),dd.getMonth()+1,dd.getDate()].join('-')
 
   it "should set the confirm attribute to true for clients", ->
     $('.confirm')[0].click()

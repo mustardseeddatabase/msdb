@@ -14,24 +14,42 @@ class CheckinsController < ApplicationController
     end
 
     render :template => template,
-           :layout => !request.xhr?,
-           :locals => {:client => @client,
-                       :household => @household,
-                       :household_qualification_docs => @household_qualification_docs,
-                       :household_color_code => @household && @household.distribution_color_code}
+      :layout => !request.xhr?,
+      :locals => {:client => @client,
+                  :household => @household,
+                  :household_qualification_docs => @household_qualification_docs,
+                  :household_color_code => @household && @household.distribution_color_code}
   end
 
   # at the conclusion of the quickcheck procedure:
-  def update
+  def create
     client = Client.find(params[:client_id])
     docs = params[:qualification_documents].values
 
     QualificationDocument.update_collection(docs)
     HouseholdCheckin.update_for(client,docs)
 
-    respond_to do |format|
-      format.js { render :nothing => true, :status => :ok } # the "quickcheck complete" scenario
+    if request.xhr?
+      render :nothing => true, :status => :ok # the "quickcheck complete" scenario
     end
+  end
+
+  def create_and_show_client
+    client = Client.find(params[:client_id])
+    docs = params[:qualification_documents]
+
+    QualificationDocument.update_collection(docs)
+    HouseholdCheckin.update_for(client,docs)
+    redirect_to client_path(client, :context => :checkin, :primary_client_id => params[:primary_client_id])
+  end
+
+  def create_and_show_household
+  end
+
+  def update_and_show_client
+  end
+
+  def update_and_show_household
   end
 
   private

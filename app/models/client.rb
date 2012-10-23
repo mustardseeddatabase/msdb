@@ -171,7 +171,8 @@ class Client < ActiveRecord::Base
   end
 
   def id_qualification_vector
-    url = client_path(id) unless id.nil?
+    #url = client_path(id) unless id.nil?
+    url = create_and_show_client_client_checkins_path(id) unless id.nil?
     iq = (id_qualdoc && id_qualdoc.qualification_vector) || IdQualdoc.new(:association_id => id).qualification_vector
     iq.merge({:head_of_household => headOfHousehold?, :url => url, :name_age => name_age, :errors => missing_data_errors})
   end

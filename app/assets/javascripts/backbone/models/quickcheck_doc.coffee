@@ -23,7 +23,7 @@ class Quickcheck.Doc extends Backbone.Model
       @warn()
     @set
       'confirm':true,
-      'date':[dd.getFullYear(),dd.getMonth(),dd.getDate()].join('-'),
+      'date':[dd.getFullYear(),dd.getMonth()+1,dd.getDate()].join('-'),
       'status':'current'
 
   status_class: ->

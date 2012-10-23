@@ -117,7 +117,7 @@ Feature: Resume a previous inventory
     Given There is an item with description "Canned Peas" in the database
     When I follow "No barcode"
     Then I should see a description autocomplete form
-    And I follow "Remove"
+    And I follow "Remove" for the autocomplete item
     Then I should not see a description autocomplete form
 
 

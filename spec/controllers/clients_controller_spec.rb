@@ -26,7 +26,7 @@ describe ClientsController do
         other_client.reload
         other_client.headOfHousehold.should == false
       end
-    end # context
+    end # /context
 
     context 'when client is assigned as head of household, but doesnt have a household' do
       let(:client){ FactoryGirl.create(:client_with_current_id) }
@@ -39,6 +39,6 @@ describe ClientsController do
         client.reload
         client.headOfHousehold.should == true
       end
-    end # context
-  end # describe #update
-end # describe Controller
+    end # /context
+  end # /describe #update
+end # /describe Controller

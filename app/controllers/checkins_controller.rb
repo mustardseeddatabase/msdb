@@ -29,9 +29,7 @@ class CheckinsController < ApplicationController
     QualificationDocument.update_collection(docs)
     HouseholdCheckin.update_for(client,docs)
 
-    if request.xhr?
-      render :nothing => true, :status => :ok # the "quickcheck complete" scenario
-    end
+    render :nothing => true, :status => :ok # the "quickcheck complete" scenario
   end
 
   def create_and_show_client

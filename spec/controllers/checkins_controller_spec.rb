@@ -87,7 +87,7 @@ describe CheckinsController do
       before do
         household = FactoryGirl.create(:household_with_expired_docs)
         client = FactoryGirl.create(:client, :household => household)
-        checkin = Checkin.new(client)
+        checkin = Checkin.create(client)
         get :edit, {:client_id => client.id, :id => checkin.id}
       end
 
@@ -98,7 +98,7 @@ describe CheckinsController do
       before do
         household = FactoryGirl.create(:household_with_current_docs)
         client = FactoryGirl.create(:client_with_current_id, :household => household)
-        checkin = Checkin.new(client)
+        checkin = Checkin.create(client)
         get :edit, {:client_id => client.id, :id => checkin.id}
       end
 
@@ -112,7 +112,7 @@ describe CheckinsController do
     let(:another_client){ FactoryGirl.create(:client, :household => household) }
     let(:existing_client_doc){ FactoryGirl.create(:id_qualdoc, :client => client, :confirm => false, :warnings => 0) }
     let(:existing_res_doc){ FactoryGirl.create(:res_qualdoc, :household => household, :confirm => false, :warnings => 0) }
-    let(:checkin){ Checkin.new(client)}
+    let(:checkin){ Checkin.create(client)}
 
     context 'when client documents params have null-string id attributes' do
       before do
@@ -221,10 +221,10 @@ describe CheckinsController do
                   :qualification_documents => {0 => {:id => 'null',
                                                      :doctype => 'id',
                                                      :association_id => client.id},
-                                                     1 => {:id => 'null',
-                                                           :doctype => 'res',
-                                                           :association_id => household.id,
-                                                           :warned => 'true'}}}
+                                               1 => {:id => 'null',
+                                                     :doctype => 'res',
+                                                     :association_id => household.id,
+                                                     :warned => 'true'}}}
         put :update, params
       end
 

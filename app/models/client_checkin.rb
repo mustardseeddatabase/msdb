@@ -15,7 +15,7 @@ class ClientCheckin < ActiveRecord::Base
     collection = where('household_checkin_id = ?', household_checkin_id)
     collection.each do |checkin|
       doc = docs.detect{|doc| doc[:association_id].to_i == checkin.client_id}
-      checkin.update_attributes(:id_warn => doc['warned'] == "true")
+      checkin.update_attributes(:id_warn => (doc['warned'] == "true") || doc['warned'] == '1')
     end
     client_checkin_id
   end

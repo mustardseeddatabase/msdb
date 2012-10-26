@@ -9,7 +9,7 @@ class CheckinsController < ApplicationController
   def create
     @client = Client.find(params[:client_id]) if params[:client_id]
     if @client.household
-      checkin = Checkin.new(@client)
+      checkin = Checkin.create(@client)
       redirect_to edit_client_checkin_path(@client,checkin.id)
     else
       render 'checkins/quickcheck_fail'
@@ -33,23 +33,25 @@ class CheckinsController < ApplicationController
   # at the conclusion of the quickcheck procedure:
   def update
     client_id = params[:client_id]
-    checkin_id = params[:id]
+    client_checkin_id = params[:id]
     docs = params[:qualification_documents].values
 
     QualificationDocument.update_collection(docs)
-    HouseholdCheckin.update_for(client_id, checkin_id, docs)
+    checkin = Checkin.find_by_client_checkin_id(client_checkin_id)
+    checkin.update_for(client_id, client_checkin_id, docs)
 
     render :nothing => true, :status => :ok # the "quickcheck complete" scenario
   end
 
   def update_and_show_client
-    client = Client.find(params[:client_id])
+    client_id = params[:client_id]
     docs = params[:qualification_documents]
-    checkin_id = params[:checkin_id]
+    client_checkin_id = params[:checkin_id]
 
     QualificationDocument.update_collection(docs)
-    HouseholdCheckin.update_for(client, checkin_id, docs)
-    redirect_to client_path(client, :context => :checkin, :primary_client_id => params[:primary_client_id], :primary_checkin_id => checkin_id)
+    checkin = Checkin.find_by_client_checkin_id(client_checkin_id)
+    checkin.update_for(client_id, client_checkin_id, docs)
+    redirect_to client_path(client_id, :context => :checkin, :primary_client_id => params[:primary_client_id], :primary_checkin_id => client_checkin_id)
   end
 
   def update_and_show_household

@@ -27,7 +27,7 @@ Feature: Client check in
     Given I am on the client quickcheck page
     Then The input field should have focus
 
-@selenium
+@selenium @allow-rescue
   Scenario: Follow the document check sequence, and follow links to related information
     Given there is a household with residency, income and govtincome current in the database
     And there is a client with last name "Arbogast", first name "Fanny", age "20", with id date "Date.new(2009,1,1)" in the database belonging to the household

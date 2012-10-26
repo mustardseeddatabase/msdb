@@ -6,7 +6,7 @@
   =button_tag "Quickcheck completed", :id => :quickcheck_completed, :type => 'submit', :style => 'display:none'
 
 :javascript
-  var docs = #{(FactoryGirl.build(:household, :with_docs, :with_errored_clients ).client_docs + FactoryGirl.build(:household, :with_docs).qualification).to_json}
+  var docs = #{(FactoryGirl.build(:household, :with_docs, :with_errored_clients ).client_docs(ClientCheckin.first.id) + FactoryGirl.build(:household, :with_docs).qualification(ClientCheckin.first.id)).to_json}
   var client_id = #{rand(50) + 1}
   var permissions = #{{:upload_permitted => true, :download_permitted => true, :delete_permitted => true}.to_json}
   var qualdoc = new Quickcheck.QualdocView(docs)

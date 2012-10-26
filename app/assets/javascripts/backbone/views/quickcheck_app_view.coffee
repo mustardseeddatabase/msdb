@@ -43,11 +43,11 @@ class Quickcheck.QualdocView extends Backbone.View
     ajax_parameters = 
       dataType: 'text',
       data:@docs.server_attributes(),
-      url: '/clients/' + client_id + '/checkins',
+      url: '/clients/' + client_id + '/checkins/' + id,
       success: @show_color_code,
       error: @checkin_fail
 
-    Backbone.sync("create", null, ajax_parameters)
+    Backbone.sync("update", null, ajax_parameters)
 
   checkin_fail: (jqXHR, textStatus)->
     new Quickcheck.ErrorView(jqXHR, textStatus)

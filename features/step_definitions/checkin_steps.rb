@@ -117,3 +117,21 @@ Then /^there should be (\d+) household checkin in the database for the household
   household = Household.first
   HouseholdCheckin.find_all_by_household_id(household.id).count.should == count.to_i
 end
+
+Then /^there should be an unwarn link for "(.*?)"$/ do |name_age|
+  page.find(:css, '#quickcheck_table').
+    find(:xpath, ".//tr[contains(.,'#{name_age}')]").
+    find(:css, 'a.warn').text.should == 'Unwarn'
+end
+
+Then /^the number of warnings for "(.*?)" should be (\d+)$/ do |name_age, warning_count|
+  page.find(:css, "#quickcheck_table").
+    find(:xpath, ".//tr[contains(.,'#{name_age}')]/td[@class='count']").
+    text.to_i.should == warning_count.to_i
+end
+
+Then /^the client checkin for "(.*?)" should have id_warn true$/ do |first_last_name|
+  first_name, last_name = first_last_name.split(" ")
+  client_id = Client.find_by_lastName(last_name).id
+  ClientCheckin.find_by_client_id(client_id).id_warn.should == true
+end

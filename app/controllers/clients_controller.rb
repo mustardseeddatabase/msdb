@@ -39,6 +39,7 @@ class ClientsController < ApplicationController
     @household = Household.find(params[:household_id]) unless params[:household_id].nil?
     @return_to = params[:return_to]
     @checkin = true if params[:context] == 'checkin'
+    @primary_checkin_id = params[:primary_checkin_id]
     respond_to do |format|
       format.html
       format.js do

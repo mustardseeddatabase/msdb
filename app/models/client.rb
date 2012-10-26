@@ -170,11 +170,15 @@ class Client < ActiveRecord::Base
     gender == "F" unless !gender
   end
 
-  def id_qualification_vector
-    #url = client_path(id) unless id.nil?
-    url = create_and_show_client_client_checkins_path(id) unless id.nil?
+  def id_qualification_vector(checkin_id = 'checkin_id')
+    # checkin_id is the id of the client who is checking-in. Not the checkin of this client
+    # it's used in the url to facilitate return to the same page
+    url = client_checkin_update_and_show_client_path(id,checkin_id) unless id.nil?
+    checkin = ClientCheckin.find(checkin_id) if checkin_id != 'checkin_id'
+    household_checkin = HouseholdCheckin.find(checkin.household_checkin_id) if checkin
+    client_checkin = household_checkin && household_checkin.client_checkins.where('client_id = ?',id)[0]
     iq = (id_qualdoc && id_qualdoc.qualification_vector) || IdQualdoc.new(:association_id => id).qualification_vector
-    iq.merge({:head_of_household => headOfHousehold?, :url => url, :name_age => name_age, :errors => missing_data_errors})
+    iq.merge({:head_of_household => headOfHousehold?, :url => url, :name_age => name_age, :errors => missing_data_errors, :warned => client_checkin && client_checkin.id_warn})
   end
 
   def has_id_doc_in_db?

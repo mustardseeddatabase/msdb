@@ -6,7 +6,7 @@
         url:'/clients/autocomplete',
         minChars:3,
         paramName:'client_full_name',
-        onItemSelect:function(client){getDetails(client)}
+        onItemSelect:function(client){createCheckin(client)}
       });
 
     ftb = new FancyTextBox(clear_quickcheck)
@@ -16,11 +16,12 @@
     $('#content').html(response)
     }
 
-  var getDetails = function(client){
-    url = "/clients/" + client.data[0] + "/checkins/new"
+  var createCheckin = function(client){
+    url = "/clients/" + client.data[0] + "/checkins"
     history.pushState({}, '', url)
     $.ajax({
         url : url,
+        type : 'post',
         success: done
         })
   };

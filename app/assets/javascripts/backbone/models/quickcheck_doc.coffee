@@ -1,6 +1,5 @@
 class Quickcheck.Doc extends Backbone.Model
   initialize: ->
-    @set('warned':false)
     if @get('doctype') == 'id'
       @view = new Quickcheck.ClientView({model:@})
     else

@@ -32,10 +32,14 @@
   =button_tag  "Quickcheck completed", :id => :quickcheck_completed, :style => 'display:none'
 
   :javascript
+    $(function(){
+      history.replaceState(null, null, '#{edit_client_checkin_path(client.id,primary_checkin_id)}')
+    })
     var authenticity_token = "#{ form_authenticity_token }"
     var docs = #{household_qualification_docs}
     var color_code = '#{household_color_code}'
     var client_id = #{client.id}
+    var id = #{params[:id]}
     var permissions = #{{:upload_permitted => current_user_permitted?({:controller => 'qualification_documents', :action => 'upload'}),
                          :download_permitted => current_user_permitted?({:controller => 'qualification_documents', :action => 'show'}),
                          :delete_permitted => current_user_permitted?({:controller => 'qualification_documents', :action => 'delete'})}.to_json}

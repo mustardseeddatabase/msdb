@@ -17,8 +17,10 @@ Feature: Client check in
           | clients#update                  |
           | clients#edit                    |
           | checkins#new                    |
+          | checkins#edit                   |
           | checkins#create                 |
-          | checkins#create_and_show_client |
+          | checkins#update                 |
+          | checkins#update_and_show_client |
 
 @selenium
   Scenario: Visit the quickcheck page
@@ -155,17 +157,23 @@ Feature: Client check in
     And I am quickchecking Fanny Arbogast
     Then The status for "Fanny Arbogast" should be "expired on 1 Jan 2010"
     And I click "Confirm" for "Fanny Arbogast"
+    And I click "Warn" for "Norman Normal"
     Then The status for "Fanny Arbogast" should be "current"
+    And there should be an unwarn link for "Normal, Norman. 20"
+    And the number of warnings for "Normal, Norman. 20" should be 1
     When I follow "Arbogast, Fanny. 20"
     Then I should see "Fanny Arbogast" within: "h1"
     And the Id document in the database for Fanny Arbogast should have "confirmed status"
     And the Id document in the database for Fanny Arbogast should have "today's date"
     And there should be 1 client checkin in the database for "Fanny Arbogast"
     And there should be 1 client checkin in the database for "Norman Normal"
+    And the client checkin for "Norman Normal" should have id_warn true
     And there should be 1 household checkin in the database for the household
     When I click the browser back button
     Then I should see "Client quick check" within: "h1"
     And The status for "Fanny Arbogast" should be "current"
+    And the number of warnings for "Normal, Norman. 20" should be 1
+    And there should be an unwarn link for "Normal, Norman. 20"
 
   Scenario: Navigate away during quickcheck to fix household errors and then return to quickcheck
     Given pending: Navigate away during quickcheck to fix household errors and then return to quickcheck

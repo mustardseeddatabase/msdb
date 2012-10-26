@@ -22,10 +22,8 @@ Msdb::Application.routes.draw do
     get 'autocomplete', :on => :collection
     resources :distributions
     resources :checkins do
-      post 'create_and_show_client', :on => :collection
-      post 'create_and_show_household', :on => :collection
-      put 'update_and_show_client'
-      put 'update_and_show_household'
+      post 'update_and_show_client' # would normally be 'put', but post is much easier to implement!
+      post 'update_and_show_household'
     end
     resources :qualification_documents do
       put 'upload' # would normally be 'put' but we use ajax, not form submission

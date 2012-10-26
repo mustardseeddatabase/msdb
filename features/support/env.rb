@@ -46,11 +46,11 @@ end
 #require 'capybara/envjs'
 Capybara.javascript_driver = :webkit
 Capybara.default_wait_time = 5
-#Capybara.register_driver :selenium do |app|
-  ## driver installed from http://code.google.com/p/selenium/downloads/list
-  ## installed in /usr/local/bin/
-  #Capybara::Selenium::Driver.new(app, :browser => :chrome)
-#end
+Capybara.register_driver :selenium do |app|
+  # driver installed from http://code.google.com/p/selenium/downloads/list
+  # installed in /usr/local/bin/
+  Capybara::Selenium::Driver.new(app, :browser => :chrome)
+end
 
 
 require 'factory_girl_rails'

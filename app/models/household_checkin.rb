@@ -2,13 +2,12 @@ class HouseholdCheckin < ActiveRecord::Base
   belongs_to :household
   has_many :client_checkins
 
-  def self.create_for(primary_client)
-    household = primary_client.household
-    if household
-      household_checkin = household.household_checkins.create
-      @primary_checkin_id = ClientCheckin.create_collection(primary_client, household.clients, household_checkin)
+  def self.extract_attributes_from_docs(docs)
+    docs.inject({}) do |hash, doc|
+      hash[doc['doctype'] + '_warn'] = doc['warned']
+      hash['household_id'] ||= doc['association_id']
+      hash
     end
-    @primary_checkin_id
   end
 
   def primary_client_checkin

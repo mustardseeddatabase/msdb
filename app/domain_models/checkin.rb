@@ -9,8 +9,7 @@ class Checkin
   end
 
   def initialize(attrs)
-    @client = attrs[:client]
-    if @client
+    if @client = attrs[:client]
       raise InvalidClientError if !@client.is_a?(Client)
       @household = @client.household
       raise InvalidClientError if !@household
@@ -38,7 +37,7 @@ class Checkin
     self
   end
 
-  def update_for(client_id, client_checkin_id, docs)
+  def update(docs)
     client_docs = docs.select{|doc| doc['doctype'] == 'id'}
     household_docs = docs.select{|doc| doc['doctype'] != 'id'}
 

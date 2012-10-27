@@ -3,8 +3,9 @@ class Quickcheck.QualdocView extends Backbone.View
   el: '#quickcheck'
 
   events:
-    "click #quickcheck_completed" : "quickcheck_completed"
-    "click .edit_client"          : "post"
+    "click #quickcheck_completed"      : "quickcheck_completed"
+    "click .edit_client"               : "post"
+    "click .update_and_show_household" : "post"
 
   post: (event)->
     url = $(event.target).data('url')

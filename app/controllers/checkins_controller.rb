@@ -38,7 +38,7 @@ class CheckinsController < ApplicationController
 
     QualificationDocument.update_collection(docs)
     checkin = Checkin.find_by_client_checkin_id(client_checkin_id)
-    checkin.update_for(client_id, client_checkin_id, docs)
+    checkin.update(docs)
 
     render :nothing => true, :status => :ok # the "quickcheck complete" scenario
   end
@@ -50,11 +50,19 @@ class CheckinsController < ApplicationController
 
     QualificationDocument.update_collection(docs)
     checkin = Checkin.find_by_client_checkin_id(client_checkin_id)
-    checkin.update_for(client_id, client_checkin_id, docs)
+    checkin.update(docs)
     redirect_to client_path(client_id, :context => :checkin, :primary_client_id => params[:primary_client_id], :primary_checkin_id => client_checkin_id)
   end
 
   def update_and_show_household
+    household_id = params[:household_id]
+    docs = params[:qualification_documents]
+    client_checkin_id = params[:checkin_id]
+
+    QualificationDocument.update_collection(docs)
+    checkin = Checkin.find_by_client_checkin_id(client_checkin_id)
+    checkin.update(docs)
+    redirect_to household_path(household_id, :context => :checkin, :primary_client_id => params[:primary_client_id], :primary_checkin_id => client_checkin_id)
   end
 
   private

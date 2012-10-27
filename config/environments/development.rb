@@ -17,7 +17,7 @@ Msdb::Application.configure do
   config.action_controller.perform_caching = false
 
   # don't combine assets in dev mode (when true)
-  config.assets.debug = false
+  config.assets.debug = true
 
   # Do not compress assets
   config.assets.compress = false

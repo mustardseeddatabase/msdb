@@ -5,29 +5,30 @@ Feature: Client check in
   Background: Logged in, with all requisite permissions
     Given I am logged in and on the "home" page
     And permissions are granted for "admin" to visit the following pages:
-          | page                            |
-          | households#index                |
-          | households#show                 |
-          | households#edit                 |
-          | households#update               |
-          | household_clients#new           |
-          | clients#autocomplete            |
-          | clients#show                    |
-          | clients#index                   |
-          | clients#update                  |
-          | clients#edit                    |
-          | checkins#new                    |
-          | checkins#edit                   |
-          | checkins#create                 |
-          | checkins#update                 |
-          | checkins#update_and_show_client |
+           | page                               |
+           | households#index                   |
+           | households#show                    |
+           | households#edit                    |
+           | households#update                  |
+           | household_clients#new              |
+           | clients#autocomplete               |
+           | clients#show                       |
+           | clients#index                      |
+           | clients#update                     |
+           | clients#edit                       |
+           | checkins#new                       |
+           | checkins#edit                      |
+           | checkins#create                    |
+           | checkins#update                    |
+           | checkins#update_and_show_client    |
+           | checkins#update_and_show_household |
 
 @selenium
   Scenario: Visit the quickcheck page
     Given I am on the client quickcheck page
     Then The input field should have focus
 
-@selenium @allow-rescue
+@selenium
   Scenario: Follow the document check sequence, and follow links to related information
     Given there is a household with residency, income and govtincome current in the database
     And there is a client with last name "Arbogast", first name "Fanny", age "20", with id date "Date.new(2009,1,1)" in the database belonging to the household
@@ -175,11 +176,31 @@ Feature: Client check in
     And the number of warnings for "Normal, Norman. 20" should be 1
     And there should be an unwarn link for "Normal, Norman. 20"
 
+@selenium
   Scenario: Navigate away during quickcheck to fix household errors and then return to quickcheck
-    Given pending: Navigate away during quickcheck to fix household errors and then return to quickcheck
-
-  Scenario: Navigate away during quickcheck to edit client and then return to quickcheck
-    Given pending: Navigate away during quickcheck to edit client and then return to quickcheck
+    Given there is a household with residency, income and govtincome current in the database
+    And there is a client with last name "Arbogast", first name "Fanny", age "20", with id date "Date.new(2009,1,1)" in the database belonging to the household
+    And there is a client with last name "Normal", first name "Norman", age "20", with id date "Date.new(2009,1,1)" in the database belonging to the household
+    And I am quickchecking Fanny Arbogast
+    Then The status for "Fanny Arbogast" should be "expired on 1 Jan 2010"
+    And I click "Confirm" for "Fanny Arbogast"
+    And I click "Warn" for "Norman Normal"
+    Then The status for "Fanny Arbogast" should be "current"
+    And there should be an unwarn link for "Normal, Norman. 20"
+    And the number of warnings for "Normal, Norman. 20" should be 1
+    When I follow "View household"
+    Then I should see "Household information" within: "h1"
+    And the Id document in the database for Fanny Arbogast should have "confirmed status"
+    And the Id document in the database for Fanny Arbogast should have "today's date"
+    And there should be 1 client checkin in the database for "Fanny Arbogast"
+    And there should be 1 client checkin in the database for "Norman Normal"
+    And the client checkin for "Norman Normal" should have id_warn true
+    And there should be 1 household checkin in the database for the household
+    When I click the browser back button
+    Then I should see "Client quick check" within: "h1"
+    And The status for "Fanny Arbogast" should be "current"
+    And the number of warnings for "Normal, Norman. 20" should be 1
+    And there should be an unwarn link for "Normal, Norman. 20"
 
   Scenario: Download a client id document that has been saved
     Given pending: Download a client id document that has been saved

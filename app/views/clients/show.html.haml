@@ -1,4 +1,11 @@
+- checkin = params[:context] == 'checkin'
+- visible = checkin ? 'hidden' : 'visible'
+- display = checkin ? 'none' : 'inline'
+- not_display = checkin ? 'inline' : 'none'
+- not_visible = checkin ? 'visible' : 'hidden'
 = message_block :on => :client
+- if checkin
+  =button_to 'Return to checkin', :back, :method => :get
 %h1= @client.first_last_name
 %table
   %tr
@@ -26,7 +33,7 @@
     %td Head of household
     %td= @client.headOfHousehold_yn
   %tr
-    %td= link_to 'View household', household_path(@client.household) if @client.household
+    %td= link_to 'View household', household_path(@client.household), :style => "visibility:#{visible}" if @client.household
 
 %h2 ID verification document:
 %table
@@ -48,7 +55,7 @@
   %tr
     %td
       -if @client.has_id_doc_in_db?
-        = link_to 'View ID document', qualification_document_path(@client.id_qualdoc)
+        = link_to 'View ID document', qualification_document_path(@client.id_qualdoc), :style => "visibility:#{visible}", :class => 'document_link'
 %h2 Recent checkins
 - if @client_checkins.blank?
   none
@@ -58,13 +65,14 @@
       %th Date
       %th Warnings
     -for checkin in @client_checkins
-      %tr{:valign => :top}
+      %tr.client_link{:valign => :top}
         %td{:width => '160px'}
           = checkin.created_at.to_formatted_s(:app_default)
           - if !checkin.primary?
             %br
               (by:
-              = link_to checkin.household_checkin.primary_client.first_last_name, client_path(checkin.household_checkin.primary_client)
+              = link_to checkin.household_checkin.primary_client.first_last_name, client_path(checkin.household_checkin.primary_client), :class => 'client_link', :style => "display:#{display}"
+              %span{:style => "display:#{not_display}"}=checkin.household_checkin.primary_client.first_last_name
               )
         %td= warnings(checkin)
 
@@ -72,7 +80,7 @@
   %tr
     %td= link_to 'Edit this client', edit_client_path(@client)
   %tr
-    %td{:colspan => '2'}= link_to 'Delete this client', client_path(@client, :return_to => @return_to), :method => :delete, :id => :delete_client_link, :data => {:confirm => 'Are you sure?'}
+    %td{:colspan => '2'}= link_to 'Delete this client', client_path(@client, :return_to => @return_to), :method => :delete, :id => :delete_client_link, :style => "visibility:#{visible}", :data => {:confirm => 'Are you sure?'}
 
 :javascript
   $(function(){

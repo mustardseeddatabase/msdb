@@ -1,6 +1,13 @@
+- checkin = params[:context] == 'checkin'
+- visible = checkin ? 'hidden' : 'visible'
+- display = checkin ? 'none' : 'inline'
+- not_display = checkin ? 'inline' : 'none'
+- not_visible = checkin ? 'visible' : 'hidden'
 = message_block :on => [:client, :household]
+- if checkin
+  =button_to 'Return to checkin', :back, :method => :get
 %h1 Household information
-%p= link_to 'Delete this household', household_path(@household), :method => :delete, :data => {:confirm => 'Are you sure?'}
+%p= link_to 'Delete this household', household_path(@household), :method => :delete, :style => "visibility:#{visible}", :data => {:confirm => 'Are you sure?'}
 %p= link_to 'Edit this household', edit_household_path(@household)
 %table
   %tr
@@ -40,7 +47,9 @@
   - if !@clients.blank?
     - for client in @clients
       %tr
-        %td= link_to client.last_first_name, client_path(client, :return_to => "household_path(#{@household.id})")
+        %td
+          = link_to client.last_first_name, client_path(client, :return_to => "household_path(#{@household.id})"), :class => 'client_link', :style => "display:#{display}"
+          %span{:style => "display:#{not_display}"}= client.last_first_name
         %td= client.age
         %td= "(head of household)" if client.headOfHousehold?
   - else
@@ -98,7 +107,7 @@
     %td= @household.res_vi_yn
   -if @household.has_res_doc_in_db?
     %tr
-      %td= link_to "View residency verification information", qualification_document_path(@household.res_qualdoc.id)
+      %td= link_to "View residency verification information", qualification_document_path(@household.res_qualdoc.id), :class => 'document_link', :style => "visibility:#{visible}"
 %table{:style => "padding-top:30px"}
   %tr
     %td{:style => "width:300px"} Income confirmed?
@@ -114,7 +123,7 @@
     %td= @household.inc_vi_yn
   -if @household.has_inc_doc_in_db?
     %tr
-      %td= link_to "View income verification information", qualification_document_path(@household.inc_qualdoc.id)
+      %td= link_to "View income verification information", qualification_document_path(@household.inc_qualdoc.id), :class => 'document_link', :style => "visibility:#{visible}"
 %table{:style => "padding-top:30px"}
   %tr
     %td{:style => "width:300px"} Government income confirmed?
@@ -130,4 +139,4 @@
     %td= @household.gov_vi_yn
   -if @household.has_gov_doc_in_db?
     %tr
-      %td= link_to "View government income verification information", qualification_document_path(@household.gov_qualdoc.id)
+      %td= link_to "View government income verification information", qualification_document_path(@household.gov_qualdoc.id), :class => 'document_link', :style => "visibility:#{visible}"

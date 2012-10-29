@@ -151,25 +151,32 @@ Feature: Client check in
     And I should see "Quickcheck completed"
 
 @selenium
-  Scenario: Navigate away during quickcheck to fix client errors and then return to quickcheck
+  Scenario: Navigate to show client during quickcheck and then return to quickcheck
     Given there is a household with residency, income and govtincome current in the database
     And there is a client with last name "Arbogast", first name "Fanny", age "20", with id date "Date.new(2009,1,1)" in the database belonging to the household
     And there is a client with last name "Normal", first name "Norman", age "20", with id date "Date.new(2009,1,1)" in the database belonging to the household
     And I am quickchecking Fanny Arbogast
     Then The status for "Fanny Arbogast" should be "expired on 1 Jan 2010"
-    And I click "Confirm" for "Fanny Arbogast"
+    And The id document for "Fanny Arbogast" should exist
+    And The id document for "Norman Normal" should exist
+    Then I click "Confirm" for "Fanny Arbogast"
     And I click "Warn" for "Norman Normal"
     Then The status for "Fanny Arbogast" should be "current"
     And there should be an unwarn link for "Normal, Norman. 20"
     And the number of warnings for "Normal, Norman. 20" should be 1
-    When I follow "Arbogast, Fanny. 20"
-    Then I should see "Fanny Arbogast" within: "h1"
+    When I follow "Normal, Norman. 20"
+    Then I should see "Norman Normal" within: "h1"
     And the Id document in the database for Fanny Arbogast should have "confirmed status"
     And the Id document in the database for Fanny Arbogast should have "today's date"
     And there should be 1 client checkin in the database for "Fanny Arbogast"
     And there should be 1 client checkin in the database for "Norman Normal"
     And the client checkin for "Norman Normal" should have id_warn true
     And there should be 1 household checkin in the database for the household
+    And view household hyperlink should be disabled
+    And delete client hyperlink should be disabled
+    And document hyperlinks should be disabled
+    And recent checkins client hyperlinks should be disabled
+    And I should see a "Return to checkin" button
     When I click the browser back button
     Then I should see "Client quick check" within: "h1"
     And The status for "Fanny Arbogast" should be "current"
@@ -177,7 +184,7 @@ Feature: Client check in
     And there should be an unwarn link for "Normal, Norman. 20"
 
 @selenium
-  Scenario: Navigate away during quickcheck to fix household errors and then return to quickcheck
+  Scenario: Navigate to show household during quickcheck and then return to quickcheck
     Given there is a household with residency, income and govtincome current in the database
     And there is a client with last name "Arbogast", first name "Fanny", age "20", with id date "Date.new(2009,1,1)" in the database belonging to the household
     And there is a client with last name "Normal", first name "Norman", age "20", with id date "Date.new(2009,1,1)" in the database belonging to the household
@@ -196,11 +203,24 @@ Feature: Client check in
     And there should be 1 client checkin in the database for "Norman Normal"
     And the client checkin for "Norman Normal" should have id_warn true
     And there should be 1 household checkin in the database for the household
+    And delete household hyperlink should be disabled
+    And resident hyperlinks should be disabled
+    And document hyperlinks should be disabled
+    And I should see a "Return to checkin" button
     When I click the browser back button
     Then I should see "Client quick check" within: "h1"
     And The status for "Fanny Arbogast" should be "current"
     And the number of warnings for "Normal, Norman. 20" should be 1
     And there should be an unwarn link for "Normal, Norman. 20"
+
+  Scenario: Edit a client during checkin
+    Given pending: Edit a client during checkin
+
+  Scenario: Edit a household during checkin
+    Given pending: Edit a household during checkin
+
+  Scenario: Show recent checkins for client
+    Given pending: Show recent checkins for client
 
   Scenario: Download a client id document that has been saved
     Given pending: Download a client id document that has been saved

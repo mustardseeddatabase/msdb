@@ -135,3 +135,51 @@ Then /^the client checkin for "(.*?)" should have id_warn true$/ do |first_last_
   client_id = Client.find_by_lastName(last_name).id
   ClientCheckin.find_by_client_id(client_id).id_warn.should == true
 end
+
+Then /^view household hyperlink should be disabled$/ do
+  page.all(:xpath, ".//a[contains(.,'View household')]").should_not be_empty
+  page.all(:xpath, ".//a[contains(.,'View household')]").each do |el|
+    el['style'].should == 'visibility: hidden; '
+  end
+end
+
+Then /^delete client hyperlink should be disabled$/ do
+  page.all(:xpath, ".//a[contains(.,'Delete this client')]").should_not be_empty
+  page.all(:xpath, ".//a[contains(.,'Delete this client')]").each do |el|
+    el['style'].should == 'visibility: hidden; '
+  end
+end
+
+Then /^recent checkins client hyperlinks should be disabled$/ do
+  page.all(:css, "a.client_link").should_not be_empty
+  page.all(:css, "a.client_link").each do |el|
+    el['style'].should == 'display: none; '
+  end
+end
+
+Then /^delete household hyperlink should be disabled$/ do
+  page.all(:xpath, ".//a[contains(.,'Delete this household')]").should_not be_empty
+  page.all(:xpath, ".//a[contains(.,'Delete this household')]").each do |el|
+    el['style'].should == 'visibility: hidden; '
+  end
+end
+
+Then /^resident hyperlinks should be disabled$/ do
+  page.all(:css,"a.client_link").should_not be_empty
+  page.all(:css,"a.client_link").each do |el|
+    el['style'].should == 'display: none; '
+  end
+end
+
+Then /^document hyperlinks should be disabled$/ do
+  page.all(:css, "a.document_link").should_not be_empty
+  page.all(:css, "a.document_link").each do |el|
+    el['style'].should == 'visibility: hidden; '
+  end
+end
+
+Then /^The id document for "(.*?)" should exist$/ do |first_last_name|
+  first_name, last_name = first_last_name.split(" ")
+  client = Client.find_by_lastName(last_name)
+  client.has_id_doc_in_db?.should == true
+end

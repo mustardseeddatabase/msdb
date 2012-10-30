@@ -1,11 +1,11 @@
-- checkin = params[:context] == 'checkin'
-- visible = checkin ? 'hidden' : 'visible'
-- display = checkin ? 'none' : 'inline'
-- not_display = checkin ? 'inline' : 'none'
-- not_visible = checkin ? 'visible' : 'hidden'
+- visible = @checkin ? 'hidden' : 'visible'
+- display = @checkin ? 'none' : 'inline'
+- not_display = @checkin ? 'inline' : 'none'
+- not_visible = @checkin ? 'visible' : 'hidden'
+- edit_path = @checkin ? edit_checkin_client_path(params[:checkin_id],@client) : edit_client_path(@client)
 = message_block :on => :client
-- if checkin
-  =button_to 'Return to checkin', :back, :method => :get
+- if @checkin
+  =button_to 'Return to checkin', edit_client_checkin_path(params[:checkin_id],@primary_client_id), :method => :get
 %h1= @client.first_last_name
 %table
   %tr
@@ -78,7 +78,7 @@
 
 %table{:style => "padding-top : 30px"}
   %tr
-    %td= link_to 'Edit this client', edit_client_path(@client)
+    %td= link_to 'Edit this client', edit_path
   %tr
     %td{:colspan => '2'}= link_to 'Delete this client', client_path(@client, :return_to => @return_to), :method => :delete, :id => :delete_client_link, :style => "visibility:#{visible}", :data => {:confirm => 'Are you sure?'}
 

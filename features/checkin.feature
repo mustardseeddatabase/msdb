@@ -213,11 +213,67 @@ Feature: Client check in
     And the number of warnings for "Normal, Norman. 20" should be 1
     And there should be an unwarn link for "Normal, Norman. 20"
 
+@selenium
   Scenario: Edit a client during checkin
-    Given pending: Edit a client during checkin
+    Given there is a household with residency, income and govtincome current in the database
+    And there is a client with last name "Arbogast", first name "Fanny", age "20", with id date "Date.new(2009,1,1)" in the database belonging to the household
+    And there is a client with last name "Normal", first name "Norman", age "20", with id date "Date.new(2009,1,1)" in the database belonging to the household
+    And I am quickchecking Fanny Arbogast
+    When I follow "Normal, Norman. 20"
+    Then I should see "Norman Normal" within: "h1"
+    When I follow "Edit this client"
+    Then I should see "Edit Norman Normal" within: "h1"
+    Then I some edit features should be disabled (what features?)
+    When I press "Save"
+    Then I should see "Norman Normal" within: "h1"
+    And I should see a "Return to checkin" button
+    When I press "Return to checkin"
+    Then I should see "Client quick check" within: "h1"
 
+@selenium
+  Scenario: Edit a client during checkin, and cancel
+    Given there is a household with residency, income and govtincome current in the database
+    And there is a client with last name "Arbogast", first name "Fanny", age "20", with id date "Date.new(2009,1,1)" in the database belonging to the household
+    And there is a client with last name "Normal", first name "Norman", age "20", with id date "Date.new(2009,1,1)" in the database belonging to the household
+    And I am quickchecking Fanny Arbogast
+    When I follow "Normal, Norman. 20"
+    Then I should see "Norman Normal" within: "h1"
+    When I follow "Edit this client"
+    Then I should see "Edit Norman Normal" within: "h1"
+    When I follow "Cancel"
+    Then I should see "Norman Normal" within: "h1"
+    And I should see a "Return to checkin" button
+    When I press "Return to checkin"
+    Then I should see "Client quick check" within: "h1"
+
+@selenium
   Scenario: Edit a household during checkin
-    Given pending: Edit a household during checkin
+    Given there is a household with residency, income and govtincome current in the database
+    And there is a client with last name "Arbogast", first name "Fanny", age "20", with id date "Date.new(2009,1,1)" in the database belonging to the household
+    And there is a client with last name "Normal", first name "Norman", age "20", with id date "Date.new(2009,1,1)" in the database belonging to the household
+    And I am quickchecking Fanny Arbogast
+    When I follow "View household"
+    Then I should see "Household information" within: "h1"
+    When I follow "Edit this household"
+    Then I some edit features should be disabled (what features?)
+    And I press "Save"
+    Then I should see a "Return to checkin" button
+    When I press "Return to checkin"
+    Then I should see "Client quick check" within: "h1"
+
+@selenium
+  Scenario: Edit a household during checkin, then cancel
+    Given there is a household with residency, income and govtincome current in the database
+    And there is a client with last name "Arbogast", first name "Fanny", age "20", with id date "Date.new(2009,1,1)" in the database belonging to the household
+    And there is a client with last name "Normal", first name "Norman", age "20", with id date "Date.new(2009,1,1)" in the database belonging to the household
+    And I am quickchecking Fanny Arbogast
+    When I follow "View household"
+    Then I should see "Household information" within: "h1"
+    When I follow "Edit this household"
+    And I follow "Cancel"
+    Then I should see a "Return to checkin" button
+    When I press "Return to checkin"
+    Then I should see "Client quick check" within: "h1"
 
   Scenario: Show recent checkins for client
     Given pending: Show recent checkins for client

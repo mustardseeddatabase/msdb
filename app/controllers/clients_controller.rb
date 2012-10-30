@@ -19,6 +19,7 @@ class ClientsController < ApplicationController
   def edit
     @client = Client.find(params[:id])
     @household = @client.household
+    @url = params[:checkin_id] ? checkin_client_path(params[:checkin_id], @client) : client_path(@client)
   end
 
   def update
@@ -26,7 +27,7 @@ class ClientsController < ApplicationController
     if @client.update_attributes(params[:client])
       @client.assign_as_sole_head_of_household if @client.headOfHousehold?
       flash[:info] = "Client updated"
-      redirect_to client_path(@client)
+      redirect_to params[:checkin_id] ? checkin_client_path(params[:checkin_id], @client) : client_path(@client)
     else
       flash[:error] = @client.errors.full_messages
       redirect_to edit_client_path(@client)
@@ -38,8 +39,7 @@ class ClientsController < ApplicationController
     @client_checkins = @client.client_checkins.sort_by(&:created_at).reverse
     @household = Household.find(params[:household_id]) unless params[:household_id].nil?
     @return_to = params[:return_to]
-    @checkin = true if params[:context] == 'checkin'
-    @primary_checkin_id = params[:primary_checkin_id]
+    @primary_client_id = @checkin = params[:checkin_id]
     respond_to do |format|
       format.html
       format.js do

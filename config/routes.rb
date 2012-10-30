@@ -34,6 +34,10 @@ Msdb::Application.routes.draw do
   resource :checkins do
     get 'new'
   end
+  resources :checkins do
+    resources :clients
+    resources :households
+  end
 
   resources :items # for actions for which it's not known if the item has a sku or upc
   match '/upc_items/:upc', :to => 'upc_items#show', :via => :get, :as => :upc_item # for the upc_items controller, we use the upc as a reference

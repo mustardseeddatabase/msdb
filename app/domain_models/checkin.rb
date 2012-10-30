@@ -2,7 +2,7 @@ class Checkin
   class InvalidClientError < StandardError; end
   class InvalidHouseholdCheckinError < StandardError; end
   attr_reader :id
-  attr_accessor :client, :household_checkin, :household, :client_checkins
+  attr_accessor :client, :household_checkin, :household, :client_checkins, :primary_client_id
 
   def self.create(client)
     new(:client => client).save
@@ -11,6 +11,7 @@ class Checkin
   def initialize(attrs)
     if @client = attrs[:client]
       raise InvalidClientError if !@client.is_a?(Client)
+      @primary_client_id = @client.id
       @household = @client.household
       raise InvalidClientError if !@household
     end

@@ -32,6 +32,20 @@ describe Checkin do
         checkin.household.should == household
       end
     end
+
+    context "when there are multiple clients in the household" do
+      describe "#primary_client_id" do
+        let(:client){ FactoryGirl.create(:client) }
+        let(:other_client){ FactoryGirl.create(:client) }
+        let(:household){ FactoryGirl.create(:household) }
+        let(:checkin){ Checkin.new(:client => client) }
+        before { household.clients << [client, other_client] }
+
+        it "should return the id of the client checking in on behalf of the household" do
+          checkin.primary_client_id.should == client.id
+        end
+      end
+    end
   end
 
   context '.new method with household_checkin attribute' do

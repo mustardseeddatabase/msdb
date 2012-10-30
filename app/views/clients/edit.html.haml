@@ -1,6 +1,6 @@
 = message_block :on => :client
 %h1 Edit #{@client.first_last_name}
-= render 'client_form', :return_page => client_path(@client)
+= render 'client_form', :return_page => params[:checkin_id] ? checkin_client_path(params[:checkin_id], @client) : client_path(@client)
 :javascript
   $(function(){
     $('#client_headOfHousehold').live('change', function(){

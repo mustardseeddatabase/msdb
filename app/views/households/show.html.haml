@@ -1,14 +1,14 @@
-- checkin = params[:context] == 'checkin'
-- visible = checkin ? 'hidden' : 'visible'
-- display = checkin ? 'none' : 'inline'
-- not_display = checkin ? 'inline' : 'none'
-- not_visible = checkin ? 'visible' : 'hidden'
+- visible = @checkin ? 'hidden' : 'visible'
+- display = @checkin ? 'none' : 'inline'
+- not_display = @checkin ? 'inline' : 'none'
+- not_visible = @checkin ? 'visible' : 'hidden'
+- edit_path = @checkin ? edit_checkin_household_path(params[:checkin_id],@household) : edit_household_path(@household)
 = message_block :on => [:client, :household]
-- if checkin
-  =button_to 'Return to checkin', :back, :method => :get
+- if @checkin
+  =button_to 'Return to checkin', edit_client_checkin_path(params[:checkin_id],@primary_client_id), :method => :get
 %h1 Household information
 %p= link_to 'Delete this household', household_path(@household), :method => :delete, :style => "visibility:#{visible}", :data => {:confirm => 'Are you sure?'}
-%p= link_to 'Edit this household', edit_household_path(@household)
+%p= link_to 'Edit this household', edit_path
 %table
   %tr
     %td{:width => '120px'} Permanent address

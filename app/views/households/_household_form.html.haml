@@ -1,4 +1,5 @@
-= form_for household, :html => {:id => 'household_form', :multipart => true} do |f|
+- return_page = params[:checkin_id] ? checkin_household_path(params[:checkin_id], @household) : households_path(@household_search.to_params)
+= form_for household, :url => @url, :html => {:id => 'household_form', :multipart => true} do |f|
   = hidden_field_tag :index_query, @household_search.params.to_json unless @household_search.nil?
   %div{:style => 'float:left; display:inline; padding-right:30px'}
     = f.fields_for :perm_address do |p|
@@ -118,7 +119,7 @@
     = render :partial => 'qualdoc', :locals => {:name => 'Income',            :qualdoc => @household.inc_qualdoc, :f => f, :padding => '30px'}
     = render :partial => 'qualdoc', :locals => {:name => 'Government income', :qualdoc => @household.gov_qualdoc, :f => f, :padding => '30px'}
 
-  - submit_or_return_to(households_path(@household_search.to_params))
+  - submit_or_return_to(return_page)
 
 = form_tag "action_to_be_replaced_by_javascript", :id => :the_real_upload_form, :style => 'display:none', :method => :put, :multipart => true
 :javascript

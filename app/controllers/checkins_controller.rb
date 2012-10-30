@@ -35,11 +35,7 @@ class CheckinsController < ApplicationController
     client_id = params[:client_id]
     client_checkin_id = params[:id]
     docs = params[:qualification_documents].values
-
-    QualificationDocument.update_collection(docs)
-    checkin = Checkin.find_by_client_checkin_id(client_checkin_id)
-    checkin.update(docs)
-
+    do_updates(docs, client_checkin_id)
     render :nothing => true, :status => :ok # the "quickcheck complete" scenario
   end
 
@@ -47,25 +43,25 @@ class CheckinsController < ApplicationController
     client_id = params[:client_id]
     docs = params[:qualification_documents]
     client_checkin_id = params[:checkin_id]
-
-    QualificationDocument.update_collection(docs)
-    checkin = Checkin.find_by_client_checkin_id(client_checkin_id)
-    checkin.update(docs)
-    redirect_to client_path(client_id, :context => :checkin, :primary_client_id => params[:primary_client_id], :primary_checkin_id => client_checkin_id)
+    do_updates(docs, client_checkin_id)
+    redirect_to checkin_client_path(client_checkin_id, client_id)
   end
 
   def update_and_show_household
     household_id = params[:household_id]
     docs = params[:qualification_documents]
     client_checkin_id = params[:checkin_id]
-
-    QualificationDocument.update_collection(docs)
-    checkin = Checkin.find_by_client_checkin_id(client_checkin_id)
-    checkin.update(docs)
-    redirect_to household_path(household_id, :context => :checkin, :primary_client_id => params[:primary_client_id], :primary_checkin_id => client_checkin_id)
+    do_updates(docs, client_checkin_id)
+    redirect_to checkin_household_path(client_checkin_id, household_id)
   end
 
   private
+
+  def do_updates(docs, client_checkin_id)
+    QualificationDocument.update_collection(docs)
+    checkin = Checkin.find_by_client_checkin_id(client_checkin_id)
+    checkin.update(docs)
+  end
 
   def set_cache_buster
     response.headers["Cache-Control"] = "no-cache, no-store, max-age=0, must-revalidate"

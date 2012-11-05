@@ -40,7 +40,7 @@
     var color_code = '#{household_color_code}'
     var client_id = #{client.id}
     var id = #{params[:id]}
-    var permissions = #{{:upload_permitted => current_user_permitted?({:controller => 'qualification_documents', :action => 'upload'}),
+    var permissions = #{{:upload_permitted => current_user_permitted?({:controller => 'qualification_documents', :action => 'create'}) || current_user_permitted?({:controller => 'qualification_documents', :action => 'update'}),
                          :download_permitted => current_user_permitted?({:controller => 'qualification_documents', :action => 'show'}),
                          :delete_permitted => current_user_permitted?({:controller => 'qualification_documents', :action => 'delete'})}.to_json}
     var qualdoc = new Quickcheck.QualdocView(docs, color_code, permissions)

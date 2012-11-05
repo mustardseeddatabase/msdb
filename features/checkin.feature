@@ -93,7 +93,8 @@ Feature: Client check in
 @selenium
   Scenario: Follow the document check sequence, start to upload a document, but then waive the requirement
     Given there is a household with residency, income and govtincome current in the database
-    And permission is granted for "admin" to go to the "qualification_documents#upload" page
+    And permission is granted for "admin" to go to the "qualification_documents#create" page
+    And permission is granted for "admin" to go to the "qualification_documents#update" page
     And there is a client with last name "Arbogast", first name "Fanny", age "20", with id date "Date.new(2009,1,1)" in the database belonging to the household
     And I am quickchecking Fanny Arbogast
     And I follow "Upload" for "Fanny Arbogast"
@@ -122,13 +123,13 @@ Feature: Client check in
     And I am quickchecking Fanny Arbogast
     Then There should be no document delete links on the page
 
-@selenium
-  Scenario: Follow the document check sequence, and upload a document
+@selenium @allow-rescue
+  Scenario: Follow the document check sequence, and upload an id document, when client did not previously have one
     Given there is a household with residency, income and govtincome expired in the database
-    And permission is granted for "admin" to go to the "qualification_documents#upload" page
+    And permission is granted for "admin" to go to the "qualification_documents#create" page
     And permission is granted for "admin" to go to the "qualification_documents#show" page
     And permission is granted for "admin" to go to the "qualification_documents#delete" page
-    And there is a client with last name "Arbogast", first name "Fanny", age "20", with id date "Date.new(2009,1,1)", and 1 warning, in the database belonging to the household
+    And there is a client with last name "Arbogast", first name "Fanny", with no id document in the database
     And I am quickchecking Fanny Arbogast
     And I follow "Upload" for "Fanny Arbogast"
     Then I should see a file selector
@@ -138,9 +139,24 @@ Feature: Client check in
     And I should see a view document link for "Fanny Arbogast"
     And I should see a delete document link for "Fanny Arbogast"
 
+@selenium @allow-rescue
+  Scenario: Follow the document check sequence, and upload an id document, replacing previous document
+    Given there is a household with residency, income and govtincome expired in the database
+    And permission is granted for "admin" to go to the "qualification_documents#update" page
+    And permission is granted for "admin" to go to the "qualification_documents#show" page
+    And permission is granted for "admin" to go to the "qualification_documents#delete" page
+    And there is a client with last name "Arbogast", first name "Fanny", age "20", with id date "Date.new(2009,1,1)", and 1 warning, in the database belonging to the household
+    And I am quickchecking Fanny Arbogast
+    And I follow "Upload" for "Fanny Arbogast"
+    Then I should see a file selector
+    When I upload a file
+    Then I should see "Document saved"
+    And Fanny Arbogast should have 0 id warning
+
 @selenium
   Scenario: Follow the document check sequence, upload the final document to complete checkout
-    And permission is granted for "admin" to go to the "qualification_documents#upload" page
+    Given permission is granted for "admin" to go to the "qualification_documents#create" page
+    And permission is granted for "admin" to go to the "qualification_documents#update" page
     And there is a household with residency, income and govtincome current in the database
     And there is a client with last name "Normal", first name "Norman", age "20", with id date "Date.new(2009,1,1)" in the database belonging to the household
     And I am quickchecking Norman Normal
@@ -216,19 +232,19 @@ Feature: Client check in
 @selenium
   Scenario: Edit a client during checkin
     Given there is a household with residency, income and govtincome current in the database
-    And there is a client with last name "Arbogast", first name "Fanny", age "20", with id date "Date.new(2009,1,1)" in the database belonging to the household
+    And there is a client with last name "Humperdinck", first name "Hubert", age "20" in the database
     And there is a client with last name "Normal", first name "Norman", age "20", with id date "Date.new(2009,1,1)" in the database belonging to the household
+    And there is a client with last name "Arbogast", first name "Fanny", age "20", with id date "Date.new(2009,1,1)" in the database belonging to the household
     And I am quickchecking Fanny Arbogast
-    When I follow "Normal, Norman. 20"
-    Then I should see "Norman Normal" within: "h1"
+    When I follow "Arbogast, Fanny. 20"
+    Then I should see "Fanny Arbogast" within: "h1"
     When I follow "Edit this client"
-    Then I should see "Edit Norman Normal" within: "h1"
-    Then I some edit features should be disabled (what features?)
+    Then I should see "Edit Fanny Arbogast" within: "h1"
     When I press "Save"
-    Then I should see "Norman Normal" within: "h1"
+    Then I should see "Fanny Arbogast" within: "h1"
     And I should see a "Return to checkin" button
     When I press "Return to checkin"
-    Then I should see "Client quick check" within: "h1"
+    Then I should see "Client quick check: Fanny Arbogast" within: "h1"
 
 @selenium
   Scenario: Edit a client during checkin, and cancel
@@ -249,21 +265,26 @@ Feature: Client check in
 @selenium
   Scenario: Edit a household during checkin
     Given there is a household with residency, income and govtincome current in the database
+    And there is a client with last name "Humperdinck", first name "Hubert", age "20" in the database
     And there is a client with last name "Arbogast", first name "Fanny", age "20", with id date "Date.new(2009,1,1)" in the database belonging to the household
     And there is a client with last name "Normal", first name "Norman", age "20", with id date "Date.new(2009,1,1)" in the database belonging to the household
     And I am quickchecking Fanny Arbogast
     When I follow "View household"
     Then I should see "Household information" within: "h1"
     When I follow "Edit this household"
-    Then I some edit features should be disabled (what features?)
+    And the remove resident links should be disabled
+    And the add resident link should be disabled
+    And the upload document links should be disabled
     And I press "Save"
-    Then I should see a "Return to checkin" button
+    Then I should see "Household information" within: "h1"
+    And I should see a "Return to checkin" button
     When I press "Return to checkin"
     Then I should see "Client quick check" within: "h1"
 
 @selenium
   Scenario: Edit a household during checkin, then cancel
     Given there is a household with residency, income and govtincome current in the database
+    And there is a client with last name "Humperdinck", first name "Hubert", age "20" in the database
     And there is a client with last name "Arbogast", first name "Fanny", age "20", with id date "Date.new(2009,1,1)" in the database belonging to the household
     And there is a client with last name "Normal", first name "Norman", age "20", with id date "Date.new(2009,1,1)" in the database belonging to the household
     And I am quickchecking Fanny Arbogast
@@ -275,8 +296,19 @@ Feature: Client check in
     When I press "Return to checkin"
     Then I should see "Client quick check" within: "h1"
 
+@selenium
   Scenario: Show recent checkins for client
-    Given pending: Show recent checkins for client
+    Given there is a household with residency, income and govtincome current in the database
+    And there is a client with last name "Arbogast", first name "Fanny", age "20", with id date "Date.new(2009,1,1)" in the database belonging to the household
+    And there is a client with last name "Normal", first name "Norman", age "20", with id date "Date.new(2009,1,1)" in the database belonging to the household
+    And I am quickchecking Fanny Arbogast
+    When I follow "Normal, Norman. 20"
+    Then I should see "Norman Normal" within: "h1"
+    And there should be 1 recent checkin by "Fanny Arbogast"
+    Then I press "Return to checkin"
+    And I follow "Arbogast, Fanny. 20"
+    Then I should see "Fanny Arbogast" within: "h1"
+    And there should be 1 recent checkin
 
   Scenario: Download a client id document that has been saved
     Given pending: Download a client id document that has been saved
@@ -286,3 +318,6 @@ Feature: Client check in
 
   Scenario: View a qualification document
     Given pending: View a qualification document
+
+  Scenario: Upload a household document
+    Given pending: Upload a household document

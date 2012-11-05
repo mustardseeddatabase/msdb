@@ -87,6 +87,15 @@ Given /^there is a client with last name "([^"]*)", first name "([^"]*)", age "(
           :id_qualdoc => id_qualdoc)
 end
 
+Given /^there is a client with last name "(.*?)", first name "(.*?)", with no id document in the database$/ do |last_name, first_name|
+  household = Household.first
+  FactoryGirl.create(:client,
+          :lastName => last_name,
+          :firstName => first_name,
+          :birthdate => 20.years.ago,
+          :household_id => household.id)
+end
+
 Then /^I click "([^"]*)"$/ do |active_text|
   find(:xpath, ".//li[text()=\"#{active_text}\"]").click
 end

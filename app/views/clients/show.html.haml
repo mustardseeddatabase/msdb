@@ -5,7 +5,7 @@
 - edit_path = @checkin ? edit_checkin_client_path(params[:checkin_id],@client) : edit_client_path(@client)
 = message_block :on => :client
 - if @checkin
-  =button_to 'Return to checkin', edit_client_checkin_path(params[:checkin_id],@primary_client_id), :method => :get
+  =button_to 'Return to checkin', edit_client_checkin_path(@primary_client_id, params[:checkin_id]), :method => :get
 %h1= @client.first_last_name
 %table
   %tr

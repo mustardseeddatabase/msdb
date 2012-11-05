@@ -178,7 +178,12 @@ class Client < ActiveRecord::Base
     household_checkin = HouseholdCheckin.find(checkin.household_checkin_id) if checkin
     client_checkin = household_checkin && household_checkin.client_checkins.where('client_id = ?',id)[0]
     iq = (id_qualdoc && id_qualdoc.qualification_vector) || IdQualdoc.new(:association_id => id).qualification_vector
-    iq.merge({:head_of_household => headOfHousehold?, :url => url, :name_age => name_age, :errors => missing_data_errors, :warned => client_checkin && client_checkin.id_warn})
+    iq = (id_qualdoc || IdQualdoc.new(:association_id => id)).qualification_vector
+    iq.merge({ :head_of_household => headOfHousehold?,
+               :url => url,
+               :name_age => name_age,
+               :errors => missing_data_errors,
+               :warned => client_checkin && client_checkin.id_warn})
   end
 
   def has_id_doc_in_db?

@@ -31,9 +31,12 @@ class Checkin
       cc.household_checkin_id = household_checkin.id
       if cc.client_id == client.id
         cc.primary = true
+        cc.save
+        @id = cc.id
+      else
+        cc.primary = false
+        cc.save
       end
-      cc.save
-      @id = cc.id
     end
     self
   end

@@ -24,9 +24,7 @@ Msdb::Application.routes.draw do
     resources :checkins do
       post 'update_and_show_client' # would normally be 'put', but post is much easier to implement!
     end
-    resources :qualification_documents do
-      put 'upload' # would normally be 'put' but we use ajax, not form submission
-    end
+    resources :qualification_documents
   end
 
   resources :qualification_documents

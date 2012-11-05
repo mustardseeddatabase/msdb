@@ -1,5 +1,5 @@
 class Quickcheck.UploadView extends Backbone.View
-  initialize: (@doc_id)->
+  initialize: ->
     @template = JST["backbone/templates/upload_form"]
     @render()
 
@@ -25,8 +25,14 @@ class Quickcheck.UploadView extends Backbone.View
       $('#docform').attr('action',@model.upload_url)
       $('#authenticity_token').attr('value', authenticity_token)
       # TODO move this to the model
-      $.ajax(@model.upload_url, {
-           data: $("input",$(@el)).serializeArray(),
+      data = [{name:"utf8", value:"&#10003"},
+              {name:"authenticity_token", value:authenticity_token},
+              {name:"qualification_document[association_id]", value:@model.get('association_id')},
+              {name:"qualification_document[doctype]", value:@model.get('doctype')}]
+      data.push {name:"_method", value:"put"} if !@model.new()
+      $.ajax(@model.upload_url + @doc_id_or_new(), {
+           #data: $("input",$(@el)).serializeArray(),
+           data: data,
            files: $("#docfile_input"),
            iframe: true,
            processData: false,
@@ -49,7 +55,7 @@ class Quickcheck.UploadView extends Backbone.View
     $('#upload_form_contents').fadeIn()
 
   doc_id_or_new: ->
-    if @doc_id != null
-      @doc_id
+    if @model.new()
+      ""
     else
-      'new'
+      "/"+@model.get('id')

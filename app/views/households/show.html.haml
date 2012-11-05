@@ -5,7 +5,7 @@
 - edit_path = @checkin ? edit_checkin_household_path(params[:checkin_id],@household) : edit_household_path(@household)
 = message_block :on => [:client, :household]
 - if @checkin
-  =button_to 'Return to checkin', edit_client_checkin_path(params[:checkin_id],@primary_client_id), :method => :get
+  =button_to 'Return to checkin', edit_client_checkin_path(@primary_client_id,params[:checkin_id]), :method => :get
 %h1 Household information
 %p= link_to 'Delete this household', household_path(@household), :method => :delete, :style => "visibility:#{visible}", :data => {:confirm => 'Are you sure?'}
 %p= link_to 'Edit this household', edit_path

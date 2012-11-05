@@ -183,3 +183,32 @@ Then /^The id document for "(.*?)" should exist$/ do |first_last_name|
   client = Client.find_by_lastName(last_name)
   client.has_id_doc_in_db?.should == true
 end
+
+When /^the remove resident links should be disabled$/ do
+  page.all(:css, 'a.remove_resident').each do |link|
+    link['style'].should == 'display: none; '
+  end
+end
+
+When /^the add resident link should be disabled$/ do
+  link = page.find(:css, 'a#add_resident')
+  link['style'].should == 'display: none; '
+end
+
+When /^the upload document links should be disabled$/ do
+  page.all(:css, 'a.document_upload').each do |link|
+    link['style'].should == 'display: none; '
+  end
+end
+
+Then /^there should be (\d+) recent checkin by "(.*?)"$/ do |count, name|
+  recent_checkins = page.all(:css, 'tr.client_link')
+  recent_checkins.count.should == count.to_i
+  recent_checkins[0].should have_content(name)
+end
+
+
+Then /^there should be (\d+) recent checkin$/ do |count|
+  recent_checkins = page.all(:css, 'tr.client_link')
+  recent_checkins.count.should == count.to_i
+end

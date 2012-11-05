@@ -39,7 +39,8 @@ class ClientsController < ApplicationController
     @client_checkins = @client.client_checkins.sort_by(&:created_at).reverse
     @household = Household.find(params[:household_id]) unless params[:household_id].nil?
     @return_to = params[:return_to]
-    @primary_client_id = @checkin = params[:checkin_id]
+    @checkin = Checkin.find_by_client_checkin_id(params[:checkin_id])
+    @primary_client_id = @checkin.primary_client_id
     respond_to do |format|
       format.html
       format.js do

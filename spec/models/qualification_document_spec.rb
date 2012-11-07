@@ -80,9 +80,9 @@ describe "#remove_document" do
   end
 
   it "should remove the file from the filesystem" do
-    @doc.docfile.present?.should == true
+    @doc.docfile.present?.should be_true
     @doc.remove_file
-    @doc.docfile.present?.should == false
+    @doc.docfile.present?.should be_false
   end
 end
 
@@ -90,6 +90,7 @@ end
 describe "FactoryGirl qualification document" do
   context "using create strategy" do
     before(:all) do
+      `rm -f tmp/factory*`
       @doc = FactoryGirl.create(:res_qualdoc)
     end
 
@@ -110,6 +111,7 @@ describe "FactoryGirl qualification document" do
 
   context "using build strategy" do
     before(:all) do
+      `rm -f tmp/factory*`
       @doc = FactoryGirl.build(:res_qualdoc)
     end
 

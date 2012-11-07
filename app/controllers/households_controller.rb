@@ -56,8 +56,10 @@ class HouseholdsController < ApplicationController
   def show
     @household = Household.includes(:clients).find(params[:id])
     @clients = @household.clients.sort_by{|c| c.age || 0 }.reverse
-    @checkin = params[:checkin_id]
-    @primary_client_id = Checkin.find_by_client_checkin_id(@checkin).primary_client_id
+    if params[:checkin_id]
+      @checkin = params[:checkin_id]
+      @primary_client_id = Checkin.find_by_client_checkin_id(@checkin).primary_client_id
+    end
   end
 
   def index

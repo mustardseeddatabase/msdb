@@ -139,42 +139,42 @@ end
 Then /^view household hyperlink should be disabled$/ do
   page.all(:xpath, ".//a[contains(.,'View household')]").should_not be_empty
   page.all(:xpath, ".//a[contains(.,'View household')]").each do |el|
-    el['style'].should == 'visibility: hidden; '
+    el['style'].strip.should == 'visibility: hidden;'
   end
 end
 
 Then /^delete client hyperlink should be disabled$/ do
   page.all(:xpath, ".//a[contains(.,'Delete this client')]").should_not be_empty
   page.all(:xpath, ".//a[contains(.,'Delete this client')]").each do |el|
-    el['style'].should == 'visibility: hidden; '
+    el['style'].strip.should == 'visibility: hidden;'
   end
 end
 
 Then /^recent checkins client hyperlinks should be disabled$/ do
   page.all(:css, "a.client_link").should_not be_empty
   page.all(:css, "a.client_link").each do |el|
-    el['style'].should == 'display: none; '
+    el['style'].strip.should == 'display: none;'
   end
 end
 
 Then /^delete household hyperlink should be disabled$/ do
   page.all(:xpath, ".//a[contains(.,'Delete this household')]").should_not be_empty
   page.all(:xpath, ".//a[contains(.,'Delete this household')]").each do |el|
-    el['style'].should == 'visibility: hidden; '
+    el['style'].strip.should == 'visibility: hidden;'
   end
 end
 
 Then /^resident hyperlinks should be disabled$/ do
   page.all(:css,"a.client_link").should_not be_empty
   page.all(:css,"a.client_link").each do |el|
-    el['style'].should == 'display: none; '
+    el['style'].strip.should == 'display: none;'
   end
 end
 
 Then /^document hyperlinks should be disabled$/ do
   page.all(:css, "a.document_link").should_not be_empty
   page.all(:css, "a.document_link").each do |el|
-    el['style'].should == 'visibility: hidden; '
+    el['style'].strip.should == 'visibility: hidden;'
   end
 end
 
@@ -186,18 +186,18 @@ end
 
 When /^the remove resident links should be disabled$/ do
   page.all(:css, 'a.remove_resident').each do |link|
-    link['style'].should == 'display: none; '
+    link['style'].strip.should == 'display: none;'
   end
 end
 
 When /^the add resident link should be disabled$/ do
   link = page.find(:css, 'a#add_resident')
-  link['style'].should == 'display: none; '
+  link['style'].strip.should == 'display: none;'
 end
 
 When /^the upload document links should be disabled$/ do
   page.all(:css, 'a.document_upload').each do |link|
-    link['style'].should == 'display: none; '
+    link['style'].strip.should == 'display: none;'
   end
 end
 

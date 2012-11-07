@@ -27,6 +27,7 @@ class HouseholdsController < ApplicationController
     @household.build_temp_address unless @household.temp_address
     @clients = @household.clients.sort_by{|c| c.age.nil? ? 0 : c.age}.reverse
     @include_clients = true
+    @url = params[:checkin_id] ? checkin_household_path(params[:checkin_id], @household) : household_path(@household)
   end
 
   def update
@@ -35,7 +36,14 @@ class HouseholdsController < ApplicationController
     if @household.update_attributes(params[:household])
       flash[:notice] = 'Household was updated'
       if params[:index_query] == "null"
-        redirect_to household_path(@household)
+        if client_checkin_id = params[:checkin_id]
+          checkin = Checkin.find_by_client_checkin_id(client_checkin_id)
+          household_id = checkin.household.id
+          redirect_to checkin_household_path(client_checkin_id, household_id)
+        else
+          redirect_to household_path(@household)
+        end
+
       else
         redirect_to households_path(@household_search.to_params)
       end
@@ -48,6 +56,10 @@ class HouseholdsController < ApplicationController
   def show
     @household = Household.includes(:clients).find(params[:id])
     @clients = @household.clients.sort_by{|c| c.age || 0 }.reverse
+    if params[:checkin_id]
+      @checkin = params[:checkin_id]
+      @primary_client_id = Checkin.find_by_client_checkin_id(@checkin).primary_client_id
+    end
   end
 
   def index

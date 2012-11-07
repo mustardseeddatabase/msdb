@@ -18,6 +18,7 @@ FactoryGirl.define do
     factory :id_qualdoc, :class => IdQualdoc do
       sourcefile = Proc.new{Rails.root.join("tmp","factory_id_qualdoc#{Kernel.rand(1000000000000)}.txt")}
       type "IdQualdoc"
+      #after(:build) do |doc|
       before(:create) do |doc| # don't create a document when strategy is 'build'
         doc.docfile = File.open(sourcefile.call,"w+")
       end
@@ -29,6 +30,7 @@ FactoryGirl.define do
     factory :res_qualdoc, :class => ResQualdoc do
       sourcefile = Proc.new{Rails.root.join("tmp","factory_res_qualdoc#{Kernel.rand(1000000000000)}.txt")}
       type "ResQualdoc"
+      #after(:build) do |doc|
       before(:create) do |doc| # don't create a document when strategy is 'build'
         doc.docfile = File.open(sourcefile.call,"w+")
       end
@@ -40,6 +42,7 @@ FactoryGirl.define do
     factory :inc_qualdoc, :class => IncQualdoc do
       sourcefile = Proc.new{Rails.root.join("tmp","factory_inc_qualdoc#{Kernel.rand(1000000000000)}.txt")}
       type "IncQualdoc"
+      #after(:build) do |doc|
       before(:create) do |doc| # don't create a document when strategy is 'build'
         doc.docfile = File.open(sourcefile.call,"w+")
       end
@@ -51,6 +54,7 @@ FactoryGirl.define do
     factory :gov_qualdoc, :class => GovQualdoc do
       sourcefile = Proc.new{Rails.root.join("tmp","factory_gov_qualdoc#{Kernel.rand(1000000000000)}.txt")}
       type "GovQualdoc"
+      #after(:build) do |doc|
       before(:create) do |doc| # don't create a document when strategy is 'build'
         doc.docfile = File.open(sourcefile.call,"w+")
       end

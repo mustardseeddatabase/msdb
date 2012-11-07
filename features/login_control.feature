@@ -83,4 +83,4 @@ Feature: Login control
     And I should not see an icon representing "admin"
 
   Scenario: Multiple failed logins exceed the threshold
-    Given this scenario is pending
+    Given pending: Multiple failed logins exceed the threshold

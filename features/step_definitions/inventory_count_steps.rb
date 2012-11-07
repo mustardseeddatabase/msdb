@@ -38,3 +38,6 @@ Then /^The item with barcode "([^"]*)" should (not )?be editable$/ do |barcode, 
   end
 end
 
+Then /^I follow "(.*?)" for the autocomplete item$/ do |arg1|
+  page.find(:css,"table#found_in_db").find(:css,"tr#description_autocomplete").find_link("Remove").click
+end

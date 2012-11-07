@@ -87,6 +87,15 @@ Given /^there is a client with last name "([^"]*)", first name "([^"]*)", age "(
           :id_qualdoc => id_qualdoc)
 end
 
+Given /^there is a client with last name "(.*?)", first name "(.*?)", with no id document in the database$/ do |last_name, first_name|
+  household = Household.first
+  FactoryGirl.create(:client,
+          :lastName => last_name,
+          :firstName => first_name,
+          :birthdate => 20.years.ago,
+          :household_id => household.id)
+end
+
 Then /^I click "([^"]*)"$/ do |active_text|
   find(:xpath, ".//li[text()=\"#{active_text}\"]").click
 end
@@ -128,7 +137,6 @@ Then /^I should (not )?see a link to "([^"]*)"$/ do |yes_no, link_name|
 end
 
 When /^I click the browser back button$/ do
-  #puts page.evaluate_script('window.history')
   page.evaluate_script('window.history.go(-1)')
 end
 
@@ -136,8 +144,11 @@ Then /^I select (faker )?options for the following select boxes:$/ do |faker,tab
   table.hashes.each do |hash|
     if faker == "faker "
       page.select hash[:value], :from => hash[:field]
+      #page.find("#"+hash[:field]).all(:css, 'option').detect{|e| e.value == hash[:value]}.select_option
     else
       page.select eval(hash[:value]), :from => hash[:field]
+      #val = eval(hash[:value])
+      #page.find("#"+hash[:field]).all(:css, 'option').detect{|e| e.value == val }.select_option
     end
   end
 end
@@ -169,17 +180,25 @@ Then /^"([^"]*)" should not be in the database$/ do |name|
   Client.find_by_firstName_and_lastName(firstName, lastName).should be_nil
 end
 
-Then /^"([^"]*)" should have (\d+) checkin$/ do |name, count|
+Then /^"([^"]*)" should have (\d+) (\D+) checkin$/ do |name, count, checkin_type|
   firstName, lastName = name.split(' ')
   client = Client.find_by_firstName_and_lastName(firstName, lastName)
-  client.checkins.length.should == count.to_i
+  if checkin_type == 'client'
+    client.client_checkins.length.should == count.to_i
+  else
+    client.household.household_checkins.length.should == count.to_i
+  end
 end
 
-Then /^"([^"]*)" last checkin should have "([^"]*)" "([^"]*)"$/ do |name, field, true_or_false|
+Then /^"([^"]*)" last (\w+) checkin should have "([^"]*)" "([^"]*)"$/ do |name, checkin_type, field, true_or_false|
   firstName, lastName = name.split(' ')
   client = Client.find_by_firstName_and_lastName(firstName, lastName)
   expectation = true_or_false == "true" ? true : false
-  client.checkins.last.send(field).should == expectation
+  if checkin_type == 'client'
+    client.client_checkins.last.send(field).should == expectation
+  else
+    client.household.household_checkins.last.send(field).should == expectation
+  end
 end
 
 Then /^there should be "([^"]*)" "([^"]*)" in the database$/ do |count, model|

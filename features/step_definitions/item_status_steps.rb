@@ -3,7 +3,7 @@ Then /^I should see an edit form for the item$/ do
 end
 
 Then /^The item in the database with upc (\d+) should have description "([^"]*)"/ do |barcode, description|
-  sleep(0.2)
+  sleep(0.3)
   Item.find_by_upc(barcode).description.should == description
 end
 

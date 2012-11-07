@@ -1,11 +1,11 @@
 = message_block :on => [:client, :household, :res_qualdoc, :inc_qualdoc, :gov_qualdoc, :id_qualdoc]
-%h1 Client quick check
+%h1 Client quick check #{ @client && (": " + @client.first_last_name) }
 :javascript
   $(function(){
-    $('#lastName').autocomplete({ 
-        url:'/clients/autocomplete', 
-        minChars:3, 
-        paramName:'client_full_name', 
+    $('#lastName').autocomplete({
+        url:'/clients/autocomplete',
+        minChars:3,
+        paramName:'client_full_name',
         onItemSelect:function(client){getDetails(client)}
       });
 
@@ -13,9 +13,10 @@
   });
 
   var getDetails = function(client){
-    history.pushState({}, '', "/qualification_documents?client_id="+client.data[0])
+    url = "/clients/" + client.data[0] + "/qualification_documents"
+    history.pushState({}, '', url)
     var form = $('#client_form')
-    form.attr('action',"/qualification_documents?client_id="+client.data[0])
+    form.attr('action', url)
     form.submit()
   };
 

@@ -1,0 +1,51 @@
+.head {
+  background-image: url("head_icon.png");
+  width: 15px;
+  height: 12px;
+  display: inline-block;
+  background-repeat: no-repeat;
+  background-size: 12px;
+  position: relative;
+}
+
+.errors {
+  background-image: url("error_m.gif");
+  width: 15px;
+  height: 12px;
+  display: inline-block;
+  background-repeat: no-repeat;
+  background-size: 12px;
+  position: relative;
+}
+
+.warn_icon {
+  background-image: url("warn_m.gif");
+  width: 15px;
+  height: 12px;
+  display: inline-block;
+  background-repeat: no-repeat;
+  background-size: 12px;
+  position: relative;
+}
+
+.document_exists {
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+  background-image: url("document_icon.png")
+}
+
+.document_missing {
+  display: none
+}
+
+.delete_document_exists {
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+  background-image: url("delete_document_icon.png")
+}
+
+.delete_document_missing {
+  display: none
+}

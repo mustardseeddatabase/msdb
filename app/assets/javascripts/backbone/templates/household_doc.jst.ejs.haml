@@ -1,0 +1,26 @@
+%td <%= household_doc.get('description') %>
+%td.date <%= household_doc.get('date') %>
+%td
+  %span.status <%= household_doc.get('status') %>
+  %span{:class => "status_icon <%= household_doc.status_class() %>"}
+%td.count{:align => :center} <%= household_doc.get('warnings') %>
+%td{:style => "width:43px; text-align:right"}
+  <% if(household_doc.get('warned')){%>
+  %a.warn{:href => '#'} Unwarn
+  <% } else { %>
+  %a.warn{:href => '#'} Warn
+  <% } %>
+%td
+  %a.confirm{:href => '#'} Confirm
+%td
+  <% if(permissions.upload_permitted){ %>
+  %a.upload{:href => '#'} Upload
+  <% } %>
+%td
+  <% if(permissions.download_permitted){ %>
+  %div{:onclick => "window.location = \"<%= household_doc.get('doc_link') %>\"", :class => "<%= household_doc.has_doc() %>"}
+  <% } %>
+%td
+  <% if(permissions.delete_permitted){ %>
+  %div{:onclick => "window.location = \"<%= household_doc.get('doc_link') %>\"", :class => "delete_<%= household_doc.has_doc() %>"}
+  <% } %>

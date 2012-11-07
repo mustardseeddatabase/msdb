@@ -1,0 +1,30 @@
+%td
+  %a.edit_client{:href => "#", :data => {:url => "<%= client.get('url') %>"}} <%= client.get('name_age') %>
+  %span{:class => "<%= client.head() %>"}
+  %span{:class => "<%= client.errors() %>"}
+%td.date <%= client.get('date') %>
+%td
+  %span.status <%= client.get('status') %>
+  %span{:class => "status_icon <%= client.status_class() %>"}
+%td.count{:align => :center} <%= client.get('warnings') %>
+%td{:style => "width:43px; text-align:right"}
+  <% if(client.get('warned')){%>
+  %a.warn{:href => '#'} Unwarn
+  <% } else { %>
+  %a.warn{:href => '#'} Warn
+  <% } %>
+%td
+  %a.confirm{:href => '#'} Confirm
+%td
+  <% if(permissions.upload_permitted){ %>
+  %a.upload{:href => '#'} Upload
+  <% } %>
+%td
+  <% if(permissions.download_permitted){ %>
+  %div{:onclick => "window.location = \"<%= client.get('doc_link') %>\"", :class => "<%= client.has_doc() %>"}
+  <% } %>
+%td
+  <% if(permissions.delete_permitted){ %>
+  %div{:class => "delete_<%= client.has_doc() %>"}
+  <% } %>
+%td

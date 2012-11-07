@@ -1,4 +1,12 @@
 module HouseholdsHelper
+  def hide_in_checkin
+    if params['checkin_id']
+      "display:none"
+    else
+      "display:block"
+    end
+  end
+
   def search_terms
     @household_search.search_terms.to_s
   end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120702004836) do
+ActiveRecord::Schema.define(:version => 20120727173357) do
 
   create_table "action_roles", :force => true do |t|
     t.integer  "role_id",    :limit => 8
@@ -59,19 +59,14 @@ ActiveRecord::Schema.define(:version => 20120702004836) do
     t.datetime "updated_at"
   end
 
-  create_table "checkins", :force => true do |t|
+  create_table "client_checkins", :force => true do |t|
     t.integer  "client_id"
-    t.integer  "parent_id"
-    t.boolean  "id_warn",    :default => false
-    t.boolean  "inc_warn",   :default => false
-    t.boolean  "res_warn",   :default => false
-    t.boolean  "gov_warn",   :default => false
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.boolean  "id_warn",              :default => false
+    t.boolean  "primary",              :default => false
+    t.integer  "household_checkin_id"
+    t.datetime "created_at",                              :null => false
+    t.datetime "updated_at",                              :null => false
   end
-
-  add_index "checkins", ["client_id"], :name => "index_checkins_on_client_id"
-  add_index "checkins", ["parent_id"], :name => "index_checkins_on_parent_id"
 
   create_table "clients", :force => true do |t|
     t.integer  "household_id"
@@ -124,6 +119,15 @@ ActiveRecord::Schema.define(:version => 20120702004836) do
     t.string   "email"
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "household_checkins", :force => true do |t|
+    t.integer  "household_id"
+    t.boolean  "res_warn",     :default => false
+    t.boolean  "inc_warn",     :default => false
+    t.boolean  "gov_warn",     :default => false
+    t.datetime "created_at",                      :null => false
+    t.datetime "updated_at",                      :null => false
   end
 
   create_table "households", :force => true do |t|

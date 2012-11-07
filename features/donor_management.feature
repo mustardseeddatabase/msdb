@@ -31,14 +31,12 @@ Feature: Donor management feature
     And I should see "Receive donations into inventory"
     And There should be "1" "donor" in the database
 
-@javascript
 	Scenario: Add a new donor without organization attribute
     Given I am on the donors#new page
     When I press "Save"
     Then I should not see "New donor saved"
     And I should see "can't be blank"
 
-@javascript
 	Scenario: Add a new donor with duplicate organization attribute
     Given I am on the donors#new page
     And There is a donor organization "Second Harvest" in the database

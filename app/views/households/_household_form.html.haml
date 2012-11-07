@@ -1,4 +1,5 @@
-= form_for household, :html => {:id => 'household_form', :multipart => true} do |f|
+- return_page = params[:checkin_id] ? checkin_household_path(params[:checkin_id], @household) : households_path(@household_search.to_params)
+= form_for household, :url => @url, :html => {:id => 'household_form', :multipart => true} do |f|
   = hidden_field_tag :index_query, @household_search.params.to_json unless @household_search.nil?
   %div{:style => 'float:left; display:inline; padding-right:30px'}
     = f.fields_for :perm_address do |p|
@@ -60,9 +61,9 @@
               %td= client.last_first_name
               %td= client.age
               %td= "(head of household)" if client.headOfHousehold?
-              %td{:style => "padding-left:40px"}= link_to 'Remove resident', household_household_client_path(@household, client), :method => :delete, :data => {:confirm => 'are you sure?'}, :class => (:remove_head if client.is_sole_head_of_household?)
+              %td{:style => "padding-left:40px"}= link_to 'Remove resident', household_household_client_path(@household, client), :method => :delete, :data => {:confirm => 'are you sure?'}, :class => "#{('remove_head' if client.is_sole_head_of_household?)} remove_resident", :style => "#{hide_in_checkin}"
         %tr{:height => "30px", :valign => "bottom"}
-          %td= link_to "Add resident...", new_household_household_client_path(@household)
+          %td= link_to "Add resident...", new_household_household_client_path(@household), :id => :add_resident, :style => "#{hide_in_checkin}"
     %table{:style => "padding-top:20px"}
       %tr
         %td{:width => '140px'}
@@ -118,7 +119,7 @@
     = render :partial => 'qualdoc', :locals => {:name => 'Income',            :qualdoc => @household.inc_qualdoc, :f => f, :padding => '30px'}
     = render :partial => 'qualdoc', :locals => {:name => 'Government income', :qualdoc => @household.gov_qualdoc, :f => f, :padding => '30px'}
 
-  - submit_or_return_to(households_path(@household_search.to_params))
+  - submit_or_return_to(return_page)
 
 = form_tag "action_to_be_replaced_by_javascript", :id => :the_real_upload_form, :style => 'display:none', :method => :put, :multipart => true
 :javascript

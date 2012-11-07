@@ -1,7 +1,30 @@
 class QualificationDocument < ActiveRecord::Base
   include BooleanRender
 
+  Types = {
+      'res' => 'ResQualdoc',
+      'inc' => 'IncQualdoc',
+      'gov' => 'GovQualdoc',
+      'id'  => 'IdQualdoc'
+    }
+
   mount_uploader :docfile, DocfileUploader
+
+  def self.update_collection(docs)
+    grouped_docs = docs.group_by{|doc| !doc['id'].nil? && doc['id'] != "null"}
+    docs_for_update = grouped_docs[true] || []
+    new_docs = grouped_docs[false] || []
+
+    docs_for_update.each do |doc|
+      qualdoc = find(doc['id'])
+      qualdoc.update_attributes(doc.slice('date', 'warnings', 'confirm'))
+    end
+
+    new_docs.each do |doc|
+      doctype = Types[doc['doctype']]
+      qualdoc = doctype.constantize.send('create',doc.slice('date','warnings','association_id', 'confirm'))
+    end
+  end
 
   def threshold
     self.class::ExpiryThreshold
@@ -40,7 +63,20 @@ class QualificationDocument < ActiveRecord::Base
   end
 
   def qualification_vector
-    { :expired? => expired?, :expiry_date => expiry_date}
+     {:association_id => association_id,
+     :date => date,
+     :description => self.class::Description.capitalize,
+     :doc_link => doc_link,
+     :doctype => document_type,
+     :expired? => expired?,
+     :expiry_date => expiry_date,
+     :id => id,
+     :status => information_status,
+     :warnings => warnings || 0}
+  end
+
+  def doc_link
+    docfile && docfile.url
   end
 
   def in_db?
@@ -51,10 +87,9 @@ class QualificationDocument < ActiveRecord::Base
     type.tableize.split("_")[0]
   end
 
-  def belongs_to?(client)
-    belongs_to_client = (document_type == "id") && (self.client == client)
-    belongs_to_household = (["inc", "res", "gov"].include?(document_type)) && (household.clients.include? client)
-    belongs_to_client || belongs_to_household
+  def remove_file
+    self.remove_docfile = true
+    save
   end
 
 end

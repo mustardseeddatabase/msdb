@@ -46,6 +46,7 @@ module Msdb
     # the following lines seem to be required after upgrade to Rails 3.2.5 (bug?) It's a workaround for assets not being found
     config.assets.paths << Rails.root.join("app", "assets", "stylesheets")
     config.assets.paths << Rails.root.join("app", "assets", "javascripts")
+    config.assets.paths << Rails.root.join("app", "assets", "images")
     config.assets.paths << Rails.root.join("vendor", "assets", "stylesheets")
     config.assets.paths << Rails.root.join("vendor", "assets", "javascripts")
     config.assets.paths << Rails.root.join("lib", "assets", "javascripts")
@@ -54,6 +55,8 @@ module Msdb
     config.assets.paths << Jquery::Rails::Engine.root.join("vendor", "assets", "javascripts")
     config.assets.paths << Rails.root.join("app", "themes", "default", "assets")
     config.assets.paths << Rails.root.join("app", "themes", "default", "assets", "images")
+    config.assets.paths << Rails.root.join("spec", "javascripts")
+    config.assets.paths << Remotipart::Rails::Engine.root.join("vendor", "assets", "javascripts")
     #it causes precompile errors to include this for production environment, so just include it for development
     #this relates to a particular fixture (client_quickcheck.html.haml), that renders a script as a partial.
     #config.assets.paths << Rails.root.join("spec", "javascripts")

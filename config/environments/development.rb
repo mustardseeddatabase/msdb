@@ -1,3 +1,5 @@
+require Rails.root.join('lib', 'factory_girl', 'create_without_validation_strategy')
+
 Msdb::Application.configure do
   # Settings specified here will take precedence over those in config/application.rb
 
@@ -14,7 +16,7 @@ Msdb::Application.configure do
 
   config.action_controller.perform_caching = false
 
-  # don't combine assets in dev mode
+  # don't combine assets in dev mode (when true)
   config.assets.debug = true
 
   # Do not compress assets

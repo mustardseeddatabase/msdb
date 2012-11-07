@@ -17,13 +17,25 @@ Msdb::Application.routes.draw do
   resources :admin
   # TODO the following route should update an inventory model, which will update constituent items
   match '/items/update_all/:inventory_id', :to => 'items#update_all', :via => :put, :as => :update_all_items
-  resources :qualification_documents do
-    put 'update', :on => :collection
-  end
 
   resources :clients do
     get 'autocomplete', :on => :collection
     resources :distributions
+    resources :checkins do
+      post 'update_and_show_client' # would normally be 'put', but post is much easier to implement!
+    end
+    resources :qualification_documents
+  end
+
+  resources :qualification_documents
+
+  resource :checkins do
+    get 'new'
+  end
+  resources :checkins do
+    resources :clients
+    resources :households
+    resources :qualification_documents
   end
 
   resources :items # for actions for which it's not known if the item has a sku or upc
@@ -41,6 +53,9 @@ Msdb::Application.routes.draw do
     get 'autocomplete', :on => :collection
     resources :household_clients
     resources :clients
+    resources :checkins do
+      post 'update_and_show_household'
+    end
   end
 
   resources :scanner

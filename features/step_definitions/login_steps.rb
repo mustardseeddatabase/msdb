@@ -40,7 +40,7 @@ Then /^There should be "([^"]*)" "([^"]*)"$/ do |number, object|
   object.singularize.capitalize.constantize.send('all').size.should == number.to_i
 end
 
-Given /^this scenario is pending$/ do
+Given /^pending/ do
   pending # always
 end
 

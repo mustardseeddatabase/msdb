@@ -39,6 +39,7 @@ Feature: Client management
     And I should see "Pendleton"
     And I should see "10101"
 
+
 @selenium
   Scenario: Add existing client to a household, client name autocomplete
     Given I am on the household_clients#new page
@@ -53,6 +54,7 @@ Feature: Client management
     When I follow "Add to household"
     Then I should see "Edit household"
 
+
 @selenium
   Scenario: Add to a household and existing client who does not currently have a household
     Given I am on the household_clients#new page
@@ -66,7 +68,7 @@ Feature: Client management
     Then I should see "Edit household"
 		And I should see "Normal, Norman"
 
-@selenium
+
   Scenario: Add a new client to a household
     Given I am on the household_clients#new page
     When I follow "Add a new client..."
@@ -80,7 +82,8 @@ Feature: Client management
     And I press "Save"
     Then I should see "New client added"
 
-@selenium
+
+@javascript
   Scenario: Add a new client, head of household, to a household that already has a head of household
     Given "Fanny Arbogast" is head of household
     And I am on the household_clients#new page
@@ -99,7 +102,7 @@ Feature: Client management
     Then I should see "(head of household)" for "Hagenflick, Herbert"
     And I should not see "(head of household)" for "Arbogast, Fanny"
 
-@selenium
+
   Scenario: Add a new invalid client to a household
     Given I am on the household_clients#new page
     When I follow "Add a new client..."
@@ -129,14 +132,14 @@ Feature: Client management
 		    | Birthdate | '1922,1,1' |
 		 And I select options for the following select boxes:
         | field         | value         |
-		    | client_race   | client.race   |
+		    | client_race   | Client::Races[client.race]   |
 		    | client_gender | client.gender |
 		 And I check "Head of household?"
 		 Then I press "Save"
 		 Then I should see "New client created"
      And There should be "5" "clients"
 
-@selenium
+
 	Scenario: Add invalid client, with blank name fields
 		Given I am on the clients#index page
 		When I follow "Add new client..."
@@ -146,37 +149,35 @@ Feature: Client management
 			 | client_lastName        | client.lastName          |
 		 And I select options for the following select boxes:
         | field         | value         |
-		    | client_race   | client.race   |
+		    | client_race   | Client::Races[client.race]   |
 		    | client_gender | client.gender |
 		 And I check "Head of household?"
 		 Then I press "Save"
 		 Then I should see "can't be blank"
      And I should see "Add a new client" within: "h1"
 
-@selenium
 	Scenario: Add invalid client, with future birthdate
 		Given I am on the clients#index page
 		When I follow "Add new client..."
 		Then I should see "Add a new client"
 		Then I fill in the following with Faker values:
-			 | client_mi              | client.mi                |
-			 | client_firstName        | client.firstName          |
-			 | client_lastName        | client.lastName          |
+			  | client_mi        | client.mi        |
+			  | client_firstName | client.firstName |
+			  | client_lastName  | client.lastName  |
 			 # the next step will cause this test to fail when it's run on
 			 # 12/31 in any year!
 		 And I select dynamic dates for the following fields:
-		    | field     | value      |
-		    | Birthdate |  (Date.today.year).to_s+'-12-31' |
+		     | field     | value                           |
+		     | Birthdate | (Date.today.year).to_s+'-12-31' |
 		 And I select options for the following select boxes:
-        | field         | value         |
-		    | client_race   | client.race   |
-		    | client_gender | client.gender |
+         | field         | value                      |
+         | client_race   | Client::Races[client.race] |
+         | client_gender | client.gender              |
 		 And I check "Head of household?"
 		 Then I press "Save"
      And I should see "Birthdate cannot be in the future"
      And I should see "Add a new client" within: "h1"
 
-@selenium
 	Scenario: Add duplicate client
 		Given I am on the clients#index page
     And The birthdate of Fanny Arbogast in the database is "1991-7-28"
@@ -189,7 +190,6 @@ Feature: Client management
 		Then I should see "Fanny Arbogast is already in the database"
     And I should see "Add a new client" within: "h1"
 
-@selenium
 	Scenario: Edit client information
     Given I am on the client#show page for "Fanny Arbogast"
     When I follow "Edit this client"
@@ -198,7 +198,7 @@ Feature: Client management
     Then I press "Save"
     Then I should see "1991-07-28"
 
-@selenium
+@javascript
 	Scenario: Edit client information, designate as head of household which already has a household head
     Given I am on the client#show page for "Fanny Arbogast"
     When I follow "Edit this client"
@@ -206,7 +206,6 @@ Feature: Client management
     And I check "Head of household"
     Then I should see "There is already designated a head of household." within: ".message"
 
-@selenium
 	Scenario: Edit client information, designate as head of household which already has a household head, and save
     Given I am on the client#show page for "Fanny Arbogast"
     When I follow "Edit this client"
@@ -216,7 +215,7 @@ Feature: Client management
     Then "Fanny Arbogast" should be head of household
     And The household should have exactly one head
 
-@selenium
+@javascript
 	Scenario: Edit client information, remove head of household designation of a client who is sole head
     Given I am on the client#show page for "Herbert Heiffetz"
     When I follow "Edit this client"
@@ -227,7 +226,6 @@ Feature: Client management
     When I press "Save"
     Then I should see "Edit Herbert Heiffetz"
 
-@selenium
 	Scenario: Edit client information, remove head of household designation of a client who is one of multiple heads
     Given there is a client with last name "Hansen", first name "Henry", age "23" in the database belonging to the household, with an ID document, head of household
     And I am on the client#show page for "Herbert Heiffetz"
@@ -249,14 +247,14 @@ Feature: Client management
     And I should see a link to "View household"
     And I should see a link to "View ID document"
 
-@selenium
+@javascript
   Scenario: Show client page when client does not have an ID document on file
     Given I am on the client#show page for "Gary Gaston"
     Then I should see "Gary Gaston" within: "h1"
     And I should see a link to "View household"
     And I should not see a link to "View ID document"
 
-@selenium
+@javascript
   Scenario: Show client page for head of housheold and try to delete
     Given I am on the client#show page for "Herbert Heiffetz"
     When I follow "Delete this client"

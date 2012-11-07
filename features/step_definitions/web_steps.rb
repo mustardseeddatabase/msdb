@@ -246,4 +246,5 @@ end
 
 Then /^I wish to debug$/ do
   debugger
+  foo = "bar"
 end

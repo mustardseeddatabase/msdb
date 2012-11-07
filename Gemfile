@@ -10,7 +10,7 @@ gem "rails", "~> 3.2.0"
 gem "mysql2"
 gem 'jquery-rails'
 
-gem 'haml', :git => 'git://github.com/infbio/haml.git', :branch => 'form_for_fix' # fixes a form_for issue in haml
+gem 'haml'#, :git => 'git://github.com/infbio/haml.git', :branch => 'form_for_fix' # fixes a form_for issue in haml
 gem 'haml-rails'
 gem 'message_block', :git => 'git://github.com/lazylester/message_block.git'
 gem 'authengine'
@@ -18,12 +18,13 @@ gem 'db_check', :path => 'vendor/gems/db_check'
 gem 'carrierwave'
 gem 'delegate_multiparameter', :path => 'vendor/gems/delegate_multiparameter'
 gem 'client_side_validations'
-gem 'haml_assets', :git => 'git://github.com/infbio/haml_assets.git' # to use haml with backbone assets
+gem 'haml_assets'#, :git => 'git://github.com/infbio/haml_assets.git' # to use haml with backbone assets
 gem 'ejs', :git => 'git://github.com/sstephenson/ruby-ejs.git'
 gem 'sprockets'
 gem 'rbarcode', :git => 'git://github.com/mustardseeddatabase/rbarcode.git'
 gem 'doccex', :git => 'git://github.com/mustardseeddatabase/doccex.git'
 gem 'summary_report', :path => 'vendor/gems/summary_report'
+gem 'remotipart', '~> 1.0'
 gem 'factory_girl_rails'
 gem 'factory_girl', :git => "https://github.com/thoughtbot/factory_girl.git" #in order to pick up commit 4e2b7e0b, when there's a new release incorporating this commit, pull from rubygems instead.
 gem 'faker', :git => 'git://github.com/stympy/faker.git' # due to an I18n problem after updating to Rails 3.1
@@ -44,8 +45,8 @@ group :development, :test do
   gem 'database_cleaner'
   gem 'launchy'
   gem 'cucumber-rails', '>=0.5.1', :require => false
-  gem 'capybara-webkit', :git => "git://github.com/thoughtbot/capybara-webkit.git" #, :branch => '1.0'
-  gem 'selenium-webdriver', '2.0.1'
+  gem 'capybara-webkit'#, :git => "git://github.com/thoughtbot/capybara-webkit.git"
+  gem 'selenium-webdriver'#, '2.0.1'
 
 
   # official unofficial ruby-debug19 fix
@@ -65,7 +66,7 @@ group :development, :test do
   gem 'active_reload'
   gem 'jasminerice'
 
-  gem 'test-unit', :require => 'test/unit' # not actually used! included only to workaround pesky bug, see http://stackoverflow.com/questions/9523931/rake-dbtestprepare-in-rails-3-app-fails-with-file-not-found
+  #gem 'test-unit', :require => 'test/unit' # not actually used! included only to workaround pesky bug, see http://stackoverflow.com/questions/9523931/rake-dbtestprepare-in-rails-3-app-fails-with-file-not-found
 
   gem 'email_spec' # for testing email with Rspec
 end

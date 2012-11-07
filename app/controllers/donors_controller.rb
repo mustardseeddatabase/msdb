@@ -8,8 +8,12 @@ class DonorsController < ApplicationController
   end
 
   def create
-    @donor = Donor.create(params[:donor])
-    redirect_to donations_path, :notice => "New donor saved"
+    @donor = Donor.new(params[:donor])
+    if @donor.save
+      redirect_to donations_path, :notice => "New donor saved"
+    else
+      render :new
+    end
   end
 
   def show

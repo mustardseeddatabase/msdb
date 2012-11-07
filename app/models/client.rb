@@ -1,5 +1,6 @@
 class Client < ActiveRecord::Base
   include ActiveModel::Validations
+  include Rails.application.routes.url_helpers
   include BooleanRender
 
   HumanizedAttributes = { :lastName => "Last name",
@@ -34,12 +35,13 @@ class Client < ActiveRecord::Base
   default_scope order('case when birthdate IS NULL then 1 else 0 end, birthdate')
 
   belongs_to :household
-  delegate :with_errors, :to => :household, :prefix => true
-  delegate :upload_link_text, :qualification_error_message, :qualification_vector, :current?, :confirm, :warnings, :vi, :confirm=, :warnings=, :vi=, :to => :id_qualdoc, :prefix => :id
+
+  delegate :qualification_docs, :with_errors, :to => :household, :prefix => true, :allow_nil => true
+  delegate :upload_link_text, :qualification_error_message, :current?, :confirm, :warnings, :vi, :confirm=, :warnings=, :vi=, :to => :id_qualdoc, :prefix => :id, :allow_nil => true
   delegate_multiparameter :date, :to => :id_qualdoc, :prefix => :id
 
   has_one :id_qualdoc, :foreign_key => :association_id, :dependent => :destroy, :autosave => true
-  has_many :checkins, :dependent => :destroy, :autosave => true
+  has_many :client_checkins, :dependent => :destroy, :autosave => true
 
   validates :firstName, :lastName, :presence => true
 
@@ -95,6 +97,15 @@ class Client < ActiveRecord::Base
     birthdate.nil? || race.nil? || gender.nil? || (age_group == "out of range")
   end
 
+  def missing_data_errors
+    errors = []
+    errors << "Missing birthdate" unless birthdate
+    errors << "Missing race" unless race
+    errors << "Missing gender" unless gender
+    errors << "Age out of range" if (age_group == "out of range")
+    errors
+  end
+
   def race_or_unknown
     !race || (race == 'OT') ? 'UNK' : race
   end
@@ -113,6 +124,10 @@ class Client < ActiveRecord::Base
 
   def age
     ( ( Date.today - birthdate.to_date )/365 ).to_i unless birthdate.nil?
+  end
+
+  def age_or_zero
+    age.to_i
   end
 
   def age_group
@@ -155,6 +170,22 @@ class Client < ActiveRecord::Base
     gender == "F" unless !gender
   end
 
+  def id_qualification_vector(checkin_id = 'checkin_id')
+    # checkin_id is the id of the client who is checking-in. Not the checkin of this client
+    # it's used in the url to facilitate return to the same page
+    url = client_checkin_update_and_show_client_path(id,checkin_id) unless id.nil?
+    checkin = ClientCheckin.find(checkin_id) if checkin_id != 'checkin_id'
+    household_checkin = HouseholdCheckin.find(checkin.household_checkin_id) if checkin
+    client_checkin = household_checkin && household_checkin.client_checkins.where('client_id = ?',id)[0]
+    iq = (id_qualdoc && id_qualdoc.qualification_vector) || IdQualdoc.new(:association_id => id).qualification_vector
+    iq = (id_qualdoc || IdQualdoc.new(:association_id => id)).qualification_vector
+    iq.merge({ :head_of_household => headOfHousehold?,
+               :url => url,
+               :name_age => name_age,
+               :errors => missing_data_errors,
+               :warned => client_checkin && client_checkin.id_warn})
+  end
+
   def has_id_doc_in_db?
     id_qualdoc && id_qualdoc.in_db?
   end
@@ -184,5 +215,21 @@ class Client < ActiveRecord::Base
 
   def missing_birthdate_flag
     "x" unless birthdate
+  end
+
+  def has_no_checkin_errors
+    household && !household_with_errors
+  end
+
+  def assign_as_sole_head_of_household
+    if household
+      household.assign_as_sole_head(self)
+    else
+      assign_as_head(true)
+    end
+  end
+
+  def assign_as_head(true_false)
+    update_attribute(:headOfHousehold, true_false)
   end
 end

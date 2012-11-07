@@ -119,14 +119,14 @@ Feature: Receive donations without barcodes
     And I should see "New Item"
     When I click "New Item"
     Then I fill in the following fields:
-        | field             | value    |
-        | description | Pea soup |
-        | weight_oz   | 12       |
-        | count       | 6        |
-        | quantity     | 27       |
+         | field       | value    |
+         | description | Pea soup |
+         | weight_oz   | 12       |
+         | count       | 6        |
+         | quantity    | 27       |
     And I select options for the following select boxes:
-        | field                | value        |
-				| category_id       | "Food: Vegetables"       |
+         | field       | value              |
+         | category_id | "Food: Vegetables" |
     When I follow "Remove"
     Then I should not see "Pea soup" within: "#found_in_db"
     And The donated items list length should be "0"

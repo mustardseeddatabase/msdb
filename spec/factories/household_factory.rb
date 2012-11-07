@@ -7,32 +7,40 @@ FactoryGirl.define do
     income  {rand(40)*1000}
     otherConcerns  {Faker::Lorem.paragraph}
 
-    perm_address
-    temp_address
+    association :perm_address, strategy: :build
+    association :temp_address, strategy: :build
 
       factory :household_with_docs do
-        after(:create) do |hh|
-          FactoryGirl.create(:res_qualdoc, :household => hh)
-          FactoryGirl.create(:inc_qualdoc, :household => hh)
-          FactoryGirl.create(:gov_qualdoc, :household => hh)
-        end
+        association :res_qualdoc, :strategy => :build
+        association :inc_qualdoc, :strategy => :build
+        association :gov_qualdoc, :strategy => :build
       end
 
       factory :household_with_current_docs do
-        after(:create) do |hh|
-          FactoryGirl.create(:res_qualdoc, :current, :household => hh)
-          FactoryGirl.create(:inc_qualdoc, :current, :household => hh)
-          FactoryGirl.create(:gov_qualdoc, :current, :household => hh)
-        end
+        association :res_qualdoc, :current, :strategy => :build
+        association :inc_qualdoc, :current, :strategy => :build
+        association :gov_qualdoc, :current, :strategy => :build
       end
 
       factory :household_with_expired_docs do
-        after(:create) do |hh|
-          FactoryGirl.create(:res_qualdoc, :expired, :household => hh)
-          FactoryGirl.create(:inc_qualdoc, :expired, :household => hh)
-          FactoryGirl.create(:gov_qualdoc, :expired, :household => hh)
-        end
+        association :res_qualdoc, :expired, :strategy => :build
+        association :inc_qualdoc, :expired, :strategy => :build
+        association :gov_qualdoc, :expired, :strategy => :build
       end # /factory
+
+      trait :with_docs do
+        res_qualdoc
+        inc_qualdoc
+        gov_qualdoc
+      end
+
+      trait :with_errored_clients do
+        after(:build) do |hh|
+          hh.clients << FactoryGirl.create_without_validation(:client, :birthdate => nil)
+          hh.clients << FactoryGirl.create(:client, :race => nil)
+          hh.clients << FactoryGirl.create(:client, :gender => nil)
+        end
+      end
 
       trait :homeless do
         homeless true

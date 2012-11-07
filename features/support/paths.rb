@@ -39,7 +39,7 @@ module NavigationHelpers
     when /the household_clients#new page/
       new_household_household_client_path(Household.first.id)
     when /the client quickcheck page/
-      qualification_documents_path
+      checkins_path
     when /the clients#index page/
       clients_path
     when /the client#show page for "(.*)"/

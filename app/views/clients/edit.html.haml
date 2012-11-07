@@ -1,3 +1,41 @@
 = message_block :on => :client
 %h1 Edit #{@client.first_last_name}
-= render 'client_form', :return_page => client_path(@client)
+= render 'client_form', :return_page => params[:checkin_id] ? checkin_client_path(params[:checkin_id], @client) : client_path(@client)
+:javascript
+  $(function(){
+    $('#client_headOfHousehold').live('change', function(){
+      var is_head = #{@client.is_sole_head_of_household?};
+      var has_head = #{@household && @household.has_head?};
+      var is_not_head_in_household_with_head = #{!@client.headOfHousehold? && @household && @household.has_head?};
+
+      var warn = function(element, text){
+        $(element).wrap('<div class="field_with_errors" />');
+        $(element).wrap('<div style="float:left" />');
+        $(element).parent().parent().append('<div style="float:left; margin-left:20px"><label for="client_headOfHousehold" class="message" style="margin-left:0px">'+text+'</label></div>')
+      }
+
+      var unwarn = function(element){
+        $(element).unwrap()
+        $(element).unwrap()
+        $(element).parent().children().last().remove()
+      }
+
+      if (is_head){
+        if(this.checked){
+          unwarn(this)
+          $('#client_submit').attr('disabled', false)
+        }else{
+          warn(this, "Head of household status cannot be removed.<br/>Instead, assign another household member as head.")
+          $('#client_submit').attr('disabled', true)
+        }
+      }
+      if (is_not_head_in_household_with_head){
+        if(this.checked){
+          warn(this, "There is already designated a head of household.<br/>Checking this checkbox replaces current head of household");
+        }else{
+          unwarn(this);
+        }
+      }
+
+    })
+  })

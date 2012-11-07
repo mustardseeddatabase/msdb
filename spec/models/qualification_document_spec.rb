@@ -74,6 +74,18 @@ describe "docfile attribute" do
   end
 end
 
+describe "#remove_document" do
+  before(:all) do
+    @doc = FactoryGirl.create(:res_qualdoc)
+  end
+
+  it "should remove the file from the filesystem" do
+    @doc.docfile.present?.should == true
+    @doc.remove_file
+    @doc.docfile.present?.should == false
+  end
+end
+
 # testing my test tools here!
 describe "FactoryGirl qualification document" do
   context "using create strategy" do

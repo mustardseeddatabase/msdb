@@ -1,4 +1,30 @@
 @Quickcheck = {}
+class Quickcheck.TmpFormView extends Backbone.View
+  initialize: (attrs = {}, values = {})->
+    @tmpForm = document.createElement("form")
+    @tmpForm.id = 'tempForm'
+
+    _(attrs).each (val,name)=>
+      $(@tmpForm).attr(name,val)
+
+    _(values).each (val,name)=>
+      @create_element(name,val)
+
+    document.body.appendChild(@tmpForm)
+
+  submit: ->
+    @tmpForm.submit()
+
+  remove: ->
+    @tmpForm.remove()
+
+  create_element: (name,value) ->
+    if _.isNumber(value) || !_.isEmpty(value) || _.isBoolean(value) # because Chrome sends the value "null" for null values
+      tmpInput = document.createElement("input")
+      tmpInput.setAttribute("name", name)
+      tmpInput.setAttribute("value", value.toString())
+      @tmpForm.appendChild(tmpInput)
+
 class Quickcheck.QualdocView extends Backbone.View
   el: '#quickcheck'
 
@@ -8,6 +34,7 @@ class Quickcheck.QualdocView extends Backbone.View
     "click .update_and_show_household" : "post"
 
   post: (event)->
+    # TODO refactor this into TmpFormView
     url = $(event.target).data('url')
     tmpForm = document.createElement("form")
     tmpForm.method="post"

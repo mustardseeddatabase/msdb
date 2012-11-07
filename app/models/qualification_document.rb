@@ -87,4 +87,9 @@ class QualificationDocument < ActiveRecord::Base
     type.tableize.split("_")[0]
   end
 
+  def remove_file
+    self.remove_docfile = true
+    save
+  end
+
 end

@@ -25,6 +25,6 @@
   <% } %>
 %td
   <% if(permissions.delete_permitted){ %>
-  %div{:onclick => "window.location = \"<%= client.get('doc_link') %>\"", :class => "delete_<%= client.has_doc() %>"}
+  %div{:class => "delete_<%= client.has_doc() %>"}
   <% } %>
 %td

@@ -40,7 +40,13 @@ class QualificationDocumentsController < ApplicationController
     send_file(qualdoc.docfile.current_path)
   end
 
-  def delete
-    
+  # only removes the file
+  def destroy
+    QualificationDocument.find(params[:id]).remove_file
+    #TODO refactor routes. checkins do not need to be nested under client
+    checkin = Checkin.find_by_client_checkin_id(params[:checkin_id])
+    client_id = checkin.primary_client_id
+    flash[:notice] = "Id document deleted"
+    redirect_to edit_client_checkin_path(client_id, params[:checkin_id])
   end
 end

@@ -35,6 +35,7 @@ Msdb::Application.routes.draw do
   resources :checkins do
     resources :clients
     resources :households
+    resources :qualification_documents
   end
 
   resources :items # for actions for which it's not known if the item has a sku or upc

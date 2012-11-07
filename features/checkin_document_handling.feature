@@ -5,23 +5,13 @@ Feature: Client check in
   Background: Logged in, with all requisite permissions
     Given I am logged in and on the "home" page
     And permissions are granted for "admin" to visit the following pages:
-           | page                               |
-           | households#index                   |
-           | households#show                    |
-           | households#edit                    |
-           | households#update                  |
-           | household_clients#new              |
+           | page                  |
            | clients#autocomplete               |
-           | clients#show                       |
-           | clients#index                      |
-           | clients#update                     |
-           | clients#edit                       |
            | checkins#new                       |
            | checkins#edit                      |
-           | checkins#create                    |
+           | checkins#create                      |
            | checkins#update                    |
-           | checkins#update_and_show_client    |
-           | checkins#update_and_show_household |
+
 @selenium
   Scenario: Follow the document check sequence, start to upload a document, but then waive the requirement
     Given there is a household with residency, income and govtincome current in the database
@@ -60,7 +50,7 @@ Feature: Client check in
     Given there is a household with residency, income and govtincome expired in the database
     And permission is granted for "admin" to go to the "qualification_documents#create" page
     And permission is granted for "admin" to go to the "qualification_documents#show" page
-    And permission is granted for "admin" to go to the "qualification_documents#delete" page
+    And permission is granted for "admin" to go to the "qualification_documents#destroy" page
     And there is a client with last name "Arbogast", first name "Fanny", with no id document in the database
     And I am quickchecking Fanny Arbogast
     And I follow "Upload" for "Fanny Arbogast"
@@ -76,14 +66,15 @@ Feature: Client check in
     Given there is a household with residency, income and govtincome expired in the database
     And permission is granted for "admin" to go to the "qualification_documents#update" page
     And permission is granted for "admin" to go to the "qualification_documents#show" page
-    And permission is granted for "admin" to go to the "qualification_documents#delete" page
+    And permission is granted for "admin" to go to the "qualification_documents#destroy" page
     And there is a client with last name "Arbogast", first name "Fanny", age "20", with id date "Date.new(2009,1,1)", and 1 warning, in the database belonging to the household
     And I am quickchecking Fanny Arbogast
     And I follow "Upload" for "Fanny Arbogast"
     Then I should see a file selector
-    When I upload a file
+    When I upload a new file
     Then I should see "Document saved"
     And Fanny Arbogast should have 0 id warning
+    And the id file for "Fanny Arbogast" should be the new file
 
 @selenium
   Scenario: Follow the document check sequence, upload the final document to complete checkout
@@ -101,8 +92,19 @@ Feature: Client check in
   Scenario: Download a client id document that has been saved
     Given pending: Download a client id document that has been saved
 
+@selenium
   Scenario: Delete a qualification document
-    Given pending: Delete a qualification document
+    Given there is a household with residency, income and govtincome expired in the database
+    And permission is granted for "admin" to go to the "qualification_documents#destroy" page
+    And permission is granted for "admin" to go to the "qualification_documents#create" page
+    And there is a client with last name "Arbogast", first name "Fanny", age "20", with id date "Date.new(2009,1,1)", and 1 warning, in the database belonging to the household
+    And I am quickchecking Fanny Arbogast
+    And I follow the delete_document link
+    And I confirm the popup
+    Then I should see "Id document deleted"
+    And There should be no document delete links on the page
+    And There should be no document download links on the page
+    And "Fanny Arbogast" should not have an id document stored
 
   Scenario: Upload a household document
     Given pending: Upload a household document

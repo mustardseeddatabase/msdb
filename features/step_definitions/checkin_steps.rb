@@ -212,3 +212,29 @@ Then /^there should be (\d+) recent checkin$/ do |count|
   recent_checkins = page.all(:css, 'tr.client_link')
   recent_checkins.count.should == count.to_i
 end
+
+Given /^I follow the delete_document link$/ do
+  page.find(:css,".delete_document_exists").click
+end
+
+When /^I upload a new file$/ do
+  @new_filename = 'newfile_' + rand(100000).to_s + '_id.txt'
+  file_path = File.join(::Rails.root.to_s, 'features', 'support', 'uploadable_files', @new_filename)
+  FileUtils.touch(file_path)
+  attach_file( "docfile_input", file_path)
+  click_button "Upload file"
+end
+
+Then /^the id file for "(.*?)" should be the new file$/ do |first_last_name|
+  first_name, last_name = first_last_name.split(' ')
+  client = Client.find_by_lastName(last_name)
+  Pathname(client.id_qualdoc.docfile.to_s).basename.to_s.should == @new_filename
+  client.id_qualdoc.docfile.present?.should == true
+end
+
+Then /^"(.*?)" should not have an id document stored$/ do |first_last_name|
+  first_name, last_name = first_last_name.split(' ')
+  client = Client.find_by_lastName(last_name)
+  id_qualdoc = client.id_qualdoc
+  id_qualdoc.in_db?.should be_false
+end
